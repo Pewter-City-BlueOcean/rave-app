@@ -7,7 +7,7 @@ const router = express.Router();
 *************ENVIRONMENT VARIABLES AND CONSTANTS*************
 *************************************************************/
 const CLIENT_ID = process.env.CLIENT_ID;
-const REDIRECT_URI = process.env.REDIRECT_URI;
+const SPOTIFY_REDIRECT_URI = process.env.SPOTIFY_REDIRECT_URI;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const CLIENT_HOME_URL = process.env.CLIENT_HOME_URL;
 const STATE_KEY = 'spotify_auth_state';
@@ -62,7 +62,7 @@ router.get('/login', (req, res) => {
       response_type: 'code',
       client_id: CLIENT_ID,
       scope: scopeParam,
-      redirect_uri: REDIRECT_URI,
+      redirect_uri: SPOTIFY_REDIRECT_URI,
       state: state,
       show_dialog: true,
     }).toString()
@@ -79,6 +79,8 @@ router.get('/callback', (req, res) => {
   const storedState = req.cookies ? req.cookies[STATE_KEY] : null;
 
   if (storedState !== state || state === null) {
+    console.log(storedState);
+    console.log(state);
     res.redirect(`${CLIENT_HOME_URL}?` +
       new URLSearchParams({
         error: 'state_mismatch'
@@ -90,7 +92,7 @@ router.get('/callback', (req, res) => {
 
     var authOptions = new URLSearchParams({
       code: code,
-      redirect_uri: REDIRECT_URI,
+      redirect_uri: SPOTIFY_REDIRECT_URI,
       'grant_type':'authorization_code'
     }).toString()
 

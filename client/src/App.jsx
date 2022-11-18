@@ -1,34 +1,57 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+import LandingPage from './pages/LandingPage.jsx';
+import FeedPage from './pages/LandingPage.jsx';
+import DiscoverPage from './pages/LandingPage.jsx';
+import GroupPage from './pages/LandingPage.jsx';
+import ProfilePage from './pages/LandingPage.jsx';
 
-  return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+const App = () => {
+  const [access_token, setAccess_token] = useState();
+  const [refresh_token, setRefresh_token] = useState();
+
+  const [page, setPage] = useState(0);
+
+  const pages = ['landing', 'feed', 'discover', 'search', 'events'];
+
+  let render;
+
+  if (page === 0) {
+    render =
+      <LandingPage auth={{
+        access_token: access_token,
+        refresh_token: refresh_token
+      }}/>
+
+  } else if (page === 1) {
+    render =
+      <FeedPage auth={{
+        access_token: access_token,
+        refresh_token: refresh_token
+      }}/>
+
+  } else if (page === 2) {
+    render = <DiscoverPage auth={{
+        access_token: access_token,
+        refresh_token: refresh_token
+      }}/>
+
+  } else if (page === 3) {
+    render = <GroupPage auth={{
+      access_token: access_token,
+      refresh_token: refresh_token
+    }}/>
+
+  } else if (page === 4) {
+    render = <ProfilePage auth={{
+      access_token: access_token,
+      refresh_token: refresh_token
+    }}/>
+  }
+
+  console.log(render)
+
+  return render;
 }
 
-export default App
+export default App;
