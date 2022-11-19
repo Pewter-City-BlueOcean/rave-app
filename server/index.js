@@ -5,7 +5,7 @@ const path = require("path");
 const express = require('express');
 
 const spotifyAuth = require("./routes/spotifyAuth.js");
-const sgAuth = require("./routes/sgAuth.js");
+const sgAuth = require("./routes/sg.js");
 
 const cookieParser = require('./middleware/cookieParser.js');
 const app = express();
@@ -17,8 +17,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true} ));
 
 app.use(cookieParser);
-app.use('/spotifyAuth', spotifyAuth);
-app.use('/sgAuth', sgAuth);
+app.use('/spotify/auth', spotifyAuth);
+app.use('/sg', sgAuth);
 
 app.use(express.static(path.join(__dirname, '../client/public/dist')));
 

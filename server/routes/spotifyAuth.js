@@ -6,12 +6,11 @@ const router = express.Router();
 /************************************************************
 *************ENVIRONMENT VARIABLES AND CONSTANTS*************
 *************************************************************/
-const CLIENT_ID = process.env.CLIENT_ID;
-const SPOTIFY_REDIRECT_URI = process.env.SPOTIFY_REDIRECT_URI;
-const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
+const REDIRECT_URI = process.env.SPOTIFY_REDIRECT_URI;
+const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
 const CLIENT_HOME_URL = process.env.CLIENT_HOME_URL;
 const STATE_KEY = 'spotify_auth_state';
-const SPOTIFY_BASE = 'https://api.spotify.com/v1/';
 const SPOTIFY_AUTH = 'https://accounts.spotify.com/authorize';
 
 // Scope of permissions being asked of user
@@ -42,6 +41,10 @@ const SCOPES = [
   return text;
 };
 
+/************************************************************
+***************************ROUTES****************************
+*************************************************************/
+
 
 /**
  * Endpoint for logging in.  Redirects to Spotify's auth page.
@@ -62,10 +65,10 @@ router.get('/login', (req, res) => {
       response_type: 'code',
       client_id: CLIENT_ID,
       scope: scopeParam,
-      redirect_uri: SPOTIFY_REDIRECT_URI,
+      redirect_uri: REDIRECT_URI,
       state: state,
       show_dialog: true,
-    }).toString()
+    })
   );
 });
 
@@ -84,7 +87,7 @@ router.get('/callback', (req, res) => {
     res.redirect(`${CLIENT_HOME_URL}?` +
       new URLSearchParams({
         error: 'state_mismatch'
-      }).toString()
+      })
     );
   } else {
 
@@ -92,9 +95,9 @@ router.get('/callback', (req, res) => {
 
     var authOptions = new URLSearchParams({
       code: code,
-      redirect_uri: SPOTIFY_REDIRECT_URI,
+      redirect_uri: REDIRECT_URI,
       'grant_type':'authorization_code'
-    }).toString()
+    })
 
     const headers = {
       headers: {
@@ -120,7 +123,7 @@ router.get('/callback', (req, res) => {
           res.redirect(`${CLIENT_HOME_URL}?` +
             new URLSearchParams({
               error: 'invalid_token'
-            }).toString());
+            }));
         }
       })
       .catch((error) => {
@@ -128,7 +131,7 @@ router.get('/callback', (req, res) => {
         res.redirect(`${CLIENT_HOME_URL}?` +
           new URLSearchParams({
             error: 'interal_server_error'
-          }).toString());
+          }));
       });
   }
 });
@@ -146,7 +149,7 @@ router.get('/refresh_token', function(req, res) {
       grant_type: 'refresh_token',
       refresh_token: refresh_token
     },
-  }).toString();
+  });
 
   const headers = {
     headers: {
@@ -170,7 +173,7 @@ router.get('/refresh_token', function(req, res) {
       res.redirect(`${CLIENT_HOME_URL}?` +
         new URLSearchParams({
           error: 'interal_server_error'
-        }).toString());
+        }));
     });
 });
 
