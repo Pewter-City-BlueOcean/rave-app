@@ -1,7 +1,6 @@
 require("dotenv").config();
 const axios = require('axios');
 const path = require("path");
-const cors = require("cors");
 
 const express = require('express');
 
@@ -17,7 +16,6 @@ const SERVER_ADDR = process.env.SERVER_ADDR;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true} ));
 
-app.use(cors());
 app.use(cookieParser);
 app.use('/spotifyAuth', spotifyAuth);
 app.use('/sgAuth', sgAuth);
