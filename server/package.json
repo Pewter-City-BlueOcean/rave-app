@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "prestart-server": "node database/postgresDB.js",
     "start-server": "nodemon ./index.js"
   },
   "keywords": [],

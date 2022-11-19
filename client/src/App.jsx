@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react';
 
 import LandingPage from './pages/LandingPage.jsx';
 import FeedPage from './pages/LandingPage.jsx';
