@@ -3,16 +3,11 @@ import React from 'react';
 
 const LandingPage = () => {
 
-  const handleLoginClick = () => {
-    axios.get('/spotifyAuth/login');
-  }
-
-
   return (
-    <div onClick={() => {
-      handleLoginClick();
-    }}>
-      Log In With Spotify
+    <div>
+      <a href='http://localhost:8080/spotifyAuth/login'>
+        Log In With Spotify
+      </a>
     </div>
   )
 }
