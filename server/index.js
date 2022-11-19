@@ -22,6 +22,10 @@ app.use('/sg', sgAuth);
 
 app.use(express.static(path.join(__dirname, '../client/public/dist')));
 
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname,'../client/public/dist/index.html'));
+});
+
 app.listen(PORT, () => {
   console.log(`listening at ${SERVER_ADDR}:${PORT}`);
 })

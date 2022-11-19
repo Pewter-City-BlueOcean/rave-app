@@ -5,7 +5,7 @@ const LandingPage = () => {
 
   return (
     <div>
-      <a href='http://localhost:8080/spotifyAuth/login'>
+      <a href='http://localhost:8080/spotify/auth/login'>
         Log In With Spotify
       </a>
     </div>

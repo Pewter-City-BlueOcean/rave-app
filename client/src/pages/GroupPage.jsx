@@ -1,7 +1,8 @@
 import React from 'react';
 
-const FeedPage = () => {
+const GroupPage = () => {
+
   return (<div>A</div>)
 }
 
-export default FeedPage;
+export default GroupPage;
