@@ -8,6 +8,7 @@ import GroupPage from './pages/GroupPage.jsx';
 import ProfilePage from './pages/ProfilePage.jsx';
 
 import Layout from './components/Layout.jsx';
+import Background from './components/Background.jsx';
 
 const App = () => {
   const params = new URLSearchParams(window.location.search);
@@ -17,6 +18,7 @@ const App = () => {
   const [refresh_token, setRefresh_token] = useState(params.get('refresh_token'));
 
   return (
+      <div>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<LandingPage />} />
@@ -26,6 +28,8 @@ const App = () => {
           <Route path="me" element={<ProfilePage />} />
         </Route>
       </Routes>
+      <Background />
+    </div>
   );
 }
 
