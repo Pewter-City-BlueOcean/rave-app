@@ -27,11 +27,13 @@ const Login = styled.button`
   }
 `;
 
+const player = new Audio('/assets/egg.mp3')
 const LandingPage = () => {
 
   return (
     <Div>
-      <Login onClick={() => {window.location.href='http://localhost:8080/spotify/auth/login'}}>
+      <Login onClick={() => {window.location.href='http://localhost:8080/spotify/auth/login'}}
+        onMouseEnter={() => { player.play(); }>
         Log In With Spotify
       </Login>
       <Login onClick={() => {window.location.href='https://www.spotify.com/us/signup'}}>
