@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import { MantineProvider, Tabs } from '@mantine/core';
+import moment from 'moment';
 
 const Outer = styled.div`
   display: flex;
@@ -13,20 +14,61 @@ const Profile = styled.div`
 `;
 
 const About = styled.div`
+  display: flex;
+  flex-direction: row;
   width: 70vh;
   background: rgba(0, 0, 0, 0.5);
   margin: 5px;
   border-radius: 10px;
+  color: white;
+  padding: 2vh;
 `;
+const ProfileImage = styled.img`
+  border-radius: 50%;
+  width: 40%;
+`;
+const AboutMe = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 60%;
+`;
+const PAbout = styled.p`
+  margin: 1px;
+`;
+
 
 const Sidebar = styled.div`
   width: 30vh;
+  flex-direction: column;
   background: rgba(0, 0, 0, 0.5);
   margin: 5px;
   border-radius: 10px;
+  color: white;
 `;
 
+const Events = styled.div`
+
+`;
+
+const Notifications = styled.div`
+
+`;
+
+const SidebarTitles = styled.h4`
+
+`
+
 const ProfilePage = () => {
+
+  const [notifications, setNotifications] = useState([{title: 'EventName', date: Date.now()}]);
+  const [upcomingEvents, setUpcomingEvents] = useState([{title: 'EventName', date: Date.now()}]);
+  const [pastEvents, setPastEvents] = useState([{title: 'EventName', date: Date.now()}]);
+
+  const [profileImage, setProfileImage] = useState('https://lexica-serve-encoded-images.sharif.workers.dev/sm/13d675a7-b651-40c4-ba45-7fc268db5ba4');
+
+  const [user, setUser] = useState(exampleUser);
+
 
   return (
   <Outer>
@@ -34,24 +76,43 @@ const ProfilePage = () => {
       <MantineProvider theme={{colorScheme: 'dark'}}>
 
       <About>
-        {/* Insert About here */}
+        <ProfileImage src={user.photo} />
+        <AboutMe>
+          <h4>{user.username}</h4>
+          <PAbout>{user.bio}</PAbout>
+          <PAbout>Location: {user.location}</PAbout>
+          <PAbout>Age: {user.age}</PAbout>
+          <PAbout>motto: {user.motto}</PAbout>
+        </AboutMe>
       </About>
       <Sidebar>
-        <Tabs color="dark" radius="md" defaultValue="Upcoming">
-        <Tabs.List>
-          <Tabs.Tab value="Upcoming" >Upcoming</Tabs.Tab>
-          <Tabs.Tab value="Past" >Past</Tabs.Tab>
-        </Tabs.List>
+        <Events>
+          <SidebarTitles>Events</SidebarTitles>
+          <Tabs color="dark" radius="md" defaultValue="Upcoming">
+          <Tabs.List>
+            <Tabs.Tab value="Upcoming" >Upcoming</Tabs.Tab>
+            <Tabs.Tab value="Past" >Past</Tabs.Tab>
+          </Tabs.List>
 
-        <Tabs.Panel value="Upcoming" pt="xs">
-          Gallery tab content
-        </Tabs.Panel>
+          <Tabs.Panel value="Upcoming" pt="xs">
+            {upcomingEvents.map((event, index) => (
+              <p>{event.title} is {getDate(event.date)} </p>
+              ))
+            }
+          </Tabs.Panel>
 
-        <Tabs.Panel value="Past" pt="xs">
-          Messages tab content
-        </Tabs.Panel>
+          <Tabs.Panel value="Past" pt="xs">
+            {pastEvents.map((event, index) => (
+              <p>{event.title} is {getDate(event.date)} </p>
+              ))
+            }
+          </Tabs.Panel>
+          </Tabs>
+        </Events>
+        <Notifications>
+          <SidebarTitles>Notifications</SidebarTitles>
 
-        </Tabs>
+        </Notifications>
       </Sidebar>
     </MantineProvider>
     </Profile>
@@ -59,4 +120,25 @@ const ProfilePage = () => {
   )
 }
 
+const getDate = (date) => {
+  let currentDate = new Date()
+  date = new Date(date);
+  currentDate = currentDate.setHours(0, 0, 0, 0);
+  date = date.setHours(0, 0, 0, 0);
+  return currentDate - date === 0 ? 'Today' : moment(date).toNow();
+}
+
+
+const exampleUser = {
+  id: 123,
+  email: "hello@okay.com",
+  bio: "I'm a raving raver",
+  location: 'Dallas',
+  age:"a bad age",
+  motto: 'rave Rave RAAAAAVE',
+  username: 'RVR4EVR',
+  photo: 'https://lexica-serve-encoded-images.sharif.workers.dev/sm/13d675a7-b651-40c4-ba45-7fc268db5ba4',
+  spotify_username: 'thatsit2001',
+  playlist_id:'none'
+};
 export default ProfilePage;
