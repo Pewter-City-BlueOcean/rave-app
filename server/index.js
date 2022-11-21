@@ -20,7 +20,12 @@ app.use(cookieParser);
 app.use('/spotify/auth', spotifyAuth);
 app.use('/sg', sgAuth);
 
+
 app.use(express.static(path.join(__dirname, '../client/dist')));
+
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, "../client/dist", 'index.html'));
+  });
 
 app.listen(PORT, () => {
   console.log(`listening at ${SERVER_ADDR}:${PORT}`);
