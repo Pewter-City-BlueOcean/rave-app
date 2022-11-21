@@ -1,3 +1,8 @@
+DROP TABLE IF EXISTS members;
+DROP TABLE IF EXISTS messages;
+DROP TABLE IF EXISTS individuals;
+DROP TABLE IF EXISTS groups;
+
 CREATE TABLE IF NOT EXISTS individuals (
   individual_id int NOT NULL PRIMARY KEY,
   email varchar(55) NOT NULL,
@@ -18,7 +23,8 @@ CREATE TABLE IF NOT EXISTS groups (
   postal_code int,
   location_latitude decimal,
   location_longitude decimal,
-  notification boolean DEFAULT false,
+  notification int DEFAULT 0,
+  created_by_individual_id int NOT NULL,
   date_added_to_db timestamp default CURRENT_TIMESTAMP
 );
 
