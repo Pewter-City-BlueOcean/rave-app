@@ -140,15 +140,13 @@ router.get('/callback', (req, res) => {
 /**
  * Endpoint for refreshing access token.
  */
-router.get('/refresh_token', function(req, res) {
+router.get('/refresh/:refresh_token', function(req, res) {
 
-  const refresh_token = req.query.refresh_token;
+  const refresh_token = req.params.refresh_token;
 
   const authOptions = new URLSearchParams({
-    form: {
-      grant_type: 'refresh_token',
-      refresh_token: refresh_token
-    },
+    grant_type: 'refresh_token',
+    refresh_token: refresh_token
   });
 
   const headers = {
@@ -160,7 +158,8 @@ router.get('/refresh_token', function(req, res) {
   axios.post('https://accounts.spotify.com/api/token', authOptions, headers)
     .then(response => {
       if (response.status === 200) {
-        const access_token = body.access_token;
+        console.log(response)
+        const access_token = response.data.access_token;
         res.send({
           'access_token': access_token
         });
