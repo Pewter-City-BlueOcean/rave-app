@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
-import { MantineProvider, Tabs } from '@mantine/core';
+import {Modal, MantineProvider, Tabs, ActionIcon } from '@mantine/core';
 import moment from 'moment';
+import EditUser from './EditUser.jsx';
 
 const Outer = styled.div`
   display: flex;
@@ -26,7 +27,9 @@ const About = styled.div`
 const ProfileImage = styled.img`
   border-radius: 50%;
   width: 40%;
+
 `;
+
 const AboutMe = styled.div`
   display: flex;
   justify-content: center;
@@ -48,15 +51,12 @@ const Sidebar = styled.div`
 `;
 
 const Events = styled.div`
-
 `;
 
 const Notifications = styled.div`
-
 `;
 
 const SidebarTitles = styled.h4`
-
 `
 
 const ProfilePage = () => {
@@ -65,18 +65,22 @@ const ProfilePage = () => {
   const [upcomingEvents, setUpcomingEvents] = useState([{title: 'EventName', date: Date.now()}]);
   const [pastEvents, setPastEvents] = useState([{title: 'EventName', date: Date.now()}]);
 
-  const [profileImage, setProfileImage] = useState('https://lexica-serve-encoded-images.sharif.workers.dev/sm/13d675a7-b651-40c4-ba45-7fc268db5ba4');
-
   const [user, setUser] = useState(exampleUser);
+  const isOwner = true;
+  const [profileImage, setProfileImage] = useState(user.photo);
 
+  const [opened, setOpened] = useState(false);
+
+  const EditIcon = (<ActionIcon size="lg" onClick={() => {setOpened(true)}}><img style={{width: '20px'}}src='https://cdn-icons-png.flaticon.com/512/1828/1828911.png'/></ActionIcon>);
 
   return (
   <Outer>
     <Profile>
       <MantineProvider theme={{colorScheme: 'dark'}}>
-
       <About>
-        <ProfileImage src={user.photo} />
+        <EditUser user={user} setUser={setUser} opened={opened} setOpened={setOpened} />
+        <ProfileImage src={profileImage}/>
+        {isOwner ? EditIcon : null}
         <AboutMe>
           <h4>{user.username}</h4>
           <PAbout>{user.bio}</PAbout>
@@ -96,14 +100,14 @@ const ProfilePage = () => {
 
           <Tabs.Panel value="Upcoming" pt="xs">
             {upcomingEvents.map((event, index) => (
-              <p>{event.title} is {getDate(event.date)} </p>
+              <p key={index} >{event.title} is {getDate(event.date)} </p>
               ))
             }
           </Tabs.Panel>
 
           <Tabs.Panel value="Past" pt="xs">
             {pastEvents.map((event, index) => (
-              <p>{event.title} is {getDate(event.date)} </p>
+              <p key={index} >{event.title} is {getDate(event.date)} </p>
               ))
             }
           </Tabs.Panel>
@@ -127,7 +131,6 @@ const getDate = (date) => {
   date = date.setHours(0, 0, 0, 0);
   return currentDate - date === 0 ? 'Today' : moment(date).toNow();
 }
-
 
 const exampleUser = {
   id: 123,
