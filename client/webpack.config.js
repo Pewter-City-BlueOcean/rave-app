@@ -27,13 +27,14 @@ module.exports = {
         ]
       }
     ]
-  }
-  // plugins: [
-  //   new webpack.DefinePlugin({
-  //     "process.env": {
-  //       SERVER_ADDR: JSON.stringify(process.env.SERVER_ADDR),
-  //       PORT: JSON.stringify(process.env.PORT)
-  //     },
-  //   }),
-  // ],
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      "process.env": {
+        SERVER_ADDR: JSON.stringify(process.env.SERVER_ADDR),
+        PORT: JSON.stringify(process.env.PORT)
+      },
+    }),
+  ],
+
 };
