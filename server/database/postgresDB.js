@@ -8,3 +8,5 @@ const pool = new Pool({
   password: process.env.POSTGRESQL_PASSWORD,
   port: process.env.POSTGRESQL_PORT
 })
+
+module.exports = pool;
