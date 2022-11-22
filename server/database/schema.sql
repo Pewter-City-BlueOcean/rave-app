@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS groups (
   group_id int NOT NULL PRIMARY KEY,
   event_title varchar (255) NOT NULL,
   datetime_local timestamp NOT NULL,
-  performers text ARRAY,
+  performers json ARRAY,
   city varchar (255) NOT NULL,
   country varchar (255) NOT NULL,
   state varchar (50),
