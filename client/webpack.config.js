@@ -1,4 +1,6 @@
 var path = require('path');
+const webpack = require("webpack");
+require("dotenv").config({ path: __dirname + '/../server/.env' });
 
 module.exports = {
   entry: path.join(__dirname, "/src/index.jsx"),
@@ -25,5 +27,14 @@ module.exports = {
         ]
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      "process.env": {
+        SERVER_ADDR: JSON.stringify(process.env.SERVER_ADDR),
+        PORT: JSON.stringify(process.env.PORT)
+      },
+    }),
+  ],
+
 };
