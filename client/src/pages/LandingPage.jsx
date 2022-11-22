@@ -1,7 +1,8 @@
 import axios from 'axios';
 import React from 'react';
 
-const player = new Audio('/assets/egg.mp3')
+const player = new Audio('/assets/egg.mp3');
+player.volume = 0.5;
 const LandingPage = () => {
 
   return (
