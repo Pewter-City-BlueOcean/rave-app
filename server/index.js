@@ -28,7 +28,8 @@ app.get('/db/groups', getGroups);
 
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, "../client/dist", 'index.html'));
+});
 
 app.listen(PORT, () => {
   console.log(`listening at ${SERVER_ADDR}:${PORT}`);
-})
+});

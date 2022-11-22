@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import styled from 'styled-components';
 import {Modal, MantineProvider, Tabs, ActionIcon } from '@mantine/core';
 import moment from 'moment';
-import EditUser from './EditUser.jsx';
+import EditUser from '../components/EditUser.jsx';
 
 const Outer = styled.div`
   display: flex;
@@ -12,6 +12,7 @@ const Outer = styled.div`
 const Profile = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: center;
 `;
 
 const About = styled.div`
@@ -20,7 +21,7 @@ const About = styled.div`
   width: 70vh;
   background: rgba(0, 0, 0, 0.5);
   margin: 5px;
-  border-radius: 10px;
+  border-radius: 5px;
   color: white;
   padding: 2vh;
 `;
@@ -46,7 +47,7 @@ const Sidebar = styled.div`
   flex-direction: column;
   background: rgba(0, 0, 0, 0.5);
   margin: 5px;
-  border-radius: 10px;
+  border-radius: 5px;
   color: white;
 `;
 
