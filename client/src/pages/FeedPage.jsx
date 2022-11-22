@@ -3,7 +3,7 @@ const { useState, useEffect } = React;
 import axios from 'axios';
 import EventCard from "../components/Feed/EventCard.jsx";
 import NotificationList from "../components/Notifications/NotificationList.jsx";
-import groups from '../components/data/group_data.js'
+import groupsData from '../components/data/group_data.js'
 import {getDaysFromToday} from '../helpers/time_helpers.js'
 import styled from 'styled-components';
 
@@ -20,8 +20,7 @@ const CardContainer = styled.div`
   justify-content: flex-start;
   flex-wrap: wrap;
   width: 1000px;
-  height: 350px;
-  border: dotted;
+  height: 400px;
   overflow: auto;
 `
 const GroupsContainer = styled.div`
@@ -30,7 +29,7 @@ const GroupsContainer = styled.div`
   width: 1000px;
   height: 800px;
   background: rgba(0, 0, 0, 0.46);
-  opacity: 0.8;
+  // opacity: 0.8;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
 `
@@ -38,10 +37,10 @@ const NotifSection = styled.div`
   display: flex;
   flex-direction: column;
   width: 300px;
-  background: rgba(0, 0, 0, 0.46);
-  opacity: 0.8;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 5px;
+  // background: rgba(0, 0, 0, 0.46);
+  // opacity: 0.8;
+  // box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  // border-radius: 5px;
 `
 const H3 = styled.h3`
   font-size: 20px;
@@ -49,30 +48,29 @@ const H3 = styled.h3`
 `
 
 const FeedPage = () => {
-  const [groupsData, setGroupsData] = useState(groups)
+  const [groups, setGroups] = useState(groupsData);
   const [upcoming, setUpcoming] = useState([]);
   const [past, setPast] = useState([]);
 
   const getGroups = () => {
     const config = {
       params: {
-        user_id: 23781
+        user_id: 12345
       }
     };
 
     const divideGroups = (g) => {
-      g.map((group) => {
+      g.forEach((group) => {
         var isPast = (getDaysFromToday(group.datetime_local) < 0);
         isPast ? setPast( past => [...past, group]) : setUpcoming(upcoming => [...upcoming, group])
-        // console.log('data', upcoming, past )
-      })
-
+      }
+      )
     }
 
     axios.get(`${process.env.SERVER_ADDR}:${process.env.PORT}/db/groups`, config)
       .then((res) => {
         console.log('Got the groups', res.data);
-        divideGroups(groupsData);
+        divideGroups(res.data);
       })
       .catch(e => console.error(e));
   }
@@ -99,7 +97,7 @@ const FeedPage = () => {
         </CardContainer>
       </GroupsContainer>
       <NotifSection>
-        <NotificationList />
+        <NotificationList groups={ groups }/>
       </NotifSection>
     </Body>
   )
