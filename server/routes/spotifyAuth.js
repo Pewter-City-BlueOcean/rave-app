@@ -112,7 +112,7 @@ router.get('/callback', (req, res) => {
           const access_token = response.data.access_token;
           const refresh_token = response.data.refresh_token;
 
-          res.redirect(`${CLIENT_HOME_URL}?` +
+          res.redirect(`${CLIENT_HOME_URL}feed?` +
             new URLSearchParams({
               access_token: access_token,
               refresh_token: refresh_token

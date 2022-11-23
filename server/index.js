@@ -24,8 +24,6 @@ app.use(cookieParser);
 app.use('/spotify/auth', spotifyAuth);
 app.use('/spotify/', spotify);
 app.use('/sg', sgAuth);
-app.use('/playback', webPlayback);
-
 
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
