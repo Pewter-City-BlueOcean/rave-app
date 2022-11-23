@@ -55,11 +55,13 @@ const DiscoverPage = () => {
       <div>
         <SearchForm searchButtonHandler={searchButtonHandler} />
       </div>
-      <Grid justify='space-around' align='stretch' style={{paddingLeft: '230px', paddingRight: '100px'}} >
-        {events.map((event, index)=> {
-          return <EventCard key={index} event={event}/>
-        })}
-      </Grid>
+      <div style={{ justifyContent: 'spaced-evenly' }}>
+        <Grid justify='pace-around'>
+          {events.map((event, index)=> {
+            return <EventCard key={index} event={event}/>
+          })}
+        </Grid>
+      </div>
     </div>
   )
 }
