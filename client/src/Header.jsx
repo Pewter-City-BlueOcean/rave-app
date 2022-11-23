@@ -26,7 +26,12 @@ const Title = styled.nav`
 
 `
 
-const Header = () => {
+const Header = ({access_token, refresh_token}) => {
+
+  const params = new URLSearchParams({
+    access_token: access_token,
+    refresh_token: refresh_token,
+  })
 
   return (
     <div>
@@ -35,11 +40,11 @@ const Header = () => {
       </Title>
       <div>
         <Nav>
-          <Link to="/feed" style={{ textDecoration: 'none' }}><H2>home</H2></Link>
+          <Link to={`/feed?${params}`} style={{ textDecoration: 'none' }}><H2>home</H2></Link>
           <H2> | </H2>
-          <Link to="/discover" style={{ textDecoration: 'none' }}><H2>discover</H2></Link>
+          <Link to={`/discover?${params}`} style={{ textDecoration: 'none' }}><H2>discover</H2></Link>
           <H2> | </H2>
-          <Link to="/me" style={{ textDecoration: 'none' }}><H2>profile</H2></Link>
+          <Link to={`/me?${params}`} style={{ textDecoration: 'none' }}><H2>profile</H2></Link>
         </Nav>
       </div>
     </div>
