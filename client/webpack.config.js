@@ -32,7 +32,8 @@ module.exports = {
     new webpack.DefinePlugin({
       "process.env": {
         SERVER_ADDR: JSON.stringify(process.env.SERVER_ADDR),
-        PORT: JSON.stringify(process.env.PORT)
+        PORT: JSON.stringify(process.env.PORT),
+        MAPS_API_KEY: JSON.stringify(process.env.MAPS_API_KEY),
       },
     }),
   ],
