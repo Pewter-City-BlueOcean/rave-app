@@ -62,16 +62,6 @@ const DiscoverPage = () => {
           })}
         </Grid>
       </div>
-<<<<<<< Updated upstream
-=======
-      <div style={{ justifyContent: 'spaced-evenly' }}>
-        <Grid justify='pace-around'>
-          {events.map((event, index)=> {
-            return <EventCard key={index} event={event}/>
-          })}
-        </Grid>
-      </div>
->>>>>>> Stashed changes
     </div>
   )
 }
