@@ -10,7 +10,7 @@ const { getGroups } = require("./database/controllers/groupController");
 const { updateIndividual, getIndividual } = require("./database/controllers/individualsController");
 
 const spotify = require('./routes/spotify.js');
-const webPlayback = require('./routes/webPlayback.js');
+//const webPlayback = require('./routes/webPlayback.js');
 
 const cookieParser = require('./middleware/cookieParser.js');
 const app = express();
