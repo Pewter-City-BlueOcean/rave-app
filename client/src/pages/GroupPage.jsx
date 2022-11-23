@@ -15,7 +15,6 @@ const GroupPage = () => {
       <ConcertInfo groupId={groupId} />
     </div>
     <div>Music Player</div>
-
   </div>
 
   )

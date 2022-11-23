@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { Card, Image, Text, Badge, Button, Group, Input, Title } from '@mantine/core';
+import { useNavigate } from "react-router-dom";
 
-const Card = styled.div`
-  width: 150px;
-  height: 150px;
-  margin: 25px;
-  background: #000000;
-  opacity: 0.8;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 5px;
+const Wrapper = styled.div`
+
+
 `
 const H4 = styled.h4`
   font-size: 20px;
@@ -17,16 +14,40 @@ const H4 = styled.h4`
 
 const EventCard = ({event}) => {
 
-  const handleClick = () => {
-    alert(event.event_title);
+  let navigate = useNavigate();
+  const routeChange = () => {
+    let path = '/group';
+    navigate(path);
   }
 
   return (
-    <div>
-      <Card onClick={(e) => handleClick()}>
-        <H4>{event.event_title}</H4>
-      </Card>
-    </div>
+    <Wrapper onClick={(e)=> routeChange()}>
+      <Card shadow="sm" p="lg" radius="md" withBorder style={{width: '250px', opacity: 0.75, margin:'40 px'} } >
+          <Card.Section component="a">
+            <Image
+              src={event.performers[0].image_url}
+              height={160}
+              alt="Norway"
+            />
+          </Card.Section>
+
+          <Group position="center" mt="md" mb="xs" >
+            <Text weight={500} >{event.event_title}</Text>
+          </Group>
+
+          <Text weight={350} size="sm" >
+            Artist: {event.performers.map((artist, i) => `${artist.name}${i < event.performers.length - 1 ? ', ' :'' }`)}
+          </Text>
+
+          <Text weight={350} size="sm" >
+            Location: {event.city}
+          </Text>
+
+          <Text weight={350} size="sm" >
+          Date: {new Date(event.datetime_local).toDateString()}
+          </Text>
+        </Card>
+    </Wrapper>
   )
 }
 
