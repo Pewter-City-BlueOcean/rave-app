@@ -16,10 +16,21 @@ const EditUser = ({opened, setOpened, user, setUser}) => {
     const user = {
       username, location, motto, bio
     };
-    if (filename) {
-      user.photo = filename;
-    }
     setOpened(false);
+    console.log(user);
+    const formData = new FormData();
+    formData.append('username', user.username);
+    formData.append('location', user.location);
+    formData.append('motto', user.motto);
+    formData.append('bio', user.bio);
+    if (filename) {
+      const photo = filename;
+      formData.append('photo', photo);
+    }
+
+    axios.post(`${process.env.SERVER_ADDR}:${process.env.PORT}/db/individuals`, formData, config).then(result => {
+      console.log(result);
+    })
   };
 
   const handleFileChange = (e) => {
@@ -85,6 +96,12 @@ const EditUser = ({opened, setOpened, user, setUser}) => {
         <Button type="submit" onClick={handleSubmitForm}>Submit</Button>
     </Modal>
   )
+}
+
+const config = {
+  headers: {
+    "Content-Type": "multipart/form-data",
+  },
 }
 
 export default EditUser;

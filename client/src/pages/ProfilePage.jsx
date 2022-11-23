@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {Modal, MantineProvider, Tabs, ActionIcon } from '@mantine/core';
 import moment from 'moment';
 import EditUser from '../components/EditUser.jsx';
+import NotificationList from '../components/Notifications/NotificationList.jsx';
 
 const Outer = styled.div`
   display: flex;
@@ -115,8 +116,7 @@ const ProfilePage = () => {
           </Tabs>
         </Events>
         <Notifications>
-          <SidebarTitles>Notifications</SidebarTitles>
-
+          <NotificationList />
         </Notifications>
       </Sidebar>
     </MantineProvider>
