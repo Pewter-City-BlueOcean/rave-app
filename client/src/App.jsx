@@ -27,30 +27,31 @@ const App = () => {
    *
    * @param {*} new_token - Our new access_token
    */
-  const refreshCb = (new_token) => {
-    setAccess_token(new_token);
+  const handlers = {
+    setAccess_token: () => {
+      setAccess_token(new_token);
+    }
   }
 
-  // /**
-  //  * Upon receiving an access_token, we will get user from Spotify
-  //  */
-  // useEffect(() => {
-  //   // Check that we have just logged in
-  //   if (!user && access_token) {
+  useEffect(() => {
+    if (!user && access_token) {
+      const getUsername = async () => {
+        const username = await spotify.whoAmI(access_token, refresh_token, handlers.setAccess_token);
 
-  //     // Ask spotify who I am and store to state
-  //     const whoAmI = async () => {
-  //       const me = await spotify.whoAmI(access_token, refresh_token, refreshCb);
-  //       setUser(me);
-  //     }
+        return username;
+      }
 
-  //   }
+      /**
+       * Get username for table lookup id
+       */
+      getUsername()
+        .then((username) => {
+          //console.log(username);
+        })
 
-  // }, [access_token]);
+    }
+  }, [access_token])
 
-  /**
-   * Our render - if we have an access token, then we can move on from login, otherwise we show landing page.
-   */
   return access_token ? (
     <div>
       <Routes>
