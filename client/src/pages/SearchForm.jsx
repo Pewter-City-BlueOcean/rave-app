@@ -1,11 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {Button} from '@mantine/core';
 import axios from 'axios';
-// import router from '../../../server/routes/sg.js';
 
-
-
-export const SearchForm = ({setEvents}) => {
+export const SearchForm = ({setEvents, events}) => {
   let state = useRef('');
   let city = useRef('');
   let eventArtistSearchTerm = useRef('');
@@ -13,7 +10,6 @@ export const SearchForm = ({setEvents}) => {
   let minPrice = useRef('');
 
   const searchButtonHandler = () => {
-
     let dataToSend = {
       state: state.current.value,
       city: city.current.value,
@@ -21,7 +17,7 @@ export const SearchForm = ({setEvents}) => {
       minPrice: minPrice.current.value,
       maxPrice: maxPrice.current.value
     }
-    axios.get('/sg/events', (dataToSend))
+    axios.get('/sg/events')
     .then((data) => {
       setEvents(data.data)
     })
@@ -58,12 +54,5 @@ export const SearchForm = ({setEvents}) => {
         <Button variant="gradient" gradient={{ from: 'orange', to: 'red' }} size='lg' onClick={searchButtonHandler}>Search</Button>
       </div>
     </div>
-
   )
 }
-
-{/* <Input variant="filled" placeholder="...Event" style={{width: '205px', displayType: 'flex', opacity: '.6' }}/> */}
-
-{/* <div style={{ paddingBottom: '50px' }}>
-<Button variant="gradient" gradient={{ from: 'orange', to: 'red' }} size='lg'>Search</Button>
-</div> */}
