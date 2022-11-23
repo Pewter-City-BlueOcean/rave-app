@@ -6,7 +6,7 @@ import { FaInfo } from 'react-icons/fa';
 import axios from 'axios';
 
 const DiscoverPage = () => {
-
+  let individual_id = 'thatsit2001';
   const [events, setEvents] = useState([])
 
   const searchButtonHandler = (dataToSend) => {
@@ -57,7 +57,7 @@ const DiscoverPage = () => {
       </div>
       <Grid justify='space-around' align='stretch' style={{paddingLeft: '230px', paddingRight: '100px'}} >
         {events.map((event, index)=> {
-          return <EventCard key={index} event={event}/>
+          return <EventCard key={index} event={event} individual_id={individual_id} searchButtonHandler={searchButtonHandler}/>
         })}
       </Grid>
     </div>

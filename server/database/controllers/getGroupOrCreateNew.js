@@ -30,4 +30,9 @@ const getGroupOrCreateNewFunc = (individual_id, objEventData) => {
   })
 }
 
-module.exports = getGroupOrCreateNewFunc
+const getFullMembersTable = (groupsArray) => {
+  return pool.query(`SELECT * FROM members WHERE group_id IN (${groupsArray.join(',')})`)
+}
+
+module.exports.getGroupOrCreateNewFunc = getGroupOrCreateNewFunc;
+module.exports.getFullMembersTable = getFullMembersTable;
