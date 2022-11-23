@@ -28,11 +28,14 @@ const App = () => {
    * @param {*} new_token - Our new access_token
    */
   const handlers = {
-    setAccess_token: () => {
+    setAccess_token: (new_token) => {
       setAccess_token(new_token);
     }
   }
 
+  /**
+   * Get username upon sign-in and use to retrieve user id from database
+   */
   useEffect(() => {
     if (!user && access_token) {
       const getUsername = async () => {
