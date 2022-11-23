@@ -1,16 +1,15 @@
 const pool = require('../postgresDB.js');
 
 const getGroupOrCreateNewFunc = (individual_id, objEventData) => {
-
   return pool.query('SELECT * FROM groups WHERE group_id = $1', [objEventData.group_id])
   .catch(()=>( 'DATABASE ERROR SELECTING'))
   .then((res)=> {
     if (res.rowCount === 0) {
-      return pool.query('INSERT INTO groups (group_id, event_title,datetime_local,performers,city,country,state,postal_code,location_latitude,location_longitude,created_by_individual_id) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING group_id', [objEventData.group_id, objEventData.event_title, objEventData.datetime_local,objEventData.performers,objEventData.city,objEventData.country,objEventData.state,objEventData.postal_code,objEventData.location_latitude,objEventData.location_longitude,individual_id])
+      return pool.query('INSERT INTO groups (group_id,event_title,datetime_local,performers,city,country,state,address,extended_address,postal_code,location_latitude,location_longitude,created_by_individual_id,average_price) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14) RETURNING group_id', [objEventData.group_id, objEventData.event_title, objEventData.datetime_local,objEventData.performers,objEventData.city,objEventData.country,objEventData.state,objEventData.address,objEventData.extended_address,objEventData.postal_code,objEventData.location_latitude,objEventData.location_longitude,individual_id,objEventData.average_price])
       .then((val)=>{
         return pool.query('INSERT INTO members VALUES ($1, $2)', [individual_id, val.rows[0].group_id])
         .then(()=>{return 'CREATED NEW GROUP'})
-        .catch(()=>{return 'NEED GROUP NEEDED BUT ERROR CREATING'})
+        .catch(()=>{return 'CREATED NEW GROUP BUT FAILED TO ADD MEMBER TO IT'})
       })
       .catch((err)=>{
         return 'NEED GROUP NEEDED BUT ERROR CREATING';
