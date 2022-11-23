@@ -65,19 +65,19 @@ const EditUser = ({opened, setOpened, user, setUser}) => {
         placeholder={user.location}
         label="Location"
         onChange={handleLocation}
-        value={location}
+        value={user.location}
         />
       <TextInput
         placeholder={user.motto}
         label="motto"
         onChange={handleMotto}
-        value={motto}
+        value={user.motto}
         />
       <Textarea
         placeholder={user.bio}
         label="Your Bio"
         onChange={handleBio}
-        value={bio}
+        value={user.bio}
         />
         <Button type="submit" onClick={handleSubmitForm}>Submit</Button>
     </Modal>

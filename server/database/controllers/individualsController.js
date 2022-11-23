@@ -9,7 +9,7 @@ const updateIndividual = (req, res) => {
     const file = req.files.photo;
     // let fileExtension = req.files.photo.name.split('.')[1];
     const filename = req.body.individual_id + path.extname(req.files.photo.name);
-    const directory = path.join(__dirname, '../..', '/uploads/images/', filename);
+    const directory = path.join(__dirname, '../../..', 'client/dist/uploads/images/', filename);
     fs.open(directory, 'w+').then(() => {
       return fs.truncate(directory, 0).then(() => {
         return fs.writeFile(directory, file.data).catch(err => {
@@ -20,6 +20,7 @@ const updateIndividual = (req, res) => {
       })
     })
     const params = [req.body.individual_id, req.body.location, req.body.motto, req.body.bio, `uploads/images/${filename}`];
+    console.log(params);
     const query = `
       UPDATE individuals
       SET individual_id = $1,
@@ -30,6 +31,9 @@ const updateIndividual = (req, res) => {
       WHERE individual_id = $1
       RETURNING *;
     `;
+    return pool.query(query, params).then(results => {
+      res.send(results.rows);
+  })
   } else {
     const params = [req.body.individual_id, req.body.location, req.body.motto, req.body.bio];
     const query = `
@@ -43,7 +47,7 @@ const updateIndividual = (req, res) => {
     `;
     return pool.query(query, params).then(results => {
       res.send(results.rows);
-    })
+  })
   }
   }
 
