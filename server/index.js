@@ -7,7 +7,7 @@ const express = require('express');
 const spotifyAuth = require("./routes/spotifyAuth.js");
 const sgAuth = require("./routes/sg.js");
 const { getGroups } = require("./database/controllers/groupController");
-const { updateIndividual } = require("./database/controllers/individualsController");
+const { updateIndividual, getIndividual } = require("./database/controllers/individualsController");
 
 const spotify = require('./routes/spotify.js');
 const webPlayback = require('./routes/webPlayback.js');
@@ -31,8 +31,8 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 
 app.get('/db/groups', getGroups);
 app.post('/db/individuals', updateIndividual);
+app.get('/db/individuals', getIndividual);
 
-<<<<<<< HEAD
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, "../client/dist", 'index.html'));
 });
@@ -40,12 +40,3 @@ app.get('/*', function (req, res) {
 app.listen(PORT, () => {
   console.log(`listening at ${SERVER_ADDR}:${PORT}`);
 });
-=======
-app.get('*', function (req, res) {
-  res.sendFile(path.join(__dirname, "../client/dist", 'index.html'))
-});
-
-app.listen(PORT, () => {
-  console.log(`listening at ${SERVER_ADDR}/`);
-})
->>>>>>> origin

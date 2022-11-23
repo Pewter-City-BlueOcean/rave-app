@@ -18,6 +18,7 @@ const EditUser = ({opened, setOpened, user, setUser}) => {
     };
     setOpened(false);
     console.log(user);
+    //create Form from object
     const formData = new FormData();
     formData.append('username', user.username);
     formData.append('location', user.location);
@@ -27,34 +28,25 @@ const EditUser = ({opened, setOpened, user, setUser}) => {
       const photo = filename;
       formData.append('photo', photo);
     }
-
+    //post Form to server
     axios.post(`${process.env.SERVER_ADDR}:${process.env.PORT}/db/individuals`, formData, config).then(result => {
       console.log(result);
     })
   };
 
   const handleFileChange = (e) => {
-    console.log(e);
     setFilename(e);
   }
-
   const handleUsername = (e) => {
-    console.log(e);
     setUsername(e.target.value);
   }
-
   const handleLocation = (e) => {
-    console.log(e);
     setLocation(e.target.value);
   }
-
   const handleMotto = (e) => {
-    console.log(e);
     setMotto(e.target.value);
   }
-
   const handleBio = (e) => {
-    console.log(e);
     setBio(e.target.value);
   }
 

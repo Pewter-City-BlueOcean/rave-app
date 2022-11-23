@@ -23,6 +23,11 @@ const updateIndividual = (req, res) => {
     })
   }
 
+const getIndividual = (req, res) => {
+  console.log(req);
+}
+
 module.exports = {
-  updateIndividual
+  updateIndividual,
+  getIndividual
 };
