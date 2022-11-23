@@ -1,17 +1,22 @@
 import React, {useState, useEffect} from 'react';
 import { ConcertInfo, Chat} from '../components/GroupComponents/index.js'
 import axios from 'axios';
+import { useRaveStore } from '../helpers/raveStore.js';
 
 const GroupPage = () => {
 
-  const [groupId, setGroupId] = useState(5757673);
+  const [groupId, setGroupId] = useState(5753906);
+
+  const currentGroup = useRaveStore((state) => state.currentGroup);
+
+  console.log(currentGroup)
 
   return (
 
   <div>
     <div>Header</div>
     <div className='group-concert'>
-      <Chat/>
+      {/* <Chat/> */}
       <ConcertInfo groupId={groupId} />
     </div>
     <div>Music Player</div>
