@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
 
 import spotify from './helper_functions/talkToSpotify.js';
+import { getUserData } from './helpers/getUserData.js';
 
 import axios from 'axios';
 
@@ -49,7 +50,7 @@ const App = () => {
        */
       getUsername()
         .then((username) => {
-          //console.log(username);
+          getUserData(username);
         })
 
     }
