@@ -15,7 +15,10 @@ const spotify = {
     return axios.get(`/spotify/me/${access_token}`)
       .then((response) => {
         if (response.status === 200) {
-          return response.data.display_name;
+          return {
+            'spotifyId': response.data.id,
+            'email': response.data.email
+          };
         } else {
           throw 'Something went wrong talking to Spotify!  Could not get /me';
         }

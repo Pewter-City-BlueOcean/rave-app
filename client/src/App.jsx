@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
 
 import spotify from './helper_functions/talkToSpotify.js';
-import { getUserData } from './helpers/getUserData.js';
+import { saveUserId } from './helpers/getUserData.js';
 
 import axios from 'axios';
 
@@ -16,12 +16,16 @@ import Layout from './components/Layout.jsx';
 import Background from './components/Background.jsx';
 import WebPlayer from './components/WebPlayer.jsx';
 
+import { useRaveStore } from './helpers/raveStore.js';
+
 const App = () => {
   const params = new URLSearchParams(window.location.search);
 
   const [access_token, setAccess_token] = useState(params.get('access_token'));
   const [refresh_token, setRefresh_token] = useState(params.get('refresh_token'));
   const [user, setUser] = useState();
+
+  const setUserId = useRaveStore((state) => state.setUserId);
 
   /**
    * Callback function used to update access_token upon a refresh
@@ -49,8 +53,9 @@ const App = () => {
        * Get username for table lookup id
        */
       getUsername()
-        .then((username) => {
-          getUserData(username);
+        .then((spotifyLogin) => {
+          saveUserId(spotifyLogin.spotifyId, spotifyLogin.email);
+          setUserId(spotifyLogin.spotifyId);
         })
 
     }
