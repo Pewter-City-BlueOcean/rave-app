@@ -6,13 +6,11 @@ const GroupPage = () => {
   return (
 
   <div>
-    <div>Header</div>
     <div>
       <Chat/>
       <ConcertInfo/>
     </div>
     <div>Music Player</div>
-
   </div>
 
   )

@@ -7,6 +7,7 @@ const express = require('express');
 const spotifyAuth = require("./routes/spotifyAuth.js");
 const sgAuth = require("./routes/sg.js");
 const { getGroups } = require("./database/controllers/groupController");
+const { getMessages, getUserPhoto, addMessage } = require("./database/controllers/messages");
 
 const spotify = require('./routes/spotify.js');
 
@@ -28,7 +29,11 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 
 app.get('/db/groups', getGroups);
 
-app.get('*', function (req, res) {
+app.get('/messages', getMessages);
+app.get('/userPhoto', getUserPhoto);
+app.post('/messages', addMessage);
+
+app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, "../client/dist", 'index.html'))
 });
 
