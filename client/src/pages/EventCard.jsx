@@ -9,6 +9,7 @@ const EventCard = ({event, individual_id, searchButtonHandler}) => {
     let dateFormated = new Date(dateInp);
     return `${dateFormated.toDateString()} at ${dateFormated.toLocaleTimeString()}`;
   }
+
   const getButtonLabel = () => {
     if (event.group_members.length === 0) {
       return 'Create New Group';
@@ -26,6 +27,7 @@ const EventCard = ({event, individual_id, searchButtonHandler}) => {
       method: 'post',
       url: '/sg/events',
       data: {
+
         invididual_id: individual_id,
         objEventData: event
       }
@@ -67,7 +69,6 @@ const EventCard = ({event, individual_id, searchButtonHandler}) => {
             Date: {convertDate(event.datetime_local)}
             </Text>
             <Button variant="gradient" disabled={buttonLabel === 'Already a Group Member'? true : false} gradient={{ from: 'teal', to: 'blue', deg: 60 }} onClick={buttonClickHandler}>{buttonLabel}</Button>
-
           </Card>
       </Grid.Col>
   )
