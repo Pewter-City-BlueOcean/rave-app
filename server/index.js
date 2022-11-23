@@ -7,7 +7,6 @@ const express = require('express');
 const spotifyAuth = require("./routes/spotifyAuth.js");
 const sgAuth = require("./routes/sg.js");
 const { getGroups } = require("./database/controllers/groupController");
-<<<<<<< HEAD
 const { updateIndividual, getIndividual } = require("./database/controllers/individualsController");
 //const webPlayback = require('./routes/webPlayback.js');
 const { getMessages, getUserPhoto, addMessage } = require("./database/controllers/messages");
@@ -34,17 +33,15 @@ app.get('/db/groups', getGroups);
 app.post('/db/individuals', updateIndividual);
 app.get('/db/individuals', getIndividual);
 
-<<<<<<< HEAD
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, "../client/dist", 'index.html'));
-=======
+});
 app.get('/messages', getMessages);
 app.get('/userPhoto', getUserPhoto);
 app.post('/messages', addMessage);
 
 app.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname, "../client/dist", 'index.html'))
->>>>>>> origin
+  res.sendFile(path.join(__dirname, "../client/dist", 'index.html'));
 });
 
 app.listen(PORT, () => {
