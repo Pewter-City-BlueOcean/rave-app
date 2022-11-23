@@ -2,6 +2,7 @@ import create from 'zustand';
 
 export const useRaveStore = create(set => ({
   currentGroup: {},
+  groups: [],
   userId: '',
   profileViewing: {},
   setCurrentGroup: (group) => {
