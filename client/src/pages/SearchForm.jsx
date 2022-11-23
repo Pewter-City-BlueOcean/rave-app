@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {Button} from '@mantine/core';
 import axios from 'axios';
-// import router from '../../../server/routes/sg.js';
-
-
 
 export const SearchForm = ({searchButtonHandler}) => {
   let state = useRef('');
@@ -11,8 +8,6 @@ export const SearchForm = ({searchButtonHandler}) => {
   let eventArtistSearchTerm = useRef('');
   let maxPrice = useRef('');
   let minPrice = useRef('');
-
-
 
   return (
     <div>
@@ -50,12 +45,5 @@ export const SearchForm = ({searchButtonHandler}) => {
         }}>Search</Button>
       </div>
     </div>
-
   )
 }
-
-{/* <Input variant="filled" placeholder="...Event" style={{width: '205px', displayType: 'flex', opacity: '.6' }}/> */}
-
-{/* <div style={{ paddingBottom: '50px' }}>
-<Button variant="gradient" gradient={{ from: 'orange', to: 'red' }} size='lg'>Search</Button>
-</div> */}

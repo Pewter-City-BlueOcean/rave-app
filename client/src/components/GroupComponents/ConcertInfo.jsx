@@ -5,42 +5,10 @@ import Attendees from './Attendees.jsx';
 import ConcertDetails from './ConcertDetails.jsx';
 import AddMember from './AddMember.jsx';
 import Notification from './Notification.jsx';
-
-const ConcertInfo = ({groupId}) => {
-
-  const [groupInfo, setGroupInfo] = useState({});
-  const [members, setMembers] = useState([]);
-
-  const getGroupMembers = () => {
-    axios.get('/groupMembers', {
-      params: {
-        group_id: groupId
-      }
-    })
-    .then((result)=> {
-      setMembers(result.data);
-    })
-  }
-
-  const getGroupInfo = () => {
-    return axios.get('/groupInfo',{
-      params: {
-        group_id: groupId
-      }
-    })
-    .then((result) => {
-      setGroupInfo(result.data[0]);
-    })
-  }
-
-  useEffect(()=> {
-    getGroupInfo()
-    .then((result)=> {
-      getGroupMembers();
-    })
-  },[groupId])
+import EventMap from './EventMap.jsx';
 
 
+const ConcertInfo = () => {
   return (
   <div className='concert-info'>
     <ConcertDetails groupInfo={groupInfo}/>
@@ -51,6 +19,7 @@ const ConcertInfo = ({groupId}) => {
       groupId={groupId}
       setMembers={setMembers}
       getGroupMembers={getGroupMembers}/>
+    <EventMap address={'1940 9th Street NW'} extended_address={'Washington, DC 20001'}/>
   </div>
   )
 }
