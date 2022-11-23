@@ -27,6 +27,22 @@ const Group = sequelize.define('groups', {
     type: Sequelize.TEXT,
     allowNull:false
   },
+  country: {
+    type: Sequelize.TEXT,
+    allowNull:false
+  },
+  state: {
+    type: Sequelize.TEXT,
+    allowNull:false
+  },
+  address: {
+    type: Sequelize.TEXT,
+    allowNull:false
+  },
+  extended_address: {
+    type: Sequelize.TEXT,
+    allowNull:false
+  },
   postal_code: {
     type: Sequelize.INTEGER,
     allowNull:false
@@ -45,6 +61,10 @@ const Group = sequelize.define('groups', {
   },
   created_by_individual_id: {
     type: Sequelize.NUMBER,
+    allowNull:false
+  },
+  average_price: {
+    type: Sequelize.TEXT,
     allowNull:false
   },
   date_added_to_db: {
