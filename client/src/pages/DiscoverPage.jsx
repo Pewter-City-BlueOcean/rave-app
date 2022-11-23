@@ -55,23 +55,13 @@ const DiscoverPage = () => {
       <div style={{marginLeft: '20px', marginRight: '20px'}}>
         <SearchForm searchButtonHandler={searchButtonHandler} />
       </div>
-  <div >
+    <div >
         <Grid align='center' gutter='xl' >
           {events.map((event, index)=> {
             return <EventCard key={index} event={event} individual_id={individual_id} searchButtonHandler={searchButtonHandler}/>
           })}
         </Grid>
       </div>
-<<<<<<< Updated upstream
-=======
-      <div style={{ justifyContent: 'spaced-evenly' }}>
-        <Grid justify='pace-around'>
-          {events.map((event, index)=> {
-            return <EventCard key={index} event={event}/>
-          })}
-        </Grid>
-      </div>
->>>>>>> Stashed changes
     </div>
   )
 }
