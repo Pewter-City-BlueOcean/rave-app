@@ -62,6 +62,7 @@ const DiscoverPage = () => {
           })}
         </Grid>
       </div>
+<<<<<<< HEAD
       <div style={{ justifyContent: 'spaced-evenly' }}>
         <Grid justify='pace-around'>
           {events.map((event, index)=> {
@@ -69,6 +70,8 @@ const DiscoverPage = () => {
           })}
         </Grid>
       </div>
+=======
+>>>>>>> main
     </div>
   )
 }

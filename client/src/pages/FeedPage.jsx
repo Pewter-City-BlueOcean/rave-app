@@ -59,7 +59,7 @@ const FeedPage = () => {
   const getGroups = () => {
     const config = {
       params: {
-        user_id: 'ben07891'
+        user_id: userId
       }
     };
 
