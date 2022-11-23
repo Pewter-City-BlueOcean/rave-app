@@ -29,15 +29,10 @@ app.use('/playback', webPlayback);
 
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
-<<<<<<< HEAD
-app.use('*', (req, res) => {
-  res.sendFile(path.join(__dirname,'../client/dist/index.html'));
-=======
 app.get('/db/groups', getGroups);
 
-app.get('/*', function (req, res) {
+app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, "../client/dist", 'index.html'))
->>>>>>> main
 });
 
 app.listen(PORT, () => {
