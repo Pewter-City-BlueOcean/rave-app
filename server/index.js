@@ -11,6 +11,7 @@ const { updateIndividual, getIndividual } = require("./database/controllers/indi
 //const webPlayback = require('./routes/webPlayback.js');
 const { getMessages, getUserPhoto, addMessage } = require("./database/controllers/messages");
 const spotify = require('./routes/spotify.js');
+const playlist = require('./routes/playlist.js')
 
 const cookieParser = require('./middleware/cookieParser.js');
 const app = express();
@@ -25,6 +26,7 @@ app.use(fileUpload());
 app.use(cookieParser);
 app.use('/spotify/auth', spotifyAuth);
 app.use('/spotify/', spotify);
+app.use('/spotify/playlist', playlist);
 app.use('/sg', sgAuth);
 
 app.use(express.static(path.join(__dirname, '../client/dist')));
