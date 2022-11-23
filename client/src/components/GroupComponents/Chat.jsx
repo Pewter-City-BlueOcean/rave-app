@@ -1,11 +1,12 @@
 import React from 'react';
 import axios from 'axios';
+import moment from 'moment';
 
 const { useState, useEffect } = React;
 
 const Chat = () => {
   const [groupId, setGroupId] = useState(5814061);
-  const [userId, setUserId] = useState(11);
+  const [userId, setUserId] = useState(10);
   const [profilePic, setProfilePic] = useState('');
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
@@ -23,6 +24,7 @@ const Chat = () => {
     // should get messages and then set messages to returned data every 5 seconds
     axios.get(`/messages?groupId=${groupId}`)
       .then((response) => {
+        console.log(response.data);
         setMessages(response.data);
       })
       .catch((err) => console.log(err));
@@ -36,6 +38,7 @@ const Chat = () => {
         'message': newMessage
       })
       .then(() => setNewMessage(''))
+      .then(() => getMessages())
       .catch((err) => console.log(err));
     }
   };
@@ -43,6 +46,10 @@ const Chat = () => {
   useEffect(() => {
     getUserInfo();
     getMessages();
+    const interval = setInterval(() => {
+      getMessages();
+    }, 10000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -55,7 +62,10 @@ const Chat = () => {
               <div key={i} style={{display: 'flex'}}>
                 <img src={message.photo} width='40px' height='40px' style={{borderRadius: '50%', objectFit: 'cover', verticalAlign: 'middle', margin: '15px'}}></img>
                 <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start'}}>
-                  <h5 style={{margin: '0'}}> {message.spotify_username} </h5>
+                  <div style={{display: 'flex'}}>
+                    <h5 style={{margin: '0'}}> {message.spotify_username} &#x2022; </h5>
+                    <p style={{margin: '1px 3px', fontSize: '12px'}}> {moment(message.message_creation_datetime).subtract(6, 'hours').fromNow()} </p>
+                  </div>
                   <p style={{backgroundColor: '#FFFFFF', color: '#000000', width: 'fit-content', maxWidth: '400px', height: 'fit-content', padding: '5px 10px', borderRadius: '5px', margin: '5px 0 20px 0', textAlign: 'left', wordWrap: 'break-word'}}> {message.message_text} </p>
                 </div>
               </div>
@@ -64,7 +74,10 @@ const Chat = () => {
             return (
               <div key={i} style={{display: 'flex', alignSelf: 'flex-end'}}>
                 <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-end'}}>
-                  <h5 style={{margin: '0'}}> {message.spotify_username} </h5>
+                  <div style={{display: 'flex'}}>
+                    <p style={{margin: '1px 3px', fontSize: '12px'}}> {moment(message.message_creation_datetime).subtract(6, 'hours').fromNow()} </p>
+                    <h5 style={{margin: '0'}}> &#x2022; {message.spotify_username} </h5>
+                  </div>
                   <p style={{backgroundColor: '#FFFFFF', color: '#000000', width: 'fit-content', maxWidth: '400px', height: 'fit-content', padding: '5px 10px', borderRadius: '5px', margin: '5px 0 20px 0', textAlign: 'left', wordWrap: 'break-word'}}> {message.message_text} </p>
                 </div>
                 <img src={message.photo} width='40px' height='40px' style={{borderRadius: '50%', objectFit: 'cover', verticalAlign: 'middle', margin: '15px'}}></img>
