@@ -130,7 +130,7 @@ router.get('/callback', (req, res) => {
         console.log(error);
         res.redirect(`${CLIENT_HOME_URL}?` +
           new URLSearchParams({
-            error: 'interal_server_error'
+            error: 'internal_server_error'
           }));
       });
   }

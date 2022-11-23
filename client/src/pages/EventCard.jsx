@@ -3,7 +3,7 @@ import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 
 
-const EventCard = ({event, individual_id, searchButtonHandler}) => {
+const EventCard = ({event, userId, searchButtonHandler}) => {
 
   const convertDate =(dateInp) => {
     let dateFormated = new Date(dateInp);
@@ -13,7 +13,7 @@ const EventCard = ({event, individual_id, searchButtonHandler}) => {
   const getButtonLabel = () => {
     if (event.group_members.length === 0) {
       return 'Create New Group';
-     } else if (event.group_members.includes(individual_id)) {
+     } else if (event.group_members.includes(userId)) {
       return 'Already a Group Member';
      } else {
       return 'Join Group';
@@ -28,11 +28,12 @@ const EventCard = ({event, individual_id, searchButtonHandler}) => {
       url: '/sg/events',
       data: {
 
-        invididual_id: individual_id,
+        invididual_id: userId,
         objEventData: event
       }
     })
     .then((val)=>{
+      console.log(val)
       setButtonLabel('Already a Group Member')
     })
     .catch((err)=>{
