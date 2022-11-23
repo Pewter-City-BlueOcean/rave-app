@@ -5,30 +5,14 @@ import axios from 'axios';
 
 
 
-export const SearchForm = ({setEvents}) => {
+export const SearchForm = ({searchButtonHandler}) => {
   let state = useRef('');
   let city = useRef('');
   let eventArtistSearchTerm = useRef('');
   let maxPrice = useRef('');
   let minPrice = useRef('');
 
-  const searchButtonHandler = () => {
 
-    let dataToSend = {
-      state: state.current.value,
-      city: city.current.value,
-      eventArtistSearchTerm: eventArtistSearchTerm.current.value,
-      minPrice: minPrice.current.value,
-      maxPrice: maxPrice.current.value
-    }
-    axios.get('/sg/events', (dataToSend))
-    .then((data) => {
-      setEvents(data.data)
-    })
-    .catch(err => {
-      console.log(err)
-    })
-  }
 
   return (
     <div>
@@ -55,7 +39,15 @@ export const SearchForm = ({setEvents}) => {
         </div>
       </div>
       <div style={{ paddingBottom: '50px' }}>
-        <Button variant="gradient" gradient={{ from: 'orange', to: 'red' }} size='lg' onClick={searchButtonHandler}>Search</Button>
+        <Button variant="gradient" gradient={{ from: 'orange', to: 'red' }} size='lg' onClick={()=> {
+          searchButtonHandler({
+            state: state.current.value,
+            city: city.current.value,
+            eventArtistSearchTerm: eventArtistSearchTerm.current.value,
+            minPrice: minPrice.current.value,
+            maxPrice: maxPrice.current.value
+          })
+        }}>Search</Button>
       </div>
     </div>
 
