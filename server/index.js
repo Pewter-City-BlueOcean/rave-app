@@ -33,7 +33,6 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 app.get('/db/groups', getGroups);
 
 app.get('/groupInfo',getGroupInfo);
-
 app.get('/groupMembers',getGroupMembers);
 app.post('/db/newIndividual', setNewUser);
 
