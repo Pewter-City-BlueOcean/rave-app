@@ -49,12 +49,12 @@ const H3 = styled.h3`
 `
 
 const FeedPage = () => {
-  const [groups, setGroups] = useState(groupsData);
+  const [groups, setGroups] = useState([]);
   const [upcoming, setUpcoming] = useState([]);
   const [past, setPast] = useState([]);
   const userId = useRaveStore((state) => state.userId);
 
-  console.log(userId);
+  // console.log(userId);
 
   const getGroups = () => {
     const config = {
@@ -81,8 +81,11 @@ const FeedPage = () => {
   }
 
   useEffect(() => {
-    getGroups();
-  }, []);
+    if (userId) {
+      getGroups();
+    }
+    console.log(userId)
+  }, [userId]);
 
   return (
     <Body>
