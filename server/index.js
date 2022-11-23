@@ -7,7 +7,7 @@ const express = require('express');
 const spotifyAuth = require("./routes/spotifyAuth.js");
 const sgAuth = require("./routes/sg.js");
 const { getGroups } = require("./database/controllers/groupController");
-const { updateIndividual, getIndividual } = require("./database/controllers/individualsController");
+const { updateIndividual, getIndividual, setNewUser } = require("./database/controllers/individualsController");
 //const webPlayback = require('./routes/webPlayback.js');
 const { getMessages, getUserPhoto, addMessage } = require("./database/controllers/messages");
 const spotify = require('./routes/spotify.js');
@@ -35,14 +35,20 @@ app.get('/db/groups', getGroups);
 app.get('/groupInfo',getGroupInfo);
 
 app.get('/groupMembers',getGroupMembers);
+app.post('/db/newIndividual', setNewUser);
 
-app.get('/getMembers',getAllMembers);
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, "../client/dist", 'index.html'));
+});
+app.get('/messages', getMessages);
+app.get('/userPhoto', getUserPhoto);
+app.post('/messages', addMessage);
 
 app.post('/groupMember',postMembertoGroup);
 
 app.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname, "../client/dist", 'index.html'))
-  });
+  res.sendFile(path.join(__dirname, "../client/dist", 'index.html'));
+});
 
 app.listen(PORT, () => {
   console.log(`listening at ${SERVER_ADDR}:${PORT}`);

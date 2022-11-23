@@ -3,13 +3,15 @@ DROP TABLE IF EXISTS messages;
 DROP TABLE IF EXISTS individuals;
 DROP TABLE IF EXISTS groups;
 
-CREATE TABLE individuals (
-  individual_id int NOT NULL PRIMARY KEY,
+
+CREATE TABLE IF NOT EXISTS individuals (
+  individual_id varchar (255) PRIMARY KEY NOT NULL,
   email varchar(55) NOT NULL,
-  spotify_username varchar (255) NOT NULL,
-  bio varchar (255),
-  photo varchar (255),
-  playlist varchar (255)
+  motto varchar (255) DEFAULT " ",
+  location varchar (255) DEFAULT " ",
+  bio TEXT DEFAULT " ",
+  photo varchar (255) DEFAULT " ",
+  playlist varchar (255) DEFAULT " "
 );
 
 CREATE TABLE groups (
@@ -31,16 +33,16 @@ CREATE TABLE groups (
   average_price int NOT NULL
 );
 
-CREATE TABLE members (
-  individual_id int NOT NULL REFERENCES individuals (individual_id),
+CREATE TABLE IF NOT EXISTS members (
+  individual_id varchar (255) NOT NULL REFERENCES individuals (individual_id),
   group_id int  NOT NULL REFERENCES groups (group_id),
-  PRIMARY KEY (individual_id,group_id)
+  PRIMARY KEY (individual_id ,group_id)
 );
 
 CREATE TABLE messages (
   message_id SERIAL NOT NULL PRIMARY KEY,
   group_id int NOT NULL REFERENCES groups (group_id),
   message_creation_datetime timestamp default CURRENT_TIMESTAMP,
-  individual_id int NOT NULL REFERENCES individuals (individual_id),
+  individual_id varchar(255) NOT NULL REFERENCES individuals (individual_id),
   message_text varchar(255) NOT NULL
 );
