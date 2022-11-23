@@ -6,24 +6,31 @@ import { FaInfo } from 'react-icons/fa';
 import axios from 'axios';
 
 const DiscoverPage = () => {
-
+  let individual_id = 'thatsit2001';
   const [events, setEvents] = useState([])
 
-  useEffect(() => {
-    let dataToSend = {
-      state: '',
-      city: '',
-      eventArtistSearchTerm: '',
-      minPrice: '',
-      maxPrice: ''
-    }
-    axios.get('/sg/events', (dataToSend))
+  const searchButtonHandler = (dataToSend) => {
+    axios({
+      method: 'GET',
+      url: '/sg/events',
+      params: dataToSend
+    })
     .then((data) => {
       setEvents(data.data)
     })
     .catch(err => {
       console.log(err)
     })
+  }
+
+  useEffect(() => {
+    searchButtonHandler({
+      state: '',
+      city: '',
+      eventArtistSearchTerm: '',
+      minPrice: '',
+      maxPrice: ''
+    });
   }, [])
 
   return (
@@ -45,14 +52,16 @@ const DiscoverPage = () => {
         </HoverCard>
       </Group>
       </div>
-      <div>
-        <SearchForm setEvents={setEvents} />
+      <div style={{marginLeft: '20px', marginRight: '20px'}}>
+        <SearchForm searchButtonHandler={searchButtonHandler} />
       </div>
-      <Grid justify='space-around' align='stretch' style={{paddingLeft: '230px', paddingRight: '100px'}} >
-        {events.map((event, index)=> {
-          return <EventCard key={index} event={event}/>
-        })}
-      </Grid>
+  <div >
+        <Grid align='center' gutter='xl' >
+          {events.map((event, index)=> {
+            return <EventCard key={index} event={event} individual_id={individual_id} searchButtonHandler={searchButtonHandler}/>
+          })}
+        </Grid>
+      </div>
     </div>
   )
 }
