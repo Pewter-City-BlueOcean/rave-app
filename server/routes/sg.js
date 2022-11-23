@@ -24,7 +24,6 @@ router.get('/events', (req, res) => {
   if (req.query.minPrice != '') {
     argsConversion['lowest_price.gt'] = req.query.minPrice
   }
-
   return axios({
     method:'get',
     url: `https://api.seatgeek.com/2/events?client_id=${process.env.SG_CLIENT_ID}&client_secret=${process.env.SG_CLIENT_SECRET}&${eventTypes}`,
@@ -51,35 +50,21 @@ router.get('/events', (req, res) => {
       average_price: item.stats.average_price,
 
     }})
-    // if (req.query.eventArtistSearchTerm != '') {
-    //   slimmedResults = slimmedResults.filter((item)=> {
-    //     return item.event_title.toUpperCase().includes(req.query.eventArtistSearchTerm.toUpperCase()) || item.performer.some((item)=>{return item.name.toUpperCase().includes(req.query.eventArtistSearchTerm.toUpperCase())})
-    //   })
-    // }
 
     slimmedResults = slimmedResults.filter((item)=> {
       if (item.average_price === null) {
         return false;
       }
       if (req.query.eventArtistSearchTerm != '') {
-        return item.event_title.toUpperCase().includes(req.query.eventArtistSearchTerm.toUpperCase()) || item.performer.some((item)=>{return item.name.toUpperCase().includes(req.query.eventArtistSearchTerm.toUpperCase())})
+        return item.event_title.toUpperCase().includes(req.query.eventArtistSearchTerm.toUpperCase()) || item.performers.some((item)=>{return item.name.toUpperCase().includes(req.query.eventArtistSearchTerm.toUpperCase())})
       } else {
         return true;
       }
     })
 
-
-    // slimmedResults = slimmedResults.filter((item)=> {
-    //   if (req.query.eventArtistSearchTerm === '') {
-    //     return item.average_price != null
-    //   } else {
-    //     return (item.event_title.toUpperCase().includes(req.query.eventArtistSearchTerm.toUpperCase()) || item.performer.some((item)=>{return item.name.toUpperCase().includes(req.query.eventArtistSearchTerm.toUpperCase())})) && item.average_price != null
-    //   }
-    // })
-
     res.send(slimmedResults)
   })
-  .catch((err)=>{res.status(500).send(err)})
+  .catch((err)=>{console.log(err); res.status(500).send(err)})
 })
 
 router.post('/events', (req, res) => {
