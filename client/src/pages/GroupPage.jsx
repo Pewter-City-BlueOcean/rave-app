@@ -9,7 +9,9 @@ const GroupPage = () => {
 
   const currentGroup = useRaveStore((state) => state.currentGroup);
 
-  console.log(currentGroup)
+  useEffect(()=> {
+    setGroupId(currentGroup);
+  },[currentGroup])
 
   return (
 

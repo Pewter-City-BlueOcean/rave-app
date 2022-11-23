@@ -49,7 +49,7 @@ const ConcertInfo = ({groupId}) => {
   return (
   <div className='concert-info'>
     {/* <ConcertDetails groupInfo={groupInfo}/> */}
-    <Notification/>
+    {/* <Notification/> */}
     {/* <Attendees members={members}/>
     <AddMember
       members={members}
