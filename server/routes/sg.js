@@ -8,6 +8,7 @@ let eventTypes = 'taxonomies.name=club_passes&taxonomies.name=music_festival&tax
 
 router.get('/events', (req, res) => {
   //{state, city, eventArtistSearchTerm, minPrice, maxPrice, IP_address}
+  // console.log(req.query)
   let argsConversion = {per_page: 50};
   if (req.query.IP_address != undefined) {
       argsConversion['geoip'] = req.query.IP_address
@@ -62,7 +63,8 @@ router.get('/events', (req, res) => {
 })
 
 router.post('/events', (req, res) => {
-  getGroupOrCreateNewFunc(req.params.individual_id, req.params.objEventData)
+
+  getGroupOrCreateNewFunc(req.body.individual_id, req.body.objEventData)
   .then((val)=> {res.send(val)})
   .catch((err)=>{res.status(500).send()});
 })

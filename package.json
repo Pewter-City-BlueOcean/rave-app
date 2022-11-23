@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "@mantine/form": "^5.8.2",
-    "@tabler/icons": "^1.112.0",
-    "moment": "^2.29.4"
-  }
-}
