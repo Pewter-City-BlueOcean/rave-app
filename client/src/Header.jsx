@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { useRaveStore } from './helpers/raveStore.js';
 
 const H1 = styled.h1`
   font-size: 100px;
@@ -27,7 +28,6 @@ const Title = styled.nav`
 `
 
 const Header = ({access_token, refresh_token}) => {
-
   const params = new URLSearchParams({
     access_token: access_token,
     refresh_token: refresh_token,

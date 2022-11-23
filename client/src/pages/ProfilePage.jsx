@@ -1,9 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import {Modal, MantineProvider, Tabs, ActionIcon } from '@mantine/core';
 import moment from 'moment';
 import EditUser from '../components/EditUser.jsx';
 import NotificationList from '../components/Notifications/NotificationList.jsx';
+import { useRaveStore } from '../helpers/raveStore.js';
+import { getUserData } from '../helpers/getUserData.js';
 
 const Outer = styled.div`
   display: flex;
@@ -67,7 +69,16 @@ const ProfilePage = () => {
   const [upcomingEvents, setUpcomingEvents] = useState([{title: 'EventName', date: Date.now()}]);
   const [pastEvents, setPastEvents] = useState([{title: 'EventName', date: Date.now()}]);
 
-  const [user, setUser] = useState(exampleUser);
+  const userId = useRaveStore((state) => state.userId);
+
+  useEffect(() => {
+    console.log(userId)
+    getUserData(userId).then(results => {
+      setUser(results.data[0]);
+    })
+  }, [userId])
+
+  const [user, setUser] = useState({});
   const isOwner = true;
   const [profileImage, setProfileImage] = useState(user.photo);
 
@@ -84,7 +95,7 @@ const ProfilePage = () => {
         <ProfileImage src={profileImage}/>
         {isOwner ? EditIcon : null}
         <AboutMe>
-          <h4>{user.username}</h4>
+          <h4>{user.individual_id}</h4>
           <PAbout>{user.bio}</PAbout>
           <PAbout>Location: {user.location}</PAbout>
           <PAbout>Age: {user.age}</PAbout>
@@ -133,16 +144,16 @@ const getDate = (date) => {
   return currentDate - date === 0 ? 'Today' : moment(date).toNow();
 }
 
-const exampleUser = {
-  id: 123,
-  email: "hello@okay.com",
-  bio: "I'm a raving raver",
-  location: 'Dallas',
-  age:"a bad age",
-  motto: 'rave Rave RAAAAAVE',
-  username: 'RVR4EVR',
-  photo: 'https://lexica-serve-encoded-images.sharif.workers.dev/sm/13d675a7-b651-40c4-ba45-7fc268db5ba4',
-  spotify_username: 'thatsit2001',
-  playlist_id:'none'
-};
+// const exampleUser = {
+//   id: 123,
+//   email: "hello@okay.com",
+//   bio: "I'm a raving raver",
+//   location: 'Dallas',
+//   age:"a bad age",
+//   motto: 'rave Rave RAAAAAVE',
+//   username: 'RVR4EVR',
+//   photo: 'https://lexica-serve-encoded-images.sharif.workers.dev/sm/13d675a7-b651-40c4-ba45-7fc268db5ba4',
+//   : 'thatsit2001',
+//   playlist_id:'none'
+// };
 export default ProfilePage;
