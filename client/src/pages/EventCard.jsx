@@ -30,8 +30,8 @@ const EventCard = ({event}) => {
   }
 
   return(
-      <Grid.Col span={3}>
-          <Card shadow="sm" p="lg" radius="md" withBorder style={{width: '250px', opacity: 0.6}} >
+      <Grid.Col span={3} style={{padding: '50px' }} >
+          <Card shadow="sm" p="lg" radius="md" withBorder style={{ opacity: 0.6}} >
             <Card.Section component="a" href={'https://seatgeek.com/' + event.event_title + '-tickets'}>
               <Image src = {event.performers[0].image_url === 'https://seatgeek.com/images/performers-landscape/gritty-kitty-4fe6dc/800829/huge.jpg' ? 'https://www.lyfepyle.com/wp-content/uploads/2021/07/music-festival-1.jpg' : event.performers[0].image_url}
                 height={160}
@@ -57,7 +57,7 @@ const EventCard = ({event}) => {
             <Text weight={350} size="sm" >
             Date: {convertDate(event.datetime_local)}
             </Text>
-            <Button variant="gradient" gradient={{ from: 'teal', to: 'blue', deg: 60 }} onClick={buttonClickHandler}>ADD OR JOIN GROUP</Button>
+            <Button variant="gradient" gradient={{ from: 'teal', to: 'blue', deg: 60 }}  onClick={buttonClickHandler}>ADD OR JOIN GROUP</Button>
           </Card>
       </Grid.Col>
   )
