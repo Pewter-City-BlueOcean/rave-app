@@ -52,14 +52,16 @@ const DiscoverPage = () => {
         </HoverCard>
       </Group>
       </div>
-      <div>
+      <div style={{marginLeft: '20px', marginRight: '20px'}}>
         <SearchForm searchButtonHandler={searchButtonHandler} />
       </div>
-      <Grid justify='space-around' align='stretch' style={{paddingLeft: '230px', paddingRight: '100px'}} >
-        {events.map((event, index)=> {
-          return <EventCard key={index} event={event} individual_id={individual_id} searchButtonHandler={searchButtonHandler}/>
-        })}
-      </Grid>
+  <div >
+        <Grid align='center' gutter='xl' >
+          {events.map((event, index)=> {
+            return <EventCard key={index} event={event} individual_id={individual_id} searchButtonHandler={searchButtonHandler}/>
+          })}
+        </Grid>
+      </div>
     </div>
   )
 }
