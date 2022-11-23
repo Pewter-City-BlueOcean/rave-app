@@ -31,23 +31,22 @@ const App = () => {
     setAccess_token(new_token);
   }
 
-  /**
-   * Upon receiving an access_token, we will get user from Spotify
-   */
-  useEffect(() => {
-    // Check that we have just logged in
-    if (!user && access_token) {
+  // /**
+  //  * Upon receiving an access_token, we will get user from Spotify
+  //  */
+  // useEffect(() => {
+  //   // Check that we have just logged in
+  //   if (!user && access_token) {
 
-      // Ask spotify who I am and store to state
-      const whoAmI = async () => {
-        const me = await spotify.whoAmI(access_token, refresh_token, refreshCb);
-        setUser(me);
-      }
+  //     // Ask spotify who I am and store to state
+  //     const whoAmI = async () => {
+  //       const me = await spotify.whoAmI(access_token, refresh_token, refreshCb);
+  //       setUser(me);
+  //     }
 
-    }
+  //   }
 
-  }, [access_token]);
-
+  // }, [access_token]);
 
   /**
    * Our render - if we have an access token, then we can move on from login, otherwise we show landing page.
@@ -55,8 +54,8 @@ const App = () => {
   return access_token ? (
     <div>
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<FeedPage />} />
+        <Route path="/" element={<Layout access_token={access_token} refresh_token={refresh_token}/>}>
+          <Route path="feed" element={<FeedPage />} />
           <Route path="discover" element={<DiscoverPage />} />
           <Route path="group" element={<GroupPage />} />
           <Route path="me" element={<ProfilePage />} />
