@@ -9,21 +9,28 @@ const DiscoverPage = () => {
 
   const [events, setEvents] = useState([])
 
-  useEffect(() => {
-    let dataToSend = {
-      state: '',
-      city: '',
-      eventArtistSearchTerm: '',
-      minPrice: '',
-      maxPrice: ''
-    }
-    axios.get('/sg/events', (dataToSend))
+  const searchButtonHandler = (dataToSend) => {
+    axios({
+      method: 'GET',
+      url: '/sg/events',
+      params: dataToSend
+    })
     .then((data) => {
       setEvents(data.data)
     })
     .catch(err => {
       console.log(err)
     })
+  }
+
+  useEffect(() => {
+    searchButtonHandler({
+      state: '',
+      city: '',
+      eventArtistSearchTerm: '',
+      minPrice: '',
+      maxPrice: ''
+    });
   }, [])
 
   return (
@@ -46,13 +53,15 @@ const DiscoverPage = () => {
       </Group>
       </div>
       <div>
-        <SearchForm setEvents={setEvents} />
+        <SearchForm searchButtonHandler={searchButtonHandler} />
       </div>
-      <Grid justify='space-around' align='stretch' style={{paddingLeft: '230px', paddingRight: '100px'}} >
-        {events.map((event, index)=> {
-          return <EventCard key={index} event={event}/>
-        })}
-      </Grid>
+      <div style={{ justifyContent: 'spaced-evenly' }}>
+        <Grid justify='pace-around'>
+          {events.map((event, index)=> {
+            return <EventCard key={index} event={event}/>
+          })}
+        </Grid>
+      </div>
     </div>
   )
 }
