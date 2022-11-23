@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Card, Image, Text, Badge, Button, Group, Input, Title } from '@mantine/core';
 import { useNavigate } from "react-router-dom";
+import { useRaveStore } from '../../helpers/raveStore.js';
 
 const Wrapper = styled.div`
 
@@ -14,8 +15,13 @@ const H4 = styled.h4`
 
 const EventCard = ({event}) => {
 
+  const setCurrentGroup = useRaveStore((state) => state.setCurrentGroup);
+  const currentGroup = useRaveStore((state) => state.currentGroup);
   let navigate = useNavigate();
+
   const routeChange = () => {
+    setCurrentGroup(event);
+    console.log(currentGroup);
     let path = '/group';
     navigate(path);
   }

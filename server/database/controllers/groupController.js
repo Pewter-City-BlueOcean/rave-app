@@ -6,7 +6,7 @@ const getGroups = (req, res) => {
   FROM groups g
   LEFT JOIN members m
   ON m.group_id=g.group_id
-  WHERE m.individual_id=12345
+  WHERE m.individual_id='${req.query.user_id}'
   ORDER BY datetime_local ASC`;
   pool.query(groupsQuery)
   .then((result) => {
