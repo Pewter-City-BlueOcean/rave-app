@@ -9,12 +9,7 @@ const GroupPage = () => {
 
   const currentGroup = useRaveStore((state) => state.currentGroup);
 
-  useEffect(()=> {
-    setGroupId(currentGroup);
-  },[currentGroup])
-
   return (
-
   <div>
     <div>Header</div>
     <div className='group-concert'>
@@ -23,7 +18,6 @@ const GroupPage = () => {
     </div>
     <div>Music Player</div>
   </div>
-
   )
 }
 

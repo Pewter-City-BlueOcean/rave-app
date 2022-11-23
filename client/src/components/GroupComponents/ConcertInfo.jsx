@@ -20,7 +20,8 @@ const ConcertInfo = ({groupId}) => {
       }
     })
     .then((result)=> {
-      setGroupInfo(result.data);
+      console.log(result);
+      // setGroupInfo(result.data);
     })
   }
 
@@ -37,13 +38,7 @@ const ConcertInfo = ({groupId}) => {
   }
 
   useEffect(()=> {
-    getGroupInfo()
-    .then((result)=> {
-      getGroupMembers();
-    })
-    .catch((err)=> {
-      console.log(err);
-    })
+    getGroupInfo();
   },[groupId])
 
   return (
