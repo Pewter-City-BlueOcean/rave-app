@@ -33,6 +33,7 @@ app.get('/messages', getMessages);
 app.get('/userPhoto', getUserPhoto);
 app.post('/messages', addMessage);
 
+
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, "../client/dist", 'index.html'))
 });
