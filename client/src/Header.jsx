@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { useRaveStore } from './helpers/raveStore.js';
 
 const H1 = styled.h1`
   font-family: KoHo;
@@ -28,7 +29,11 @@ const Title = styled.nav`
   justifiy-content: flex-start;
 `
 
-const Header = () => {
+const Header = ({access_token, refresh_token}) => {
+  const params = new URLSearchParams({
+    access_token: access_token,
+    refresh_token: refresh_token,
+  })
 
   return (
     <div>
@@ -37,11 +42,11 @@ const Header = () => {
       </Title>
       <div>
         <Nav>
-          <Link to="/feed" style={{ textDecoration: 'none' }}><H2>home</H2></Link>
+          <Link to={`/feed?${params}`} style={{ textDecoration: 'none' }}><H2>home</H2></Link>
           <H2> | </H2>
-          <Link to="/discover" style={{ textDecoration: 'none' }}><H2>discover</H2></Link>
+          <Link to={`/discover?${params}`} style={{ textDecoration: 'none' }}><H2>discover</H2></Link>
           <H2> | </H2>
-          <Link to="/me" style={{ textDecoration: 'none' }}><H2>profile</H2></Link>
+          <Link to={`/me?${params}`} style={{ textDecoration: 'none' }}><H2>profile</H2></Link>
         </Nav>
       </div>
     </div>

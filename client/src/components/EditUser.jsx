@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Button, Group, FileInput, Textarea, TextInput } from '@mantine/core';
 import axios from 'axios';
+import { useRaveStore } from '../helpers/raveStore.js';
 
 
 const EditUser = ({opened, setOpened, user, setUser}) => {
@@ -11,39 +12,41 @@ const EditUser = ({opened, setOpened, user, setUser}) => {
   const [motto, setMotto] = useState(user.motto);
   const [bio, setBio] = useState(user.bio);
 
+  const userId = useRaveStore((state) => state.userId);
 
   const handleSubmitForm = () => {
     const user = {
-      username, location, motto, bio
+      location, motto, bio
     };
-    if (filename) {
-      user.photo = filename;
-    }
     setOpened(false);
+    console.log(user);
+    //create Form from object
+    const formData = new FormData();
+    formData.append('individual_id', userId);
+    formData.append('location', location);
+    formData.append('motto', motto);
+    formData.append('bio', bio);
+    if (filename) {
+      const photo = filename;
+      formData.append('photo', photo);
+    }
+    //post Form to server
+    axios.post(`${process.env.SERVER_ADDR}:${process.env.PORT}/db/individuals`, formData, config).then(result => {
+      console.log(result.data[0]);
+      setUser(result.data[0])
+    })
   };
 
   const handleFileChange = (e) => {
-    console.log(e);
     setFilename(e);
   }
-
-  const handleUsername = (e) => {
-    console.log(e);
-    setUsername(e.target.value);
-  }
-
   const handleLocation = (e) => {
-    console.log(e);
     setLocation(e.target.value);
   }
-
   const handleMotto = (e) => {
-    console.log(e);
     setMotto(e.target.value);
   }
-
   const handleBio = (e) => {
-    console.log(e);
     setBio(e.target.value);
   }
 
@@ -57,12 +60,6 @@ const EditUser = ({opened, setOpened, user, setUser}) => {
         label="Your Profile Image"
         value={filename}
         onChange={handleFileChange}
-        />
-      <TextInput
-        placeholder={user.username}
-        label="Username"
-        onChange={handleUsername}
-        value={username}
         />
       <TextInput
         placeholder={user.location}
@@ -85,6 +82,12 @@ const EditUser = ({opened, setOpened, user, setUser}) => {
         <Button type="submit" onClick={handleSubmitForm}>Submit</Button>
     </Modal>
   )
+}
+
+const config = {
+  headers: {
+    "Content-Type": "multipart/form-data",
+  },
 }
 
 export default EditUser;

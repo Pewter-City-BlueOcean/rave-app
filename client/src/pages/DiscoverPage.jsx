@@ -1,64 +1,66 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Image, Text, Badge, Button, Group, Input, Title } from '@mantine/core';
+import { Card, Image, Text, Badge, Button, Group, Input, Title, HoverCard, Grid } from '@mantine/core';
+import {SearchForm} from './SearchForm.jsx';
+import EventCard from './EventCard.jsx';
+import { FaInfo } from 'react-icons/fa';
+import axios from 'axios';
 
 const DiscoverPage = () => {
-  //form with three inputs
-  //location, event name, artist name; distance and price
-  //search DB
-  const [searchCriteria, setSearchCriteria] = useState({
-    eventName: '',
-    artist: '',
-    location: '',
-    minPrice: '',
-    maxPrice: ''
-  })
+  let individual_id = 'thatsit2001';
+  const [events, setEvents] = useState([])
+
+  const searchButtonHandler = (dataToSend) => {
+    axios({
+      method: 'GET',
+      url: '/sg/events',
+      params: dataToSend
+    })
+    .then((data) => {
+      setEvents(data.data)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
+
+  useEffect(() => {
+    searchButtonHandler({
+      state: '',
+      city: '',
+      eventArtistSearchTerm: '',
+      minPrice: '',
+      maxPrice: ''
+    });
+  }, [])
 
   return (
     <div>
       <Title order={1} align='center' variant="gradient" gradient={{ from: 'teal', to: 'lime', deg: 105 }} style={{padding: '50px'}} >
         DISCOVER
       </Title>
-      <div style={{display: 'flex', columnGap: '50px', justifyContent: 'center', paddingBottom: '50px', padding: '50px'}}>
-        <Input variant="filled" placeholder="...Event" style={{width: '205px', displayType: 'flex', opacity: '.6' }}/>
-        <Input variant="filled" placeholder="...Artist" style={{width: '205px', displayType: 'flex', opacity: '.6' }}/>
-        <Input variant="filled" placeholder="...Location" style={{width: '205px', opacity: '.6' }}/>
-        <Input variant="filled" placeholder="...Min Price" style={{width: '205px', opacity: '.6' }}/>
-        <Input variant="filled" placeholder="...Max Price" style={{width: '205px', opacity: '.6' }}/>
+      <div style={{display: 'flex', alignItems:'center', justifyContent:'center'}}>
+      <Group >
+        <HoverCard width={280} shadow="md">
+          <HoverCard.Target>
+            <Button style={{ alignItems:'center', justifyContent:'center', width:45, height:45, borderRadius:50}}><FaInfo size={15}/></Button>
+          </HoverCard.Target>
+          <HoverCard.Dropdown style={{ backgroundColor: 'green', borderColor: 'green' }}>
+            <Text size="sm" style={{ color: 'yellow' }}>
+              No fields are mandatory! Search to your hearts content!
+            </Text>
+          </HoverCard.Dropdown>
+        </HoverCard>
+      </Group>
       </div>
-      <div style={{ paddingBottom: '50px' }}>
-        <Button variant="gradient" gradient={{ from: 'orange', to: 'red' }} size='lg'>Search</Button>
+      <div style={{marginLeft: '20px', marginRight: '20px'}}>
+        <SearchForm searchButtonHandler={searchButtonHandler} />
       </div>
-      <div style={{display: 'flex', columnGap: '50px', justifyContent: 'center'}}>
-        <Card shadow="sm" p="lg" radius="md" withBorder style={{width: '250px', opacity: 0.6}} >
-          <Card.Section component="a" href="https://mantine.dev/">
-            <Image
-              src="https://www.lyfepyle.com/wp-content/uploads/2021/07/music-festival-1.jpg"
-              height={160}
-              alt="Norway"
-            />
-          </Card.Section>
-
-          <Group position="center" mt="md" mb="xs" >
-            <Text weight={500} >Event Name</Text>
-          </Group>
-
-          <Text weight={350} size="sm" >
-            Artist: Raver Santa
-          </Text>
-
-          <Text weight={350} size="sm" >
-            Locations: North Pole, Antarctica
-          </Text>
-
-          <Text weight={350} size="sm" >
-          Price: Free (If on Nauty list)
-          </Text>
-
-          <Text weight={350} size="sm" >
-          Date: 12/25/2022
-          </Text>
-          <Button variant="gradient" gradient={{ from: 'teal', to: 'blue', deg: 60 }}>DYNAMIC ADD OR JOIN</Button>
-        </Card>
+  <div >
+        <Grid align='center' gutter='xl' >
+          {events.map((event, index)=> {
+            return <EventCard key={index} event={event} individual_id={individual_id} searchButtonHandler={searchButtonHandler}/>
+          })}
+        </Grid>
       </div>
 <<<<<<< Updated upstream
 =======

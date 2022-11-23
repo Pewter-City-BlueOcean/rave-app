@@ -13,7 +13,7 @@ const Title = styled.nav`
 `
 
 
-const Layout = () => {
+const Layout = ({access_token, refresh_token}) => {
   return (
     <Wrapper>
       <Title>
