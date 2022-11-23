@@ -1,100 +1,79 @@
 import React, { useState, useEffect } from 'react';
-
 import axios from 'axios';
+import spotify from '../helper_functions/talkToSpotify.js';
 
-function WebPlayer({ access_token, currentSong }) {
-  /**
-   * We need to move this to be handled by server
-   */
+function WebPlayer({ access_token, track }) {
+  const [player, setPlayer] = useState(undefined);
+  const [is_paused, setPaused] = useState(false);
+  const [is_active, setActive] = useState(false);
+  const [current_track, setTrack] = useState(track);
+
+  // Our hooks wrapped in non-hook functions to be used as callbacks
+  const handlers = {
+    setPlayer: (player) => {
+      setPlayer(player);
+    },
+
+    setTrack: (player) => {
+      setTrack(player);
+    },
+
+    setActive: (player) => {
+      setActive(player);
+    },
+
+    setPaused: (player) => {
+      setPaused(player);
+    },
+
+  }
+
+  // Create a device and then connect to it using Spotify's Webplayer SDK
   useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://sdk.scdn.co/spotify-player.js";
-    script.async = true;
-
-    document.body.appendChild(script);
-
-    window.onSpotifyWebPlaybackSDKReady = () => {
-      const player = new window.Spotify.Player({
-        name: "NeuRave",
-        getOAuthToken: (cb) => {
-          cb(access_token);
-        },
-        volume: 0.5,
-      });
-
-      // Player Ready
-      player.addListener("ready", ({ device_id }) => {
-        // console.log("Ready with Device ID", device_id);
-        let body = {
-          device_ids: [device_id],
-          play: false,
-          access_token: access_token
-        };
-
-        // After player is ready, change current device to this player
-        const connect_to_device = () => {
-            // console.log("Changing to device");
-            axios.put(`${process.env.SERVER_ADDR}/me/player`, body)
-              .then((response) => {
-                console.log(response)
-              });
-        };
-
-        connect_to_device();
-
-      });
-
-      // Not Ready
-      player.addListener("not_ready", ({ device_id }) => {
-        console.log("Device ID has gone offline", device_id);
-      });
-
-      // Error Handling
-      player.addListener("initialization_error", ({ message }) => {
-        console.error(message);
-      });
-      player.addListener("authentication_error", ({ message }) => {
-        console.error(message);
-      });
-      player.addListener("account_error", ({ message }) => {
-        console.error(message);
-      });
-
-      // Start device connection
-      player.connect().then((success) => {
-        if (success) {
-          console.log("The Web Playback SDK successfully connected to Spotify!");
-        }
-      });
-    };
+    spotify.createAndConnectDevice(
+      access_token,
+      handlers.setPlayer,
+      handlers.setPaused,
+      handlers.setActive,
+      handlers.setTrack
+    );
   }, []);
 
-  // const play_song = async (uri) => {
-  //   console.log("Changing song");
-  //   let request_answer = await fetch(
-  //     "https://api.spotify.com/v1/me/player/play",
-  //     {
-  //       method: "PUT",
-  //       body: JSON.stringify({
-  //         uris: [uri],
-  //       }),
-  //       headers: new Headers({
-  //         Authorization: "Bearer " + access_token,
-  //       }),
-  //     }
-  //   ).then((data) => console.log(data));
-  // };
+  // Skeleton player stolen from Spotify's docs on Web SDK
+  if (!is_active) {
+    return (
+      <div>
+        <div className="main-wrapper">
+          <b> Instance not active. Transfer your playback using your Spotify app </b>
+        </div>
+      </div>)
+  } else {
+    return (
+      <div className="container">
+        <div className="main-wrapper">
 
-  return (
-    currentSong ?
-      <div className = "play" onClick = {() => {
-        play_song(`spotify:track:${currentSong.id}`);
-      }}>
-        <a>Play</a>
-      </div> : null
+          <img src={current_track.album.images[0].url} className="now-playing__cover" alt="" />
 
+          <div className="now-playing__side">
+              <div>{current_track.name}</div>
+              <div>{current_track.artists[0].name}</div>
 
-  );
+              <button onClick={() => { player.previousTrack() }} >
+                  &lt;&lt;
+              </button>
+
+              <button onClick={() => { player.togglePlay() }} >
+                  { is_paused ? "PLAY" : "PAUSE" }
+              </button>
+
+              <button onClick={() => { player.nextTrack() }} >
+                  &gt;&gt;
+              </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default WebPlayer
