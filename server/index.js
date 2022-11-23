@@ -7,6 +7,7 @@ const express = require('express');
 const spotifyAuth = require("./routes/spotifyAuth.js");
 const sgAuth = require("./routes/sg.js");
 const { getGroups } = require("./database/controllers/groupController");
+const {getGroupInfo,getGroupMembers,getAllMembers,postMembertoGroup} = require ('./database/controllers/groupEvent/index.js');
 
 const cookieParser = require('./middleware/cookieParser.js');
 const app = express();
@@ -26,8 +27,17 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 
 app.get('/db/groups', getGroups);
 
+app.get('/groupInfo',getGroupInfo);
+
+app.get('/groupMembers',getGroupMembers);
+
+app.get('/getMembers',getAllMembers);
+
+app.post('/groupMember',postMembertoGroup);
+
 app.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname, "../client/dist", 'index.html'));
+  res.sendFile(path.join(__dirname, "../client/dist", 'index.html'))
+  });
 
 app.listen(PORT, () => {
   console.log(`listening at ${SERVER_ADDR}:${PORT}`);
