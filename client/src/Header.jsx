@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { useRaveStore } from './helpers/raveStore.js';
 
 const H1 = styled.h1`
+  font-family: KoHo;
+  font-style: italic;
   font-size: 100px;
   color: #eeeee4;
   text-shadow: #000000 1px 0 14px;
@@ -11,6 +13,7 @@ const H1 = styled.h1`
 `
 const H2 = styled.h2`
   font-size: 20px;
+  font-family: KoHo;
   color: #eeeee4;
   text-shadow: #000000 1px 0 14px;
 `
@@ -24,7 +27,6 @@ const Title = styled.nav`
   display: flex;
   flex-direction: row;
   justifiy-content: flex-start;
-
 `
 
 const Header = ({access_token, refresh_token}) => {

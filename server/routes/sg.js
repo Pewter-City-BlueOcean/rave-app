@@ -2,7 +2,8 @@ require("dotenv").config();
 const express = require('express');
 const axios = require('axios');
 const router = express.Router();
-const getGroupOrCreateNewFunc = require('../database/controllers/getGroupOrCreateNew.js');
+const {getGroupOrCreateNewFunc} = require('../database/controllers/getGroupOrCreateNew.js');
+const {getFullMembersTable} = require('../database/controllers/getGroupOrCreateNew.js');
 
 let eventTypes = 'taxonomies.name=club_passes&taxonomies.name=music_festival&taxonomies.name=Concert&taxonomies.name=Concerts';
 
@@ -62,9 +63,26 @@ router.get('/events', (req, res) => {
       }
     })
 
-    res.send(slimmedResults)
+    let group_ids = slimmedResults.reduce((accumulator, item)=> {return [...accumulator, item.group_id]}, []);
+
+    getFullMembersTable(group_ids)
+    .then((val)=> {
+      let membersTable = val.rows;
+      for (let i = 0; i < slimmedResults.length; i ++) {
+        let members = membersTable.reduce((accumulator, item)=> {
+          return item.group_id === slimmedResults[i].group_id ? [...accumulator, item.individual_id] : accumulator;
+        }, []);
+
+        slimmedResults[i]['group_members'] = members;
+      }
+      res.send(slimmedResults)
+    })
+    .catch((err)=>{
+      res.status(500).send();
+    })
+
   })
-  .catch((err)=>{console.log(err); res.status(500).send(err)})
+  .catch((err)=>{res.status(500).send(err)})
 })
 
 router.post('/events', (req, res) => {

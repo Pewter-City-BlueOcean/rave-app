@@ -6,6 +6,7 @@ import NotificationList from "../components/Notifications/NotificationList.jsx";
 import groupsData from '../components/data/group_data.js'
 import {getDaysFromToday} from '../helpers/time_helpers.js'
 import styled from 'styled-components';
+import { useRaveStore } from '../helpers/raveStore.js';
 
 
 const Body = styled.div`
@@ -48,14 +49,17 @@ const H3 = styled.h3`
 `
 
 const FeedPage = () => {
-  const [groups, setGroups] = useState(groupsData);
+  const [groups, setGroups] = useState([]);
   const [upcoming, setUpcoming] = useState([]);
   const [past, setPast] = useState([]);
+  const userId = useRaveStore((state) => state.userId);
+
+  // console.log(userId);
 
   const getGroups = () => {
     const config = {
       params: {
-        user_id: 12345
+        user_id: userId
       }
     };
 
@@ -71,13 +75,17 @@ const FeedPage = () => {
       .then((res) => {
         console.log('Got the groups', res.data);
         divideGroups(res.data);
+        setGroups(res.data);
       })
       .catch(e => console.error(e));
   }
 
   useEffect(() => {
-    getGroups();
-  }, []);
+    if (userId) {
+      getGroups();
+    }
+    console.log(userId)
+  }, [userId]);
 
   return (
     <Body>

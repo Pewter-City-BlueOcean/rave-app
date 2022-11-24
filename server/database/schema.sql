@@ -25,11 +25,11 @@ CREATE TABLE groups (
   state varchar (50),
   address varchar (255),
   extended_address varchar (255),
-  postal_code int,
+  postal_code varchar (255),
   location_latitude decimal,
   location_longitude decimal,
   notification int DEFAULT 0,
-  created_by_individual_id int NOT NULL,
+  created_by_individual_id varchar (255) NOT NULL,
   date_added_to_db timestamp default CURRENT_TIMESTAMP,
   average_price int NOT NULL
 );

@@ -1,6 +1,7 @@
 const pool = require('../postgresDB.js');
 
 const getGroupOrCreateNewFunc = (individual_id, objEventData) => {
+
   return pool.query('SELECT * FROM groups WHERE group_id = $1', [objEventData.group_id])
   .catch(()=>( 'DATABASE ERROR SELECTING'))
   .then((res)=> {
@@ -12,6 +13,7 @@ const getGroupOrCreateNewFunc = (individual_id, objEventData) => {
         .catch(()=>{return 'CREATED NEW GROUP BUT FAILED TO ADD MEMBER TO IT'})
       })
       .catch((err)=>{
+        console.log(err)
         return 'NEED GROUP NEEDED BUT ERROR CREATING';
       })
     } else {
@@ -30,4 +32,9 @@ const getGroupOrCreateNewFunc = (individual_id, objEventData) => {
   })
 }
 
-module.exports = getGroupOrCreateNewFunc
+const getFullMembersTable = (groupsArray) => {
+  return pool.query(`SELECT * FROM members WHERE group_id IN (${groupsArray.join(',')})`)
+}
+
+module.exports.getGroupOrCreateNewFunc = getGroupOrCreateNewFunc;
+module.exports.getFullMembersTable = getFullMembersTable;
