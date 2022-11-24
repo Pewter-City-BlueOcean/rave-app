@@ -17,6 +17,7 @@ const EventCard = ({event}) => {
 
   const setCurrentGroup = useRaveStore((state) => state.setCurrentGroup);
   const currentGroup = useRaveStore((state) => state.currentGroup);
+
   let navigate = useNavigate();
 
   const routeChange = () => {

@@ -36,9 +36,6 @@ app.post('/db/individuals', updateIndividual);
 app.get('/db/individuals', getIndividual);
 app.post('/db/newIndividual', setNewUser);
 
-app.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname, "../client/dist", 'index.html'));
-});
 app.get('/messages', getMessages);
 app.get('/userPhoto', getUserPhoto);
 app.post('/messages', addMessage);

@@ -10,7 +10,7 @@ const NotificationHeader = styled.div`
 box-sizing: border-box;
 border: 1pt solid blue;
 border-radius: 5px 5px ${props => (props.show ? '0px 0px' : '5px 5px')};
-background-color: #eee;
+background: rgba(0, 0, 0, 0.46);
 display: flex;
 justify-content: space-between;
 align-items: center;

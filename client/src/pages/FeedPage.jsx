@@ -67,8 +67,8 @@ const FeedPage = () => {
       g.forEach((group) => {
         var isPast = (getDaysFromToday(group.datetime_local) < 0);
         isPast ? setPast( past => [...past, group]) : setUpcoming(upcoming => [...upcoming, group])
-      }
-      )
+       }
+     )
     }
 
     axios.get(`${process.env.SERVER_ADDR}:${process.env.PORT}/db/groups`, config)

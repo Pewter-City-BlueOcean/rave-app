@@ -33,6 +33,7 @@ const LandingPage = () => {
 
   return (
     <Div>
+      <h1>neuRAVE</h1>
       <Login onClick={() => {window.location.href='http://localhost:8080/spotify/auth/login'}}
         onMouseEnter={() => { player.play(); }}>
         Log In With Spotify
