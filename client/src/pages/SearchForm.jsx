@@ -2,12 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import {Button} from '@mantine/core';
 import axios from 'axios';
 
-export const SearchForm = ({searchButtonHandler}) => {
-  let state = useRef('');
-  let city = useRef('');
-  let eventArtistSearchTerm = useRef('');
-  let maxPrice = useRef('');
-  let minPrice = useRef('');
+export const SearchForm = ({searchButtonHandler, searchExecute, city, state, eventArtistSearchTerm, maxPrice, minPrice}) => {
 
   return (
     <div>
@@ -34,15 +29,7 @@ export const SearchForm = ({searchButtonHandler}) => {
         </div>
       </div>
       <div style={{ paddingBottom: '50px' }}>
-        <Button variant="gradient" gradient={{ from: 'orange', to: 'red' }} size='lg' onClick={()=> {
-          searchButtonHandler({
-            state: state.current.value,
-            city: city.current.value,
-            eventArtistSearchTerm: eventArtistSearchTerm.current.value,
-            minPrice: minPrice.current.value,
-            maxPrice: maxPrice.current.value
-          })
-        }}>Search</Button>
+        <Button variant="gradient" gradient={{ from: 'orange', to: 'red' }} size='lg' onClick={searchExecute}>Search</Button>
       </div>
     </div>
   )

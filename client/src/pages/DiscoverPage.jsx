@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Card, Image, Text, Badge, Button, Group, Input, Title, HoverCard, Grid } from '@mantine/core';
 import {SearchForm} from './SearchForm.jsx';
 import EventCard from './EventCard.jsx';
@@ -11,6 +11,11 @@ import { getUserData } from '../helpers/getUserData.js';
 const DiscoverPage = () => {
 
   const userId = useRaveStore((state) => state.userId);
+  let state = useRef('');
+  let city = useRef('');
+  let eventArtistSearchTerm = useRef('');
+  let maxPrice = useRef('');
+  let minPrice = useRef('');
 
   useEffect(() => {
     getUserData(userId).then(results => {
@@ -29,6 +34,16 @@ const DiscoverPage = () => {
     })
     .catch(err => {
       console.log(err)
+    })
+  }
+
+  const searchExecute = () => {
+    searchButtonHandler({
+      state: state.current.value,
+      city: city.current.value,
+      eventArtistSearchTerm: eventArtistSearchTerm.current.value,
+      minPrice: minPrice.current.value,
+      maxPrice: maxPrice.current.value
     })
   }
 
@@ -65,12 +80,12 @@ const DiscoverPage = () => {
         </Group>
         </div>
         <div style={{marginLeft: '20px', marginRight: '20px'}}>
-          <SearchForm searchButtonHandler={searchButtonHandler} />
+          <SearchForm searchButtonHandler={searchButtonHandler} searchExecute={searchExecute} city={city} state={state} eventArtistSearchTerm={eventArtistSearchTerm} maxPrice={maxPrice} minPrice={minPrice}/>
         </div>
         <div >
           <Grid align='center' gutter='xl' >
-            {events.map((event, index)=> {
-              return <EventCard key={index} event={event} userId={userId} searchButtonHandler={searchButtonHandler}/>
+            {events.map((event)=> {
+              return <EventCard key={event.group_id} event={event} userId={userId} searchExecute={searchExecute}/>
             })}
           </Grid>
         </div>
