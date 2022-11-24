@@ -20,10 +20,10 @@ router.get('/events', (req, res) => {
     argsConversion['q'] = req.query.eventArtistSearchTerm
   }
   if (req.query.maxPrice != '') {
-    argsConversion['highest_price.lte'] = req.query.maxPrice
+    argsConversion['average_price.lte'] = req.query.maxPrice
   }
   if (req.query.minPrice != '') {
-    argsConversion['lowest_price.gt'] = req.query.minPrice
+    argsConversion['average_price.gt'] = req.query.minPrice
   }
   return axios({
     method:'get',
