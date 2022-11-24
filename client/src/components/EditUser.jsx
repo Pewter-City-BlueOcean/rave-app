@@ -20,7 +20,6 @@ const EditUser = ({opened, setOpened, user, setUser}) => {
       location, motto, bio
     };
     setOpened(false);
-    console.log(user);
     //create Form from object
     const formData = new FormData();
     formData.append('individual_id', userId );
@@ -34,7 +33,6 @@ const EditUser = ({opened, setOpened, user, setUser}) => {
     }
     //post Form to server
     axios.post(`${process.env.SERVER_ADDR}:${process.env.PORT}/db/individuals`, formData, config).then(result => {
-      console.log(result.data[0]);
       setUser(result.data[0])
     })
   };
