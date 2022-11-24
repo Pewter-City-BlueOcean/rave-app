@@ -20,21 +20,19 @@ const EditUser = ({opened, setOpened, user, setUser}) => {
       location, motto, bio
     };
     setOpened(false);
-    console.log(user);
     //create Form from object
     const formData = new FormData();
-    formData.append('individual_id', userId);
-    formData.append('location', location);
-    formData.append('motto', motto);
-    formData.append('age', age);
-    formData.append('bio', bio);
+    formData.append('individual_id', userId );
+    formData.append('location', location || user.location);
+    formData.append('motto', motto || user.motto);
+    formData.append('age', age || user.age);
+    formData.append('bio', bio || user.bio);
     if (filename) {
       const photo = filename;
       formData.append('photo', photo);
     }
     //post Form to server
     axios.post(`${process.env.SERVER_ADDR}:${process.env.PORT}/db/individuals`, formData, config).then(result => {
-      console.log(result.data[0]);
       setUser(result.data[0])
     })
   };
@@ -70,25 +68,25 @@ const EditUser = ({opened, setOpened, user, setUser}) => {
         placeholder={user.location}
         label="Location"
         onChange={handleLocation}
-        value={user.location}
+        value={location}
         />
       <TextInput
         placeholder={user.motto}
         label="motto"
         onChange={handleMotto}
-        value={user.motto}
+        value={motto}
         />
         <TextInput
         placeholder={user.age}
         label="age"
         onChange={handleAge}
-        value={user.age}
+        value={age}
         />
       <Textarea
         placeholder={user.bio}
         label="Your Bio"
         onChange={handleBio}
-        value={user.bio}
+        value={bio}
         />
         <Button type="submit" onClick={handleSubmitForm}>Submit</Button>
     </Modal>
