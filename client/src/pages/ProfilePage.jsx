@@ -7,6 +7,8 @@ import NotificationList from '../components/Notifications/NotificationList.jsx';
 import { useRaveStore } from '../helpers/raveStore.js';
 import { getUserData } from '../helpers/getUserData.js';
 
+const SERVER_ADDR = process.env.SERVER_ADDR + ':' + process.env.PORT;
+
 const Outer = styled.div`
   display: flex;
   flex-direction: column;
@@ -72,20 +74,25 @@ const ProfilePage = () => {
   const userId = useRaveStore((state) => state.userId);
 
   useEffect(() => {
-    console.log(userId)
     getUserData(userId).then(results => {
-      // setUser(results.data[0]);
+      console.log(results.data[0]);
+      setUser(results.data[0]);
+      setProfileImage(`${SERVER_ADDR}/${results.data[0].photo}`);
     })
   }, [userId])
 
-  const [user, setUser] = useState(exampleUser);
+  const [user, setUser] = useState({});
   const isOwner = true;
-  const [profileImage, setProfileImage] = useState(user.photo);
+  const [profileImage, setProfileImage] = useState('');
 
   const [opened, setOpened] = useState(false);
 
   const EditIcon = (<ActionIcon size="lg" onClick={() => {setOpened(true)}}><img style={{width: '20px'}}src='https://cdn-icons-png.flaticon.com/512/1828/1828911.png'/></ActionIcon>);
-
+  if (!userId) {
+    return (
+      <div><h1>Loading</h1></div>
+    )
+  } else {
   return (
   <Outer>
     <Profile>
@@ -95,11 +102,11 @@ const ProfilePage = () => {
         <ProfileImage src={profileImage}/>
         {isOwner ? EditIcon : null}
         <AboutMe>
-          <h4>{user.individual_id}</h4>
-          <PAbout>{user.bio}</PAbout>
-          <PAbout>Location: {user.location}</PAbout>
-          <PAbout>Age: {user.age}</PAbout>
-          <PAbout>motto: {user.motto}</PAbout>
+          <h4>{user.individual_id || ''}</h4>
+          <PAbout>{user.bio || ''}</PAbout>
+          <PAbout>Location: {user.location || ''}</PAbout>
+          <PAbout>Age: {user.age || ''}</PAbout>
+          <PAbout>motto: {user.motto || ''}</PAbout>
         </AboutMe>
       </About>
       <Sidebar>
@@ -134,6 +141,7 @@ const ProfilePage = () => {
     </Profile>
   </Outer>
   )
+  }
 }
 
 const getDate = (date) => {
