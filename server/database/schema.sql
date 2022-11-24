@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS individuals (
   motto varchar (255) DEFAULT " ",
   location varchar (255) DEFAULT " ",
   bio TEXT DEFAULT " ",
+  age varchar (255) DEFAULT " ",
   photo varchar (255) DEFAULT " ",
   playlist varchar (255) DEFAULT " "
 );

@@ -74,7 +74,6 @@ const ProfilePage = () => {
   const userId = useRaveStore((state) => state.userId);
 
   useEffect(() => {
-    console.log(userId)
     getUserData(userId).then(results => {
       console.log(results.data[0]);
       setUser(results.data[0]);
@@ -83,7 +82,6 @@ const ProfilePage = () => {
   }, [userId])
 
   const [user, setUser] = useState({});
-  console.log(user);
   const isOwner = true;
   const [profileImage, setProfileImage] = useState('');
 
