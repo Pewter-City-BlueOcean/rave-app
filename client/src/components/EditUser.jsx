@@ -9,6 +9,7 @@ const EditUser = ({opened, setOpened, user, setUser}) => {
   const [filename, setFilename] = useState('');
   const [username, setUsername] = useState(user.username);
   const [location, setLocation] = useState(user.location);
+  const [age, setAge] = useState(user.age);
   const [motto, setMotto] = useState(user.motto);
   const [bio, setBio] = useState(user.bio);
 
@@ -25,6 +26,7 @@ const EditUser = ({opened, setOpened, user, setUser}) => {
     formData.append('individual_id', userId);
     formData.append('location', location);
     formData.append('motto', motto);
+    formData.append('age', age);
     formData.append('bio', bio);
     if (filename) {
       const photo = filename;
@@ -49,6 +51,9 @@ const EditUser = ({opened, setOpened, user, setUser}) => {
   const handleBio = (e) => {
     setBio(e.target.value);
   }
+  const handleAge = (e) => {
+    setAge(e.target.value);
+  }
 
   return (
     <Modal
@@ -65,19 +70,25 @@ const EditUser = ({opened, setOpened, user, setUser}) => {
         placeholder={user.location}
         label="Location"
         onChange={handleLocation}
-        value={location}
+        value={user.location}
         />
       <TextInput
         placeholder={user.motto}
         label="motto"
         onChange={handleMotto}
-        value={motto}
+        value={user.motto}
+        />
+        <TextInput
+        placeholder={user.age}
+        label="age"
+        onChange={handleAge}
+        value={user.age}
         />
       <Textarea
         placeholder={user.bio}
         label="Your Bio"
         onChange={handleBio}
-        value={bio}
+        value={user.bio}
         />
         <Button type="submit" onClick={handleSubmitForm}>Submit</Button>
     </Modal>
