@@ -1,9 +1,9 @@
 import { Card, Image, Text, Badge, Button, Group, Input, Title, HoverCard, Grid } from '@mantine/core';
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 
-const EventCard = ({event, userId, searchButtonHandler}) => {
+const EventCard = ({event, userId, searchExecute}) => {
 
   const convertDate =(dateInp) => {
     let dateFormated = new Date(dateInp);
@@ -22,6 +22,10 @@ const EventCard = ({event, userId, searchButtonHandler}) => {
 
   const [buttonLabel, setButtonLabel] = useState(getButtonLabel())
 
+  useEffect(()=> {
+    setButtonLabel(getButtonLabel())
+  }, [event])
+
   const buttonClickHandler = ()=> {
     axios({
       method: 'post',
@@ -33,8 +37,7 @@ const EventCard = ({event, userId, searchButtonHandler}) => {
       }
     })
     .then((val)=>{
-      console.log(val)
-      setButtonLabel('Already a Group Member')
+      searchExecute()
     })
     .catch((err)=>{
       alert(err);
