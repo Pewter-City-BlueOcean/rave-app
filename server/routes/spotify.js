@@ -52,7 +52,7 @@ router.get("/search/:access_token", (req, res) => {
   axios.get(`${SPOTIFY_BASE}search?type=track&q=${query}`, headers)
     .then((response) => {
       if (response.status === 200) {
-        res.send(response);
+        res.send(response.data);
       } else {
         res.status(500).send('Spotify responded with a status ' + response.status);
       }
