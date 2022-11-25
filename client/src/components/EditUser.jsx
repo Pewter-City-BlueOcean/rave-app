@@ -9,6 +9,7 @@ const EditUser = ({opened, setOpened, user, setUser}) => {
   const [filename, setFilename] = useState('');
   const [username, setUsername] = useState(user.username);
   const [location, setLocation] = useState(user.location);
+  const [age, setAge] = useState(user.age);
   const [motto, setMotto] = useState(user.motto);
   const [bio, setBio] = useState(user.bio);
 
@@ -19,20 +20,19 @@ const EditUser = ({opened, setOpened, user, setUser}) => {
       location, motto, bio
     };
     setOpened(false);
-    console.log(user);
     //create Form from object
     const formData = new FormData();
-    formData.append('individual_id', userId);
-    formData.append('location', location);
-    formData.append('motto', motto);
-    formData.append('bio', bio);
+    formData.append('individual_id', userId );
+    formData.append('location', location || user.location);
+    formData.append('motto', motto || user.motto);
+    formData.append('age', age || user.age);
+    formData.append('bio', bio || user.bio);
     if (filename) {
       const photo = filename;
       formData.append('photo', photo);
     }
     //post Form to server
     axios.post(`${process.env.SERVER_ADDR}:${process.env.PORT}/db/individuals`, formData, config).then(result => {
-      console.log(result.data[0]);
       setUser(result.data[0])
     })
   };
@@ -48,6 +48,9 @@ const EditUser = ({opened, setOpened, user, setUser}) => {
   }
   const handleBio = (e) => {
     setBio(e.target.value);
+  }
+  const handleAge = (e) => {
+    setAge(e.target.value);
   }
 
   return (
@@ -72,6 +75,12 @@ const EditUser = ({opened, setOpened, user, setUser}) => {
         label="motto"
         onChange={handleMotto}
         value={motto}
+        />
+        <TextInput
+        placeholder={user.age}
+        label="age"
+        onChange={handleAge}
+        value={age}
         />
       <Textarea
         placeholder={user.bio}

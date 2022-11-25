@@ -1,28 +1,43 @@
 import { Card, Image, Text, Badge, Button, Group, Input, Title, HoverCard, Grid } from '@mantine/core';
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 
-const EventCard = ({event}) => {
-
-  let replaceMeLaterWithZuswang_individual_id = 12345;
+const EventCard = ({event, userId, searchExecute}) => {
 
   const convertDate =(dateInp) => {
     let dateFormated = new Date(dateInp);
     return `${dateFormated.toDateString()} at ${dateFormated.toLocaleTimeString()}`;
   }
 
+  const getButtonLabel = () => {
+    if (event.group_members.length === 0) {
+      return 'Create New Group';
+     } else if (event.group_members.includes(userId)) {
+      return 'Already a Group Member';
+     } else {
+      return 'Join Group';
+     };
+  }
+
+  const [buttonLabel, setButtonLabel] = useState(getButtonLabel())
+
+  useEffect(()=> {
+    setButtonLabel(getButtonLabel())
+  }, [event])
+
   const buttonClickHandler = ()=> {
     axios({
       method: 'post',
       url: '/sg/events',
       data: {
-        invididual_id: replaceMeLaterWithZuswang_individual_id,
+
+        invididual_id: userId,
         objEventData: event
       }
     })
     .then((val)=>{
-      console.log(val);
+      searchExecute()
     })
     .catch((err)=>{
       alert(err);

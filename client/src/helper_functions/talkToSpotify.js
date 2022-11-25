@@ -2,6 +2,20 @@ import axios from "axios"
 
 const SERVER_ADDR = process.env.SERVER_ADDR + ':' + process.env.PORT;
 
+const handleError = (error) => {
+  if (error.response.status === 401) {
+    axios.get(`/spotify/auth/refresh/${refresh_token}`)
+      .then((response) => {
+        setAccess_token(response.data.access_token);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  } else {
+    throw 'Something went wrong talking to Spotify!  Access token is expired but we could not refresh it';
+  }
+}
+
 const spotify = {
   /**
    * Asks spotify for information from /me endpoint
@@ -24,18 +38,60 @@ const spotify = {
         }
       })
       .catch((error) => {
-        if (error.response.status === 401) {
-          axios.get(`/spotify/auth/refresh/${refresh_token}`)
-            .then((response) => {
-              setAccess_token(response.data.access_token);
-            })
-            .catch((error) => {
-              console.log(error);
-            })
-        } else {
-          throw 'Something went wrong talking to Spotify!  Access token is expired but we could not refresh it';
-        }
+        handleError(error);
       })
+  },
+
+  getPlaylist: (access_token, playlist_id, setAccess_token) => {
+    return axios.get(`/spotify/playlist/${playlist_id}/${access_token}`)
+      .then((response) => {
+        return response.status;
+      })
+      .catch((error) => {
+        handleError(error);
+      });
+  },
+
+  updatePlaylistInfo: (access_token, playlist_id, setAccess_token) => {
+    return axios.put(`/spotify/playlist/${playlist_id}/${access_token}`, body)
+      .then((response) => {
+        return response.status;
+      })
+      .catch((error) => {
+        handleError(error);
+      });
+  },
+
+  getPlaylistTracks: (access_token, playlist_id, setAccess_token) => {
+    return axios.get(`/spotify/playlist/${playlist_id}/tracks/${access_token}`, body)
+      .then((response) => {
+        return response.status;
+      })
+      .catch((error) => {
+        handleError(error);
+      });
+  },
+
+  addTrackToPlaylist: (access_token, playlist_id, setAccess_token) => {
+    return axios.post(`/spotify/playlist/${playlist_id}/tracks/${access_token}`, body)
+      .then((response) => {
+        return response.status;
+      })
+      .catch((error) => {
+        handleError(error);
+      });
+  },
+
+  removeTrackFromPlaylist: (access_token, playlist_id, setAccess_token) => {
+    return null;
+  },
+
+  getMyPlaylists: (access_token, playlist_id, setAccess_token) => {
+    return null;
+  },
+
+  createPlaylist: (access_token) => {
+    return null;
   },
 
   /**
@@ -60,7 +116,9 @@ const spotify = {
 
         const player = new window.Spotify.Player({
             name: 'neuRAVE',
-            getOAuthToken: cb => { cb(access_token); },
+            getOAuthToken: cb => {
+              cb(access_token);
+            },
             volume: 0.5
         });
 
@@ -72,6 +130,10 @@ const spotify = {
 
         player.addListener('not_ready', ({ device_id }) => {
             console.log('Device ID has gone offline', device_id);
+        });
+
+        player.addListener("authentication_error", ({ message }) => {
+          console.error(message);
         });
 
         player.addListener('player_state_changed', ( state => {
@@ -93,7 +155,7 @@ const spotify = {
         player.connect();
 
     };
-  }
+  },
 }
 
 export default spotify;
