@@ -7,11 +7,12 @@ DROP TABLE IF EXISTS groups;
 CREATE TABLE IF NOT EXISTS individuals (
   individual_id varchar (255) PRIMARY KEY NOT NULL,
   email varchar(55) NOT NULL,
-  motto varchar (255),
-  location varchar (255),
-  bio TEXT,
-  photo varchar (255),
-  playlist varchar (255)
+  motto varchar (255) DEFAULT " ",
+  location varchar (255) DEFAULT " ",
+  bio TEXT DEFAULT " ",
+  age varchar (255) DEFAULT " ",
+  photo varchar (255) DEFAULT " ",
+  playlist varchar (255) DEFAULT " "
 );
 
 CREATE TABLE groups (

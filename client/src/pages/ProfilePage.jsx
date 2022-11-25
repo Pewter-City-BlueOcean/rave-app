@@ -6,6 +6,11 @@ import EditUser from '../components/EditUser.jsx';
 import NotificationList from '../components/Notifications/NotificationList.jsx';
 import { useRaveStore } from '../helpers/raveStore.js';
 import { getUserData } from '../helpers/getUserData.js';
+import {getDaysFromToday} from '../helpers/time_helpers.js';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
+const SERVER_ADDR = process.env.SERVER_ADDR + ':' + process.env.PORT;
 
 const Outer = styled.div`
   display: flex;
@@ -66,26 +71,65 @@ const SidebarTitles = styled.h4`
 const ProfilePage = () => {
 
   const [notifications, setNotifications] = useState([{title: 'EventName', date: Date.now()}]);
-  const [upcomingEvents, setUpcomingEvents] = useState([{title: 'EventName', date: Date.now()}]);
-  const [pastEvents, setPastEvents] = useState([{title: 'EventName', date: Date.now()}]);
-
+  const setCurrentGroup = useRaveStore((state) => state.setCurrentGroup);
+  const [upcoming, setUpcoming] = useState([]);
+  const [past, setPast] = useState([]);
+  let navigate = useNavigate();
   const userId = useRaveStore((state) => state.userId);
 
+  const getGroups = () => {
+    const config = {
+      params: {
+        user_id: userId
+      }
+    };
+
+    const divideGroups = (g) => {
+      g.forEach((group) => {
+        var isPast = (getDaysFromToday(group.datetime_local) < 0);
+        isPast ? setPast( past => [...past, group]) : setUpcoming(upcoming => [...upcoming, group])
+      }
+      )
+    }
+
+    axios.get(`${process.env.SERVER_ADDR}:${process.env.PORT}/db/groups/?${userId}`)
+      .then((res) => {
+        console.log('Got the groups', res.data);
+        divideGroups(res.data);
+        setGroups(res.data);
+      })
+      .catch(e => console.error(e));
+  }
+
   useEffect(() => {
-    console.log(userId)
-    getUserData(userId).then(results => {
-      // setUser(results.data[0]);
-    })
+    if (userId) {
+      getUserData(userId).then(results => {
+        console.log(results.data[0]);
+        setUser(results.data[0]);
+        setProfileImage(`${SERVER_ADDR}/${results.data[0].photo}`);
+      })
+      getGroups();
+    }
   }, [userId])
 
-  const [user, setUser] = useState(exampleUser);
+  const [user, setUser] = useState({});
   const isOwner = true;
-  const [profileImage, setProfileImage] = useState(user.photo);
+  const [profileImage, setProfileImage] = useState('');
 
   const [opened, setOpened] = useState(false);
 
-  const EditIcon = (<ActionIcon size="lg" onClick={() => {setOpened(true)}}><img style={{width: '20px'}}src='https://cdn-icons-png.flaticon.com/512/1828/1828911.png'/></ActionIcon>);
+  const handleEventClick = (event) => {
+    setCurrentGroup(event);
+    let path = '/group';
+    navigate(path);
+  };
 
+  const EditIcon = (<ActionIcon size="lg" onClick={() => {setOpened(true)}}><img style={{width: '20px'}}src='https://cdn-icons-png.flaticon.com/512/1828/1828911.png'/></ActionIcon>);
+  if (!userId) {
+    return (
+      <div><h1>Loading</h1></div>
+    )
+  } else {
   return (
   <Outer>
     <Profile>
@@ -95,11 +139,11 @@ const ProfilePage = () => {
         <ProfileImage src={profileImage}/>
         {isOwner ? EditIcon : null}
         <AboutMe>
-          <h4>{user.individual_id}</h4>
-          <PAbout>{user.bio}</PAbout>
-          <PAbout>Location: {user.location}</PAbout>
-          <PAbout>Age: {user.age}</PAbout>
-          <PAbout>motto: {user.motto}</PAbout>
+          <h4>{user.individual_id || ''}</h4>
+          <PAbout>{user.bio || ''}</PAbout>
+          <PAbout>Location: {user.location || ''}</PAbout>
+          <PAbout>Age: {user.age || ''}</PAbout>
+          <PAbout>motto: {user.motto || ''}</PAbout>
         </AboutMe>
       </About>
       <Sidebar>
@@ -112,15 +156,15 @@ const ProfilePage = () => {
           </Tabs.List>
 
           <Tabs.Panel value="Upcoming" pt="xs">
-            {upcomingEvents.map((event, index) => (
+            {upcoming.map((event, index) => (
               <p key={index} >{event.title} is {getDate(event.date)} </p>
               ))
             }
           </Tabs.Panel>
 
           <Tabs.Panel value="Past" pt="xs">
-            {pastEvents.map((event, index) => (
-              <p key={index} >{event.title} is {getDate(event.date)} </p>
+            {past.map((event, index) => (
+              <p onClick={() => {handleEventClick(event)}} key={index} >{event.event_title} is {getDate(event.datetime_local)} </p>
               ))
             }
           </Tabs.Panel>
@@ -134,6 +178,7 @@ const ProfilePage = () => {
     </Profile>
   </Outer>
   )
+  }
 }
 
 const getDate = (date) => {
