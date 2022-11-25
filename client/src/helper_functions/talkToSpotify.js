@@ -2,6 +2,10 @@ import axios from "axios"
 
 const SERVER_ADDR = process.env.SERVER_ADDR + ':' + process.env.PORT;
 
+/**
+ *
+ * @param {*} error
+ */
 const handleError = (error) => {
   if (error.response.status === 401) {
     axios.get(`/spotify/auth/refresh/${refresh_token}`)
@@ -42,6 +46,13 @@ const spotify = {
       })
   },
 
+  /**
+   *
+   * @param {*} access_token
+   * @param {*} playlist_id
+   * @param {*} setAccess_token
+   * @returns
+   */
   getPlaylist: (access_token, playlist_id, setAccess_token) => {
     return axios.get(`/spotify/playlist/${playlist_id}/${access_token}`)
       .then((response) => {
@@ -52,7 +63,15 @@ const spotify = {
       });
   },
 
-  updatePlaylistInfo: (access_token, playlist_id, setAccess_token) => {
+  /**
+   *
+   * @param {*} access_token
+   * @param {*} playlist_id
+   * @param {*} setAccess_token
+   * @param {*} body
+   * @returns
+   */
+  updatePlaylistInfo: (access_token, playlist_id, body, setAccess_token) => {
     return axios.put(`/spotify/playlist/${playlist_id}/${access_token}`, body)
       .then((response) => {
         return response.status;
@@ -62,7 +81,15 @@ const spotify = {
       });
   },
 
-  getPlaylistTracks: (access_token, playlist_id, setAccess_token) => {
+  /**
+   *
+   * @param {*} access_token
+   * @param {*} playlist_id
+   * @param {*} setAccess_token
+   * @param {*} body
+   * @returns
+   */
+  getPlaylistTracks: (access_token, playlist_id, body, setAccess_token) => {
     return axios.get(`/spotify/playlist/${playlist_id}/tracks/${access_token}`, body)
       .then((response) => {
         return response.status;
@@ -72,7 +99,15 @@ const spotify = {
       });
   },
 
-  addTrackToPlaylist: (access_token, playlist_id, setAccess_token) => {
+  /**
+   *
+   * @param {*} access_token
+   * @param {*} playlist_id
+   * @param {*} body
+   * @param {*} setAccess_token
+   * @returns
+   */
+  addTrackToPlaylist: (access_token, playlist_id, body, setAccess_token) => {
     return axios.post(`/spotify/playlist/${playlist_id}/tracks/${access_token}`, body)
       .then((response) => {
         return response.status;
@@ -82,16 +117,56 @@ const spotify = {
       });
   },
 
-  removeTrackFromPlaylist: (access_token, playlist_id, setAccess_token) => {
-    return null;
+  /**
+   *
+   * @param {*} access_token
+   * @param {*} playlist_id
+   * @param {*} body
+   * @param {*} setAccess_token
+   * @returns
+   */
+  removeTrackFromPlaylist: (access_token, playlist_id, body, setAccess_token) => {
+    return axios.delete(`/spotify/playlist/${playlist_id}/tracks/${access_token}`, body)
+      .then((response) => {
+        return response.status;
+      })
+      .catch((error) => {
+        handleError(error);
+      });
   },
 
+  /**
+   *
+   * @param {*} access_token
+   * @param {*} playlist_id
+   * @param {*} setAccess_token
+   * @returns
+   */
   getMyPlaylists: (access_token, playlist_id, setAccess_token) => {
-    return null;
+    return axios.get(`/spotify/playlist/me/${access_token}`,)
+      .then((response) => {
+        return response.status;
+      })
+      .catch((error) => {
+        handleError(error);
+      });
   },
 
-  createPlaylist: (access_token) => {
-    return null;
+  /**
+   *
+   * @param {*} access_token
+   * @param {*} user_id
+   * @param {*} setAccess_token
+   * @returns
+   */
+  createPlaylist: (access_token, user_id, setAccess_token) => {
+    return axios.get(`/users/${user_id}/playlists/${access_token}`)
+      .then((response) => {
+        return response.data;
+      })
+      .catch((error) => {
+        handleError(error);
+      });
   },
 
   /**
