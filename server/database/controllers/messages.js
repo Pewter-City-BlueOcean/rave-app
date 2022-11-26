@@ -2,7 +2,7 @@ const pool = require('../postgresDB.js');
 
 const getMessages = (req, res) => {
   const groupId = req.query.groupId;
-  return pool.query('SELECT m.message_creation_datetime, m.message_text, m.individual_id, i.photo, i.spotify_username FROM messages m, individuals i WHERE m.group_id = $1 AND m.individual_id = i.individual_id ORDER BY m.message_creation_datetime DESC', [groupId])
+  return pool.query('SELECT m.message_creation_datetime, m.message_text, m.individual_id, i.photo, i.individual_id FROM messages m, individuals i WHERE m.group_id = $1 AND m.individual_id = i.individual_id ORDER BY m.message_creation_datetime DESC', [groupId])
     .then((result) => res.send(result.rows))
     .catch((err) => console.log(err));
 };

@@ -5,8 +5,8 @@ import moment from 'moment';
 const { useState, useEffect } = React;
 
 const Chat = () => {
-  const [groupId, setGroupId] = useState(5814061);
-  const [userId, setUserId] = useState(10);
+  const [groupId, setGroupId] = useState(5852961);
+  const [userId, setUserId] = useState('31d2ibnaf2ug6gwivecavuhnphze');
   const [profilePic, setProfilePic] = useState('');
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
@@ -38,18 +38,17 @@ const Chat = () => {
         'message': newMessage
       })
       .then(() => setNewMessage(''))
+      .then(()=> socket.emit('new message emitted!'))
       .then(() => getMessages())
       .catch((err) => console.log(err));
     }
   };
 
+  socket.on('new message broadcasted!', ()=> {getMessages()});
+
   useEffect(() => {
     getUserInfo();
     getMessages();
-    const interval = setInterval(() => {
-      getMessages();
-    }, 10000);
-    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -63,7 +62,7 @@ const Chat = () => {
                 <img src={message.photo} width='40px' height='40px' style={{borderRadius: '50%', objectFit: 'cover', verticalAlign: 'middle', margin: '15px'}}></img>
                 <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start'}}>
                   <div style={{display: 'flex'}}>
-                    <h5 style={{margin: '0'}}> {message.spotify_username} &#x2022; </h5>
+                    <h5 style={{margin: '0'}}> {message.individual_id} &#x2022; </h5>
                     <p style={{margin: '1px 3px', fontSize: '12px'}}> {moment(message.message_creation_datetime).subtract(6, 'hours').fromNow()} </p>
                   </div>
                   <p style={{backgroundColor: '#FFFFFF', color: '#000000', width: 'fit-content', maxWidth: '400px', height: 'fit-content', padding: '5px 10px', borderRadius: '5px', margin: '5px 0 20px 0', textAlign: 'left', wordWrap: 'break-word'}}> {message.message_text} </p>
@@ -76,7 +75,7 @@ const Chat = () => {
                 <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-end'}}>
                   <div style={{display: 'flex'}}>
                     <p style={{margin: '1px 3px', fontSize: '12px'}}> {moment(message.message_creation_datetime).subtract(6, 'hours').fromNow()} </p>
-                    <h5 style={{margin: '0'}}> &#x2022; {message.spotify_username} </h5>
+                    <h5 style={{margin: '0'}}> &#x2022; {message.individual_id} </h5>
                   </div>
                   <p style={{backgroundColor: '#FFFFFF', color: '#000000', width: 'fit-content', maxWidth: '400px', height: 'fit-content', padding: '5px 10px', borderRadius: '5px', margin: '5px 0 20px 0', textAlign: 'left', wordWrap: 'break-word'}}> {message.message_text} </p>
                 </div>
