@@ -92,7 +92,7 @@ const ProfilePage = () => {
       )
     }
 
-    axios.get(`${process.env.SERVER_ADDR}:${process.env.PORT}/db/groups/?${userId}`)
+    axios.get(`${process.env.SERVER_ADDR}:${process.env.PORT}/db/groups/?user_id=${userId}`)
       .then((res) => {
         console.log('Got the groups', res.data);
         divideGroups(res.data);
@@ -157,7 +157,7 @@ const ProfilePage = () => {
 
           <Tabs.Panel value="Upcoming" pt="xs">
             {upcoming.map((event, index) => (
-              <p key={index} >{event.title} is {getDate(event.date)} </p>
+              <p key={index} >{event.event_title} is {getDate(event.datetime_local)} </p>
               ))
             }
           </Tabs.Panel>
