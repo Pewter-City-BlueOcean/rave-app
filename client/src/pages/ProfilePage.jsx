@@ -74,6 +74,7 @@ const ProfilePage = () => {
   const setCurrentGroup = useRaveStore((state) => state.setCurrentGroup);
   const [upcoming, setUpcoming] = useState([]);
   const [past, setPast] = useState([]);
+  const [groups, setGroups] = useState([]);
   let navigate = useNavigate();
   const userId = useRaveStore((state) => state.userId);
 
@@ -139,7 +140,7 @@ const ProfilePage = () => {
         <ProfileImage src={profileImage}/>
         {isOwner ? EditIcon : null}
         <AboutMe>
-          <h4>{user.individual_id || ''}</h4>
+          <h4>{user.username || user.individual_id}</h4>
           <PAbout>{user.bio || ''}</PAbout>
           <PAbout>Location: {user.location || ''}</PAbout>
           <PAbout>Age: {user.age || ''}</PAbout>
@@ -157,7 +158,7 @@ const ProfilePage = () => {
 
           <Tabs.Panel value="Upcoming" pt="xs">
             {upcoming.map((event, index) => (
-              <p key={index} >{event.event_title} is {getDate(event.datetime_local)} </p>
+              <p onClick={() => {handleEventClick(event)}} key={index} >{event.event_title} is {getDate(event.datetime_local)} </p>
               ))
             }
           </Tabs.Panel>
@@ -171,7 +172,7 @@ const ProfilePage = () => {
           </Tabs>
         </Events>
         <Notifications>
-          <NotificationList />
+          <NotificationList groups={groups} />
         </Notifications>
       </Sidebar>
     </MantineProvider>
