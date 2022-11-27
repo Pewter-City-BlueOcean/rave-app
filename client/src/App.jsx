@@ -68,7 +68,7 @@ const App = () => {
           <Route path="feed" element={<FeedPage />} />
           <Route path="discover" element={<DiscoverPage />} />
           <Route path="group" element={<GroupPage />} />
-          <Route path="me" element={<ProfilePage />} />
+          <Route path="me" element={<ProfilePage access_token={access_token} setAccess_token={handlers.setAccess_token} refresh_token={refresh_token} />} />
         </Route>
       </Routes>
       <Background />

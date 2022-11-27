@@ -9,7 +9,7 @@ const SPOTIFY_BASE = 'https://api.spotify.com/v1';
  * Get Playlist
  * https://developer.spotify.com/documentation/web-api/reference/#/operations/get-playlist
  */
-router.get('/:playlist_id/:access_token', (req, res) => {
+router.get('/get/:playlist_id/:access_token', (req, res) => {
   const playlist_id = req.params.playlist_id;
   const access_token = req.params.access_token;
 
@@ -18,10 +18,24 @@ router.get('/:playlist_id/:access_token', (req, res) => {
       "Authorization": `Bearer ${access_token}`
     }
   }
+  console.log(playlist_id);
+  axios.get(`${SPOTIFY_BASE}/playlists/${playlist_id}`, headers)
+    .then((response) => {
+      console.log('hi')
+      if (response.status === 200) {
+        res.send(response.data);
+      } else {
+        res.status(500).send('Spotify responded with a status ' + response.status);
+      }
+    })
+    .catch((error) => {
+      if (error.response.status === 401) {
+        res.status(401).send();
+      } else {
+        res.status(500).send('Spotify responded with a status ' + error.response.status);
+      }
+    });
 
-  axios.get(`${SPOTIFY_BASE}/playlists/${playlist_id}`, headers);
-
-  res.send();
 });
 
 /**
@@ -39,9 +53,21 @@ router.put('/:playlist_id/:access_token', (req, res) => {
     }
   }
 
-  axios.put(`${SPOTIFY_BASE}/playlists/${playlist_id}`, body, headers);
-
-  res.send();
+  axios.put(`${SPOTIFY_BASE}/playlists/${playlist_id}`, body, headers)
+    .then((response) => {
+      if (response.status === 200) {
+        res.send(response.data);
+      } else {
+        res.status(500).send('Spotify responded with a status ' + response.status);
+      }
+    })
+    .catch((error) => {
+      if (error.response.status === 401) {
+        res.status(401).send();
+      } else {
+        res.status(500).send('Spotify responded with a status ' + error.response.status);
+      }
+    });
 });
 
 /**
@@ -58,9 +84,21 @@ router.get('/:playlist_id/tracks/:access_token', (req, res) => {
     }
   }
 
-  axios.get(`${SPOTIFY_BASE}/playlists/${playlist_id}/tracks`, headers);
-
-  res.send();
+  axios.get(`${SPOTIFY_BASE}/playlists/${playlist_id}/tracks`, headers)
+    .then((response) => {
+      if (response.status === 200) {
+        res.send(response.data);
+      } else {
+        res.status(500).send('Spotify responded with a status ' + response.status);
+      }
+    })
+    .catch((error) => {
+      if (error.response.status === 401) {
+        res.status(401).send();
+      } else {
+        res.status(500).send('Spotify responded with a status ' + error.response.status);
+      }
+    });
 });
 
 /**
@@ -76,9 +114,21 @@ router.get('/:playlist_id/images/:access_token', (req, res) => {
       "Authorization": `Bearer ${access_token}`
     }
   }
-  axios.get(`${SPOTIFY_BASE}/images/${playlist_id}`, headers);
-
-  res.send();
+  axios.get(`${SPOTIFY_BASE}/playlists/${playlist_id}/images`, headers)
+    .then((response) => {
+      if (response.status === 200) {
+        res.send(response.data);
+      } else {
+        res.status(500).send('Spotify responded with a status ' + response.status);
+      }
+    })
+    .catch((error) => {
+      if (error.response.status === 401) {
+        res.status(401).send();
+      } else {
+        res.status(500).send('Spotify responded with a status ' + error.response.status);
+      }
+    });
 });
 
 /**
@@ -88,8 +138,7 @@ router.get('/:playlist_id/images/:access_token', (req, res) => {
 router.post('/:playlist_id/tracks/:access_token', (req, res) => {
   const playlist_id = req.params.playlist_id;
   const access_token = req.params.access_token;
-  const body = {};
-  const uri = req.body.uri;
+  const body = req.body;
 
   const headers = {
     headers: {
@@ -97,14 +146,27 @@ router.post('/:playlist_id/tracks/:access_token', (req, res) => {
     }
   }
 
-  axios.post(`${SPOTIFY_BASE}/tracks/${playlist_id}` +
-    new URLSearchParams({
-      uris: uri
-    }), body, headers);
-
-  res.send();
+  axios.post(`${SPOTIFY_BASE}/playlists/${playlist_id}/tracks`, body, headers)
+    .then((response) => {
+      if (response.status === 201) {
+        res.send(response.data);
+      } else {
+        res.status(500).send('Spotify responded with a status ' + response.status);
+      }
+    })
+    .catch((error) => {
+      if (error.response.status === 401) {
+        res.status(401).send();
+      } else {
+        res.status(500).send('Spotify responded with a status ' + error.response.status);
+      }
+    });
 });
 
+/**
+ * Remove Playlist Items
+ * https://developer.spotify.com/documentation/web-api/reference/#/operations/remove-tracks-playlist
+ */
 router.delete('/:playlist_id/tracks/:access_token', (req, res) => {
   const playlist_id = req.params.playlist_id;
   const access_token = req.params.access_token;
@@ -116,9 +178,83 @@ router.delete('/:playlist_id/tracks/:access_token', (req, res) => {
     }
   }
 
-  axios.delete(`${SPOTIFY_BASE}/playlists/${playlist_id}/tracks`, body, headers);
+  axios.delete(`${SPOTIFY_BASE}/playlists/${playlist_id}/tracks`, body, headers)
+    .then((response) => {
+      if (response.status === 200) {
+        res.send(response.data);
+      } else {
+        res.status(500).send('Spotify responded with a status ' + response.status);
+      }
+    })
+    .catch((error) => {
+      if (error.response.status === 401) {
+        res.status(401).send();
+      } else {
+        res.status(500).send('Spotify responded with a status ' + error.response.status);
+      }
+    });
+});
 
-  res.send();
+/**
+ * Get User's Playlists
+ * https://developer.spotify.com/documentation/web-api/reference/#/operations/get-list-users-playlists
+ */
+router.get(`/:user_id/:access_token`, (req, res) => {
+  const access_token = req.params.access_token;
+  const user_id = req.params.user_id;
+
+  const headers = {
+    headers: {
+      "Authorization": `Bearer ${access_token}`
+    }
+  }
+  axios.get(`${SPOTIFY_BASE}/users/${user_id}/playlists`, headers)
+    .then((response) => {
+      if (response.status === 200) {
+        res.send(response.data);
+      } else {
+        res.status(500).send('Spotify responded with a status ' + response.status);
+      }
+    })
+    .catch((error) => {
+      if (error.response.status === 401) {
+        res.status(401).send();
+      } else {
+        res.status(500).send('Spotify responded with a status ' + error.response.status);
+      }
+    })
+});
+
+/**
+ * Create Playlist
+ * https://developer.spotify.com/documentation/web-api/reference/#/operations/create-playlist
+ */
+router.post('/users/:user_id/playlists/:access_token', (req, res) => {
+  const access_token = req.params.access_token;
+  const user_id = req.params.user_id;
+  const body = req.body;
+
+  const headers = {
+    headers: {
+      "Authorization": `Bearer ${access_token}`
+    }
+  }
+
+  router.post(`${SPOTIFY_BASE}/users/${user_id}/playlists`, body, headers)
+    .then((response) => {
+      if (response.status === 201) {
+        res.send(response.data);
+      } else {
+        res.status(500).send('Spotify responded with a status ' + response.status);
+      }
+    })
+    .catch((error) => {
+      if (error.response.status === 401) {
+        res.status(401).send();
+      } else {
+        res.status(500).send('Spotify responded with a status ' + error.response.status);
+      }
+    })
 });
 
 module.exports = router;
