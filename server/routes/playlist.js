@@ -18,7 +18,7 @@ router.get('/get/:playlist_id/:access_token', (req, res) => {
       "Authorization": `Bearer ${access_token}`
     }
   }
-
+  console.log(playlist_id);
   axios.get(`${SPOTIFY_BASE}/playlists/${playlist_id}`, headers)
     .then((response) => {
       console.log('hi')
@@ -199,15 +199,16 @@ router.delete('/:playlist_id/tracks/:access_token', (req, res) => {
  * Get User's Playlists
  * https://developer.spotify.com/documentation/web-api/reference/#/operations/get-list-users-playlists
  */
-router.get(`/me/:access_token`, (req, res) => {
+router.get(`/:user_id/:access_token`, (req, res) => {
   const access_token = req.params.access_token;
+  const user_id = req.params.user_id;
+
   const headers = {
     headers: {
       "Authorization": `Bearer ${access_token}`
     }
   }
-
-  axios.get(`${SPOTIFY_BASE}/me/playlists`, headers)
+  axios.get(`${SPOTIFY_BASE}/users/${user_id}/playlists`, headers)
     .then((response) => {
       if (response.status === 200) {
         res.send(response.data);
