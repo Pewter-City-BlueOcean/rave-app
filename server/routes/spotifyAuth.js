@@ -22,6 +22,7 @@ const SCOPES = [
   'streaming',
   'playlist-read-collaborative',
   'playlist-modify-public',
+  'playlist-modify-private',
   'user-read-email',
   'user-read-private',
 ];
@@ -158,7 +159,6 @@ router.get('/refresh/:refresh_token', function(req, res) {
   axios.post('https://accounts.spotify.com/api/token', authOptions, headers)
     .then(response => {
       if (response.status === 200) {
-        console.log(response)
         const access_token = response.data.access_token;
         res.send({
           'access_token': access_token
@@ -171,7 +171,7 @@ router.get('/refresh/:refresh_token', function(req, res) {
       console.log(error);
       res.redirect(`${CLIENT_HOME_URL}?` +
         new URLSearchParams({
-          error: 'interal_server_error'
+          error: 'internal_server_error'
         }));
     });
 });

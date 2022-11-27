@@ -13,7 +13,6 @@ const Wrapper = styled.div`
 const FlexColumn = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 100px;
 `
 const Title = styled.nav`
   position:fixed;
@@ -22,6 +21,7 @@ const Title = styled.nav`
 `
 const Body = styled.nav`
   margin-top: 300px;
+  margin-left: 100px;
 `
 
 

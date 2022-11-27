@@ -27,7 +27,7 @@ const updateIndividual = (req, res) => {
           motto = $3,
           bio = $4,
           photo = $5,
-          age = $6
+          age = $6,
       WHERE individual_id = $1
       RETURNING *;
     `;
@@ -76,8 +76,27 @@ const setNewUser = (req, res) => {
   })
 }
 
+const setPlaylist = (req, res) => {
+  const params = [req.body.individual_id, req.body.playlist_id];
+    const query = `
+      UPDATE individuals
+      SET playlist = $2
+      WHERE individual_id = $1
+      RETURNING *;
+    `;
+
+  return pool.query(query, params)
+    .then(results => {
+      res.send(results.rows);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}
+
 module.exports = {
   updateIndividual,
   getIndividual,
-  setNewUser
+  setNewUser,
+  setPlaylist
 };
