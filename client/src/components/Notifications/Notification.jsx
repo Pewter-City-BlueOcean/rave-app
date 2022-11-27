@@ -9,7 +9,7 @@ const Notification = ({event_title, days}) => {
 
   return (
     <div>
-      <p>You have <b>{event_title}</b>{days === 0 ? ' today!' : ' in ' + days + ' days.'}</p>
+      <p style={{color:'black'}} >You have <b>{event_title}</b>{days === 0 ? ' today!' : ' in ' + days + ' days.'}</p>
     </div>
   )
 }

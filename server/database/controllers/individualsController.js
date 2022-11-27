@@ -19,7 +19,7 @@ const updateIndividual = (req, res) => {
         console.log(err);
       })
     })
-    const params = [req.body.individual_id, req.body.location, req.body.motto, req.body.bio, `uploads/images/${filename}`, req.body.age];
+    const params = [req.body.individual_id, req.body.location, req.body.motto, req.body.bio, `uploads/images/${filename}`, req.body.age, req.body.username];
     const query = `
       UPDATE individuals
       SET individual_id = $1,
@@ -28,6 +28,7 @@ const updateIndividual = (req, res) => {
           bio = $4,
           photo = $5,
           age = $6,
+          username = $7
       WHERE individual_id = $1
       RETURNING *;
     `;
@@ -35,14 +36,15 @@ const updateIndividual = (req, res) => {
       res.send(results.rows);
   })
   } else {
-    const params = [req.body.individual_id, req.body.location, req.body.motto, req.body.bio, req.body.age];
+    const params = [req.body.individual_id, req.body.location, req.body.motto, req.body.bio, req.body.age, req.body.username];
     const query = `
     UPDATE individuals
     SET individual_id = $1,
     location = $2,
     motto = $3,
     bio = $4,
-    age = $5
+    age = $5,
+    username = $6
     WHERE individual_id = $1
     RETURNING *;
     `;
