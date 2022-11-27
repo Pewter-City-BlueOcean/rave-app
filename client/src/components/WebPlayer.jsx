@@ -1,6 +1,91 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlay, faPause, faForward, faBackward } from '@fortawesome/free-solid-svg-icons';
+
+import styled from 'styled-components';
+
 import spotify from '../helper_functions/talkToSpotify.js';
+
+const Wrapper = styled.div`
+  background: rgba(0, 0, 0, 0.5);
+  margin-left: 10%;
+  margin-right: 10%;
+  position:fixed;
+  bottom:0;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80%
+`;
+
+const NotConnected = styled.div`
+  height: 64px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Text = styled.div`
+  display: flex;
+  color: white;
+`;
+
+const SongWrapper = styled.div`
+  display: inline-block;
+  flex-basis: 33%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+`;
+
+const SongInfo = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-basis: 33%;
+`;
+
+const NameArtist = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-left: 8px;
+  color: white;
+`;
+
+const Name = styled.b`
+
+`;
+
+const Artist = styled.a`
+
+`;
+
+const ImageContainer = styled.div`
+  padding: 2px
+`;
+
+const ButtonsWrapper = styled.div`
+  display: flex;
+  flex-basis: 34%;
+  padding: 4px;
+  border-radius: 6px;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.5);
+`;
+
+const ButtonsContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+`;
+
+const Hamburger = styled.div`
+  flex-basis: 33%;
+`;
 
 function WebPlayer({ access_token, track }) {
   const [player, setPlayer] = useState(undefined);
@@ -39,41 +124,58 @@ function WebPlayer({ access_token, track }) {
     );
   }, []);
 
+  const play = is_paused ? 'faPlay' : 'fa-duotone fa-pause'
+
   // Skeleton player stolen from Spotify's docs on Web SDK
-  if (!is_active) {
+  if (!is_active || !current_track) {
     return (
-      <div>
-        <div className="main-wrapper">
-          <b> Instance not active. Transfer your playback using your Spotify app </b>
-        </div>
-      </div>)
+      <Wrapper>
+        <NotConnected>
+          <Text>
+            Loading...
+          </Text>
+        </NotConnected>
+        </Wrapper>)
   } else {
     return (
-      <div className="container">
-        <div className="main-wrapper">
+      <Wrapper>
+        <SongWrapper>
 
-          <img src={current_track.album.images[0].url} className="now-playing__cover" alt="" />
+          <SongInfo>
+            <ImageContainer>
+              <img
+                src={current_track.album.images[0].url}
+                style={{
+                  height: '64px',
+                  width: '64px',
+                }}
+                />
+              </ImageContainer>
+          <NameArtist>
+            <Name>{current_track.name}</Name>
+            <Artist>{current_track.artists[0].name}</Artist>
+          </NameArtist>
+          </SongInfo>
+        </SongWrapper>
+        <ButtonsWrapper>
 
-          <div className="now-playing__side">
-              <div>{current_track.name}</div>
-              <div>{current_track.artists[0].name}</div>
+          <ButtonsContainer>
 
-              <button onClick={() => { player.previousTrack() }} >
-                  &lt;&lt;
-              </button>
 
-              <button onClick={() => { player.togglePlay() }} >
-                  { is_paused ? "PLAY" : "PAUSE" }
-              </button>
+            <FontAwesomeIcon icon={faBackward} onClick={() => { player.previousTrack() }}/>
 
-              <button onClick={() => { player.nextTrack() }} >
-                  &gt;&gt;
-              </button>
-          </div>
-        </div>
-      </div>
+            <FontAwesomeIcon icon={is_paused ? faPlay : faPause} onClick={() => {player.togglePlay()}}/>
+
+            <FontAwesomeIcon icon={faForward} onClick={() => { player.previousTrack() }}/>
+
+          </ButtonsContainer>
+        </ButtonsWrapper>
+        <Hamburger>
+              <div></div>
+        </Hamburger>
+      </Wrapper>
     );
   }
 }
 
-export default WebPlayer
+export default WebPlayer;

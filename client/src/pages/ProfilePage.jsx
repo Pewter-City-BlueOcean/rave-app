@@ -9,6 +9,7 @@ import { getUserData } from '../helpers/getUserData.js';
 import {getDaysFromToday} from '../helpers/time_helpers.js';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Playlist from '../components/Playlist.jsx';
 
 const SERVER_ADDR = process.env.SERVER_ADDR + ':' + process.env.PORT;
 
@@ -23,6 +24,24 @@ const Profile = styled.div`
   justify-content: center;
 `;
 
+const ColumnContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const RowContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const PlaylistContainer = styled.div`
+  background: rgba(0, 0, 0, 0.5);
+  margin: 5px;
+  border-radius: 5px;
+  color: white;
+  padding: 0.35vh;
+`;
+
 const About = styled.div`
   display: flex;
   flex-direction: row;
@@ -33,10 +52,20 @@ const About = styled.div`
   color: white;
   padding: 2vh;
 `;
+
+const ImageContainer = styled.div`
+  position: relative;
+
+  width: 40%;
+  height: 0;
+  padding-bottom: 40%;
+`;
+
 const ProfileImage = styled.img`
   border-radius: 50%;
-  width: 40%;
-
+  width: 100%;
+  object-fit: cover;
+  aspect-ratio: 1 / 1;
 `;
 
 const AboutMe = styled.div`
@@ -68,7 +97,7 @@ const Notifications = styled.div`
 const SidebarTitles = styled.h4`
 `
 
-const ProfilePage = () => {
+const ProfilePage = ({access_token, setAccess_token, refresh_token}) => {
 
   const [notifications, setNotifications] = useState([{title: 'EventName', date: Date.now()}]);
   const setCurrentGroup = useRaveStore((state) => state.setCurrentGroup);
@@ -118,7 +147,6 @@ const ProfilePage = () => {
   const [profileImage, setProfileImage] = useState('');
 
   const [opened, setOpened] = useState(false);
-
   const handleEventClick = (event) => {
     setCurrentGroup(event);
     let path = '/group';
@@ -126,6 +154,7 @@ const ProfilePage = () => {
   };
 
   const EditIcon = (<ActionIcon size="lg" onClick={() => {setOpened(true)}}><img style={{width: '20px'}}src='https://cdn-icons-png.flaticon.com/512/1828/1828911.png'/></ActionIcon>);
+
   if (!userId) {
     return (
       <div><h1>Loading</h1></div>

@@ -40,7 +40,7 @@ router.get('/me/:access_token', (req, res) => {
  * https://developer.spotify.com/documentation/web-api/reference/#/operations/search
  */
 router.get("/search/:access_token", (req, res) => {
-  const access_token = req.params.access_token
+  const access_token = req.params.access_token;
   const query = req.body.query.split(" ").join("%20");
 
   const headers = {
@@ -52,7 +52,34 @@ router.get("/search/:access_token", (req, res) => {
   axios.get(`${SPOTIFY_BASE}search?type=track&q=${query}`, headers)
     .then((response) => {
       if (response.status === 200) {
-        res.send(response);
+        res.send(response.data);
+      } else {
+        res.status(500).send('Spotify responded with a status ' + response.status);
+      }
+    })
+    .catch((error) => {
+      if (error.response.status === 401) {
+        res.status(401).send();
+      } else {
+        res.status(500).send('Spotify responded with a status ' + error.response.status);
+      }
+    })
+});
+
+router.put('/player/:access_token', (req, res) => {
+  const access_token = req.params.access_token;
+  const body = req.body;
+
+  const headers = {
+    headers: {
+      "Authorization": `Bearer ${access_token}`
+    }
+  }
+
+  axios.put(`${SPOTIFY_BASE}/me/player`, body, headers)
+    .then((response) => {
+      if (response.status === 202) {
+        res.send(response.data);
       } else {
         res.status(500).send('Spotify responded with a status ' + response.status);
       }
