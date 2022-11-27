@@ -135,18 +135,33 @@ const ProfilePage = () => {
   <Outer>
     <Profile>
       <MantineProvider theme={{colorScheme: 'dark'}}>
-      <About>
-        <EditUser user={user} setUser={setUser} opened={opened} setOpened={setOpened} />
-        <ProfileImage src={profileImage}/>
-        {isOwner ? EditIcon : null}
-        <AboutMe>
-          <h4>{user.username || user.individual_id}</h4>
-          <PAbout>{user.bio || ''}</PAbout>
-          <PAbout>Location: {user.location || ''}</PAbout>
-          <PAbout>Age: {user.age || ''}</PAbout>
-          <PAbout>motto: {user.motto || ''}</PAbout>
-        </AboutMe>
-      </About>
+      <ColumnContainer>
+        <PlaylistContainer>
+          <Playlist
+            id={user.playlist}
+            access_token={access_token}
+            setAccess_token={setAccess_token}
+            refresh_token={refresh_token}
+            isOwner={isOwner}
+            user={user}
+            setUser={setUser}
+          />
+        </PlaylistContainer>
+      <RowContainer>
+        <About>
+          <EditUser user={user} setUser={setUser} opened={opened} setOpened={setOpened} />
+          <ImageContainer>
+          <ProfileImage src={profileImage}/>
+          </ImageContainer>
+          {isOwner ? EditIcon : null}
+          <AboutMe>
+            <h4>{user.username || user.individual_id}</h4>
+            <PAbout>{user.bio || ''}</PAbout>
+            <PAbout>Location: {user.location || ''}</PAbout>
+            <PAbout>Age: {user.age || ''}</PAbout>
+            <PAbout>motto: {user.motto || ''}</PAbout>
+          </AboutMe>
+        </About>
       <Sidebar>
         <Events>
           <SidebarTitles>Events</SidebarTitles>
@@ -155,14 +170,12 @@ const ProfilePage = () => {
             <Tabs.Tab value="Upcoming" >Upcoming</Tabs.Tab>
             <Tabs.Tab value="Past" >Past</Tabs.Tab>
           </Tabs.List>
-
           <Tabs.Panel value="Upcoming" pt="xs">
             {upcoming.map((event, index) => (
               <p onClick={() => {handleEventClick(event)}} key={index} >{event.event_title} is {getDate(event.datetime_local)} </p>
               ))
             }
           </Tabs.Panel>
-
           <Tabs.Panel value="Past" pt="xs">
             {past.map((event, index) => (
               <p onClick={() => {handleEventClick(event)}} key={index} >{event.event_title} is {getDate(event.datetime_local)} </p>
@@ -175,9 +188,11 @@ const ProfilePage = () => {
           <NotificationList groups={groups} />
         </Notifications>
       </Sidebar>
-    </MantineProvider>
-    </Profile>
-  </Outer>
+    </RowContainer>
+    </ColumnContainer>
+  </MantineProvider>
+  </Profile>
+</Outer>
   )
   }
 }
