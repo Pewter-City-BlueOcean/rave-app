@@ -48,7 +48,7 @@ const H3 = styled.h3`
   color: #eeeee4;
 `
 
-const FeedPage = () => {
+const FeedPage = ({ access_token, refresh_token, setAccess_token }) => {
   const [groups, setGroups] = useState([]);
   const [upcoming, setUpcoming] = useState([]);
   const [past, setPast] = useState([]);
@@ -93,14 +93,14 @@ const FeedPage = () => {
         <H3>Upcoming Events ({upcoming.length})</H3>
         <CardContainer>
           {upcoming.map((event, i) => (
-            <EventCard key={i} event={event} />
+            <EventCard key={i} event={event} access_token={access_token} setAccess_token={setAccess_token} refresh_token={refresh_token} />
           ))}
         </CardContainer>
 
         <H3>Past Events ({past.length})</H3>
         <CardContainer>
         {past.map((event, i) => (
-          <EventCard key={i} event={event} />
+          <EventCard key={i} event={event} access_token={access_token} setAccess_token={setAccess_token} refresh_token={refresh_token} />
         ))}
         </CardContainer>
       </GroupsContainer>
