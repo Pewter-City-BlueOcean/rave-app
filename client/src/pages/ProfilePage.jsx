@@ -10,6 +10,7 @@ import {getDaysFromToday} from '../helpers/time_helpers.js';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Playlist from '../components/Playlist.jsx';
+import { H2, H3 } from '../Styles.jsx';
 
 const SERVER_ADDR = process.env.SERVER_ADDR + ':' + process.env.PORT;
 
@@ -55,7 +56,6 @@ const About = styled.div`
 
 const ImageContainer = styled.div`
   position: relative;
-
   width: 40%;
   height: 0;
   padding-bottom: 40%;
@@ -126,7 +126,6 @@ const ProfilePage = ({access_token, setAccess_token, refresh_token}) => {
       .then((res) => {
         console.log('Got the groups', res.data);
         divideGroups(res.data);
-        setGroups(res.data);
       })
       .catch(e => console.error(e));
   }
