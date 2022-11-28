@@ -1,6 +1,7 @@
 const {Group,Individual, Member} = require('../../models/index.js');
 
 const getGroupMembers =async (req, res) => {
+  console.log('=========')
   const group_id = req.query.group_id;
   try {
     const membersIds = await Individual.findAll({

@@ -65,10 +65,10 @@ const App = () => {
     <div>
       <Routes>
         <Route path="/" element={<Layout access_token={access_token} refresh_token={refresh_token}/>}>
-          <Route path="feed" element={<FeedPage />} />
+          <Route path="feed" element={<FeedPage access_token={access_token} setAccess_token={handlers.setAccess_token} refresh_token={refresh_token} />} />
           <Route path="discover" element={<DiscoverPage />} />
-          <Route path="group" element={<GroupPage />} />
-          <Route path="me" element={<ProfilePage />} />
+          <Route path="group" element={<GroupPage access_token={access_token} setAccess_token={handlers.setAccess_token} refresh_token={refresh_token}/>} />
+          <Route path="me" element={<ProfilePage access_token={access_token} setAccess_token={handlers.setAccess_token} refresh_token={refresh_token} />} />
         </Route>
       </Routes>
       <Background />

@@ -2,7 +2,11 @@ import axios from "axios"
 
 const SERVER_ADDR = process.env.SERVER_ADDR + ':' + process.env.PORT;
 
-const handleError = (error) => {
+/**
+ *
+ * @param {*} error
+ */
+const handleError = (error, refresh_token, setAccess_token) => {
   if (error.response.status === 401) {
     axios.get(`/spotify/auth/refresh/${refresh_token}`)
       .then((response) => {
@@ -12,7 +16,7 @@ const handleError = (error) => {
         console.log(error);
       })
   } else {
-    throw 'Something went wrong talking to Spotify!  Access token is expired but we could not refresh it';
+    throw 'Something went wrong talking to Spotify!';
   }
 }
 
@@ -38,60 +42,140 @@ const spotify = {
         }
       })
       .catch((error) => {
-        handleError(error);
+        handleError(error, refresh_token, setAccess_token);
       })
   },
 
-  getPlaylist: (access_token, playlist_id, setAccess_token) => {
-    return axios.get(`/spotify/playlist/${playlist_id}/${access_token}`)
+  /**
+   *
+   * @param {*} access_token
+   * @param {*} playlist_id
+   * @param {*} setAccess_token
+   * @returns
+   */
+  getPlaylist: (access_token, refresh_token, playlist_id, setAccess_token) => {
+    return axios.get(`/spotify/playlist/get/${playlist_id}/${access_token}`)
       .then((response) => {
-        return response.status;
+        if (response.status === 200) {
+          return response.data;
+        } else {
+          throw 'Something went wrong talking to Spotify!  Could not get playlist ' + playlist_id;
+        }
       })
       .catch((error) => {
-        handleError(error);
+        handleError(error, refresh_token, setAccess_token);
       });
   },
 
-  updatePlaylistInfo: (access_token, playlist_id, setAccess_token) => {
+  /**
+   *
+   * @param {*} access_token
+   * @param {*} playlist_id
+   * @param {*} setAccess_token
+   * @param {*} body
+   * @returns
+   */
+  updatePlaylistInfo: (access_token, refresh_token, playlist_id, body, setAccess_token) => {
     return axios.put(`/spotify/playlist/${playlist_id}/${access_token}`, body)
       .then((response) => {
-        return response.status;
+        return response.data;
       })
       .catch((error) => {
-        handleError(error);
+        handleError(error, refresh_token, setAccess_token);
       });
   },
 
-  getPlaylistTracks: (access_token, playlist_id, setAccess_token) => {
+  /**
+   *
+   * @param {*} access_token
+   * @param {*} playlist_id
+   * @param {*} setAccess_token
+   * @param {*} body
+   * @returns
+   */
+  getPlaylistTracks: (access_token, playlist_id, body, setAccess_token) => {
     return axios.get(`/spotify/playlist/${playlist_id}/tracks/${access_token}`, body)
       .then((response) => {
-        return response.status;
+        return response.data;
       })
       .catch((error) => {
-        handleError(error);
+        handleError(error, refresh_token, setAccess_token);
       });
   },
 
-  addTrackToPlaylist: (access_token, playlist_id, setAccess_token) => {
+  /**
+   *
+   * @param {*} access_token
+   * @param {*} playlist_id
+   * @param {*} body
+   * @param {*} setAccess_token
+   * @returns
+   */
+  addTrackToPlaylist: (access_token, refresh_token, playlist_id, body, setAccess_token) => {
     return axios.post(`/spotify/playlist/${playlist_id}/tracks/${access_token}`, body)
       .then((response) => {
-        return response.status;
+        return response.data;
+      })
+      .catch((error) => {
+        handleError(error, refresh_token, setAccess_token);
+      });
+  },
+
+  /**
+   *
+   * @param {*} access_token
+   * @param {*} playlist_id
+   * @param {*} body
+   * @param {*} setAccess_token
+   * @returns
+   */
+  removeTrackFromPlaylist: (access_token, refresh_token, playlist_id, body, setAccess_token) => {
+    return axios.delete(`/spotify/playlist/${playlist_id}/tracks/${access_token}`, body)
+      .then((response) => {
+        return response.data;
+      })
+      .catch((error) => {
+        handleError(error, refresh_token, setAccess_token);
+      });
+  },
+
+  /**
+   *
+   * @param {*} access_token
+   * @param {*} playlist_id
+   * @param {*} setAccess_token
+   * @returns
+   */
+  getMyPlaylists: (access_token, refresh_token, user_id, setAccess_token) => {
+    return axios.get(`/spotify/playlist/${user_id}/${access_token}`,)
+      .then((response) => {
+        if (response.status === 200) {
+          return response.data.items;
+
+        } else {
+          throw 'Something went wrong talking to Spotify!  Could not get user\'s playlists';
+        }
+      })
+      .catch((error) => {
+        handleError(error, refresh_token, setAccess_token);
+      });
+  },
+
+  /**
+   *
+   * @param {*} access_token
+   * @param {*} user_id
+   * @param {*} setAccess_token
+   * @returns
+   */
+  createPlaylist: (access_token, refresh_token, user_id, setAccess_token) => {
+    return axios.get(`/users/${user_id}/playlists/${access_token}`)
+      .then((response) => {
+        return response.data;
       })
       .catch((error) => {
         handleError(error);
       });
-  },
-
-  removeTrackFromPlaylist: (access_token, playlist_id, setAccess_token) => {
-    return null;
-  },
-
-  getMyPlaylists: (access_token, playlist_id, setAccess_token) => {
-    return null;
-  },
-
-  createPlaylist: (access_token) => {
-    return null;
   },
 
   /**
@@ -126,6 +210,18 @@ const spotify = {
 
         player.addListener('ready', ({ device_id }) => {
             console.log('Ready with Device ID', device_id);
+            const connectToDevice = () => {
+              const body = {
+                device_ids: [device_id],
+                play: false,
+              }
+              axios.put(`${SERVER_ADDR}/spotify/player/${access_token}`, body)
+                .catch((error) => {
+                  handleError(error);
+                });
+            }
+
+            connectToDevice();
         });
 
         player.addListener('not_ready', ({ device_id }) => {
@@ -152,7 +248,11 @@ const spotify = {
 
         }));
 
-        player.connect();
+        player.connect().then((success) => {
+          if (success) {
+            console.log("The Web Playback SDK successfully connected to Spotify!");
+          }
+        });;
 
     };
   },

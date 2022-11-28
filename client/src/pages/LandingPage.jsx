@@ -13,6 +13,7 @@ align-items: center;
 const Login = styled.button`
   display: flex;
   align-items: center;
+  justify-content: center;
   background: rgba(0, 0, 0, 0.5);
   color: #fff;
   line-height: 42px;
@@ -21,7 +22,7 @@ const Login = styled.button`
   padding: 10px;
   margin: 5px;
   border-radius: 10px;
-
+  width: 10.5em;
   &:hover {
     background: rgba(0, 0, 0, 1);
   }
@@ -33,6 +34,7 @@ const LandingPage = () => {
 
   return (
     <Div>
+      <h1>neuRAVE</h1>
       <Login onClick={() => {window.location.href='http://localhost:8080/spotify/auth/login'}}
         onMouseEnter={() => { player.play(); }}>
         Log In With Spotify

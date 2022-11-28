@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import Avatar from '@mui/material/Avatar';
+import EventMap from '../GroupComponents/EventMap.jsx';
 
 // import {AccessTimeFilledIcon} from '@mui/icons-material';
 
@@ -14,17 +15,20 @@ const ConcertDetails = ({groupInfo}) => {
     <h2 className='concert-detail-title'>{groupInfo.event_title}</h2>
     <div>{moment(groupInfo.datetime_local).format("dddd, MMMM Do YYYY, h:mm:ss a")}</div>
     <p>{groupInfo.address} &nbsp; {groupInfo.extended_address} ,&nbsp; {groupInfo.country}</p>
+    <EventMap address={'1940 9th Street NW'} extended_address={'Washington, DC 20001'}/>
     {/* <p>{groupInfo.city}</p> */}
     <div className='column-flex'>
-      {
-        (groupInfo.performers) &&
-        groupInfo.performers.map((p,index)=> (
-          <div className='row-flex' key={index}>
-            {/* <Avatar src={p.image_url} /> */}
-            <p>{p.name}</p>
-          </div>
-          ))
-      }
+      <ul>
+        {
+          (groupInfo.performers) &&
+          groupInfo.performers.map((p,index)=> (
+            <div className='row-flex' key={index}>
+              {/* <Avatar src={p.image_url} /> */}
+              <li>{p.name}</li>
+            </div>
+            ))
+        }
+      </ul>
     </div>
   </div>
 
