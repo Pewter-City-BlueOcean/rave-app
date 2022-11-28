@@ -15,6 +15,7 @@ const getUserPhoto = (req, res) => {
 };
 
 const addMessage = (req, res) => {
+  console.log('added attempt!')
   return pool.query('INSERT INTO messages (message_id, group_id, message_creation_datetime, individual_id, message_text) VALUES (default, $1, default, $2, $3)', [req.body.groupId, req.body.userId, req.body.message])
     .then(() => res.end())
     .catch((err) => console.log(err));
