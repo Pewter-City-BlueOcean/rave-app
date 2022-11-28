@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
-import {Modal, MantineProvider, Tabs, ActionIcon } from '@mantine/core';
+import { Modal, MantineProvider, Tabs, ActionIcon } from '@mantine/core';
 import moment from 'moment';
 import EditUser from '../components/EditUser.jsx';
 import NotificationList from '../components/Notifications/NotificationList.jsx';
 import { useRaveStore } from '../helpers/raveStore.js';
 import { getUserData } from '../helpers/getUserData.js';
-import {getDaysFromToday} from '../helpers/time_helpers.js';
+import { getDaysFromToday } from '../helpers/time_helpers.js';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Playlist from '../components/Playlist.jsx';
@@ -89,12 +89,15 @@ const Sidebar = styled.div`
 `;
 
 const Events = styled.div`
+  font-family: Karla;
 `;
 
 const Notifications = styled.div`
+  font-family: Karla;
 `;
 
 const SidebarTitles = styled.h4`
+  font-family: Karla;
 `
 
 const ProfilePage = ({access_token, setAccess_token, refresh_token}) => {
@@ -166,6 +169,7 @@ const ProfilePage = ({access_token, setAccess_token, refresh_token}) => {
   } else {
   return (
   <Outer>
+    <H2>PROFILE</H2>
     <Profile>
       <MantineProvider theme={{colorScheme: 'dark'}}>
       <ColumnContainer>
@@ -205,13 +209,13 @@ const ProfilePage = ({access_token, setAccess_token, refresh_token}) => {
           </Tabs.List>
           <Tabs.Panel value="Upcoming" pt="xs">
             {upcoming.map((event, index) => (
-              <p onClick={() => {handleEventClick(event)}} key={index} >{event.event_title} is {getDate(event.datetime_local)} </p>
+              <p onClick={() => {handleEventClick(event)}} key={index} >{event.event_title}</p>
               ))
             }
           </Tabs.Panel>
           <Tabs.Panel value="Past" pt="xs">
             {past.map((event, index) => (
-              <p onClick={() => {handleEventClick(event)}} key={index} >{event.event_title} is {getDate(event.datetime_local)} </p>
+              <p onClick={() => {handleEventClick(event)}} key={index} >{event.event_title}</p>
               ))
             }
           </Tabs.Panel>
