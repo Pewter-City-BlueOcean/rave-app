@@ -96,10 +96,9 @@ const setPlaylist = (req, res) => {
     });
 }
 
-const getIndividualsNotInGroup = (req, res) => {
-  const group_id = req.params.group_id;
+const getAllIndividuals = (req, res) => {
   const query = `
-    SELECT * FROM individuals INNER JOIN members ON individuals.individual_id = members.individual_id WHERE members.group_id != ${group_id};
+    SELECT * FROM individuals;
   `;
 
   return pool.query(query)

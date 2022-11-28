@@ -179,6 +179,26 @@ const spotify = {
   },
 
   /**
+   *
+   * @param {*} access_token
+   * @param {*} refresh_token
+   * @param {*} setAccess_token
+   */
+  setPlayback: (access_token, refresh_token, setAccess_token, uri) => {
+    const body = {
+      context_uri: uri
+    };
+
+    return axios.put(`/spotify/play/${access_token}`, body)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      handleError(error);
+    });
+  },
+
+  /**
    * Spotify's Webplayback SDK
    *
    * @param {*} access_token - auth token
@@ -221,7 +241,7 @@ const spotify = {
                 });
             }
 
-            //connectToDevice();
+            connectToDevice();
         });
 
         player.addListener('not_ready', ({ device_id }) => {

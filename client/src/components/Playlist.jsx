@@ -25,10 +25,12 @@ const Playlist = ({id, access_token, setAccess_token, refresh_token, isOwner, us
     }
   }, [id]);
 
+  const handlePlay = () => {
+    spotify.setPlayback(access_token, refresh_token, setAccess_token, `spotify:playlist:${id}`);
+  }
+
   return playlist ? (
-    <div style={styles.wrapper} onClick={()=> {
-      console.log('Should play this playlist')
-    }}>
+    <div style={styles.wrapper} onClick={handlePlay}>
       <div style={styles.imageWrapper}>
         <img style={styles.image} src={playlist.images[0].url}/>
       </div>

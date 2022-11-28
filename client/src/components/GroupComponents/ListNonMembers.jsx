@@ -2,26 +2,23 @@ import React, {useState, useEffect} from 'react';
 import {Modal, ActionIcon } from '@mantine/core';
 import axios from 'axios';
 
-const ListMembers = ({ isOpen, setIsOpen, members, setMembers }) => {
+const ListMembers = ({ isOpen, setIsOpen, members, handleSetMembers, eventInfo}) => {
   const [nonMembers, setNonMembers] = useState([]);
+  const [memberToAdd, setMemberToAdd] = useState();
 
   useEffect(() => {
-    console.log();
-    if (isOpen) {
-      axios.get('/db/individuals/all')
+    console.log('m', members)
+    if (isOpen && members) {
+      axios.get(`/db/individuals/all`)
         .then((response) => {
           const allIndividuals = response.data;
-          const buildNonMembers = [];
-
+          const buildNonMembersArray = [];
           allIndividuals.map((individual) => {
-            if (members.indexOf(individual.individual_id) === -1 && members.indexOf(individual.username) === -1) {
-              console.log(members);
-              buildNonMembers.push(individual);
+            if (!members.includes(individual.individual_id) && !members.includes(individual.username)) {
+              buildNonMembersArray.push(individual);
             }
           })
-
-          setNonMembers([...buildNonMembers]);
-
+          setNonMembers(buildNonMembersArray);
         })
     }
   }, [isOpen]);
@@ -30,6 +27,17 @@ const ListMembers = ({ isOpen, setIsOpen, members, setMembers }) => {
     console.log(nonMembers);
   }, [nonMembers])
 
+  const handleAdd = (nonMember) => {
+    axios.post(`/db/members/${eventInfo.group_id}/${nonMember.individual_id}`)
+      .then((response) => {
+        const memberToAdd = nonMember.username ? nonMember.username : nonMember.individual_id;
+        handleSetMembers([...members, memberToAdd]);
+      });
+
+    setIsOpen(false);
+
+  }
+
   return isOpen ? (
     <Modal
       opened={isOpen}
@@ -37,9 +45,18 @@ const ListMembers = ({ isOpen, setIsOpen, members, setMembers }) => {
       title="Add someone to the Group"
       style={{marginTop: '100px', backgroundColor: '0, 0, 0, 1'}}
     >
-      {nonMembers.map((nonMember) => {
-        console.log(nonMember);
-      })}
+      {
+        nonMembers.map((nonMember) => {
+          return (
+            <div stlye={{display: 'flex', flexDirection: 'column'}}>
+            <div>{nonMember.username ? nonMember.username : nonMember.individual_id}</div>
+            <div style={{cursor: 'pointer'}} onClick={() => {
+              handleAdd(nonMember);
+            }}>+</div>
+            </div>
+            )
+          })
+        }
     </Modal>
   ) : (
     null

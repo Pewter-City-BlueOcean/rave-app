@@ -13,10 +13,6 @@ const ConcertInfo = ( {eventInfo} ) => {
     setMembers(members);
   }
 
-  useEffect(() => {
-    console.log(members);
-  }, [members]);
-
   return (
     <div style={{backgroundColor: 'rgba(0, 0, 0, 0.5)', borderRadius: '5px', margin: '5px', padding: '30px'}}>
       <Notification />
@@ -25,8 +21,8 @@ const ConcertInfo = ( {eventInfo} ) => {
         <ConcertDetails eventInfo={eventInfo}/>
       </div>
 
-      <Attendees groupId={eventInfo.group_id} setMembers={handleSetMembers}/>
-      <AddMember members={members} setMembers={handleSetMembers}/>
+      <Attendees groupId={eventInfo.group_id} handleSetMembers={handleSetMembers} members={members}/>
+      <AddMember eventInfo={eventInfo} members={members} handleSetMembers={handleSetMembers}/>
     </div>
 
   )

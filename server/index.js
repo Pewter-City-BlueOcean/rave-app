@@ -8,8 +8,8 @@ const http = require('http');
 const spotifyAuth = require("./routes/spotifyAuth.js");
 const sgAuth = require("./routes/sg.js");
 const { getGroups } = require("./database/controllers/groupController");
-const { getGroupMembers } = require('./database/controllers/members');
-const { updateIndividual, getIndividual, setNewUser, setPlaylist, getIndividualsNotInGroup } = require("./database/controllers/individualsController");
+const { getGroupMembers, addToGroup } = require('./database/controllers/members');
+const { updateIndividual, getIndividual, setNewUser, setPlaylist, getAllIndividuals } = require("./database/controllers/individualsController");
 //const webPlayback = require('./routes/webPlayback.js');
 const { getMessages, getUserPhoto, addMessage } = require("./database/controllers/messages");
 const spotify = require('./routes/spotify.js');
@@ -38,11 +38,12 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 
 app.get('/db/groups', getGroups);
 app.get('/db/members/:group_id', getGroupMembers);
+app.post('/db/members/:group_id/:individual_id', addToGroup);
 app.post('/db/individuals', updateIndividual);
 app.post('/db/individuals/playlist', setPlaylist);
 app.get('/db/individuals', getIndividual);
 app.post('/db/newIndividual', setNewUser);
-app.get('/db/individuals/:group_id', getIndividualsNotInGroup);
+app.get('/db/individuals/all', getAllIndividuals);
 
 app.get('/messages', getMessages);
 app.get('/userPhoto', getUserPhoto);

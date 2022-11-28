@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const SERVER_ADDR = process.env.SERVER_ADDR + ':' + process.env.PORT;
 
-const Attendees = ({groupId, setMembers}) => {
+const Attendees = ({groupId, handleSetMembers, members}) => {
   const [attendees, setAttendees] = useState([]);
 
   useEffect(() => {
@@ -11,22 +11,23 @@ const Attendees = ({groupId, setMembers}) => {
       axios.get(`${SERVER_ADDR}/db/members/${groupId}`)
         .then((response) => {
           setAttendees(response.data);
-
         })
         .catch((error) => {
           console.log(error);
         });
 
     }
-  }, [groupId]);
+  }, [groupId, members]);
 
   useEffect(() => {
-    const members = [];
-    attendees.map((attendee) => {
-      members.push(attendee.individual_id);
-    });
+    if (JSON.stringify(attendees) !== JSON.stringify(members)) {
+      const members = [];
+      attendees.map((attendee) => {
+        members.push(attendee.individual_id);
+      });
 
-    setMembers[members];
+      handleSetMembers(members);
+    }
   }, [attendees])
 
   return (
