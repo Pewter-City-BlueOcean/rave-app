@@ -17,7 +17,6 @@ const Chat = () => {
   const [profilePic, setProfilePic] = useState('');
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
-  console.log(userId, groupId)
   if (!userId || !groupId) {
     return <div>loading...</div>
   }
