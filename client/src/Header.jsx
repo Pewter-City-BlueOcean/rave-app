@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useRaveStore } from './helpers/raveStore.js';
 
 const H1 = styled.h1`
+  margin-top: 10px;
   font-family: KoHo;
   font-style: italic;
   font-size: 100px;
