@@ -1,12 +1,18 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import ListNonMembers from './ListNonMembers.jsx';
+const AddMember = ({eventInfo, members, handleSetMembers}) => {
+  const [isOpen, setIsOpen] = useState(false);
 
-const AddMember = () => {
+  const handleButtonClick = () => {
+    setIsOpen(true);
+  }
 
   return (
-  <div>
-    AddMember
-  </div>
+    <div>
+      <button style={{cursor: 'pointer'}} onClick={handleButtonClick}>Add Member</button>
 
+      <ListNonMembers isOpen={isOpen} setIsOpen={setIsOpen} members={members} handleSetMembers={handleSetMembers} eventInfo={eventInfo}/>
+    </div>
   )
 }
 
