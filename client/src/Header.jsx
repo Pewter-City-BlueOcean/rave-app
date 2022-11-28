@@ -20,6 +20,7 @@ const H1 = styled.h1`
 const H2 = styled.h2`
   font-size: 25px;
   font-family: KoHo;
+  font-style: bold;
   color: #eeeee4;
 `
 const Nav = styled.nav`
