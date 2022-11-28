@@ -203,7 +203,7 @@ const spotify = {
             getOAuthToken: cb => {
               cb(access_token);
             },
-            volume: 0.5
+            volume: 0.2
         });
 
         setPlayer(player);
