@@ -13,7 +13,7 @@ const H4 = styled.h4`
   color: #eeeee4;
 `
 
-const EventCard = ({event}) => {
+const EventCard = ({ event, access_token, refresh_token, setAccess_token}) => {
 
   const setCurrentGroup = useRaveStore((state) => state.setCurrentGroup);
   const currentGroup = useRaveStore((state) => state.currentGroup);
@@ -22,7 +22,12 @@ const EventCard = ({event}) => {
   const routeChange = () => {
     setCurrentGroup(event);
     console.log(currentGroup);
-    let path = '/group';
+    let path = '/group?' +
+      new URLSearchParams({
+        id: event.group_id,
+        access_token: access_token,
+        refresh_token: refresh_token,
+      });
     navigate(path);
   }
 
