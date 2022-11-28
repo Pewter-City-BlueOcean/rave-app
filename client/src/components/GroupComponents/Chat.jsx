@@ -1,16 +1,26 @@
 import React from 'react';
 import axios from 'axios';
 import moment from 'moment';
+import { useRaveStore } from '../../helpers/raveStore.js';
+import { getUserData } from '../../helpers/getUserData.js';
+
 
 const { useState, useEffect } = React;
 
 const Chat = () => {
-  const [groupId, setGroupId] = useState(5852961);
-  const [userId, setUserId] = useState('31d2ibnaf2ug6gwivecavuhnphze');
+  const groupId = useRaveStore((state) => state.currentGroup.group_id);
+
+  // const [groupId, setGroupId] = useState('5730147');
+  // const [userId, setUserId] = useState('31d2ibnaf2ug6gwivecavuhnphze');
+  const userId = useRaveStore((state) => state.userId);
+
   const [profilePic, setProfilePic] = useState('');
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
-
+  console.log(userId, groupId)
+  if (!userId || !groupId) {
+    return <div>loading...</div>
+  }
   const getUserInfo = () => {
     // should get user information and then set profileInfo to returned data
     axios.get(`/userPhoto?userId=${userId}`)
