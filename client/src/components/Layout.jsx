@@ -20,8 +20,10 @@ const Title = styled.nav`
   width: 90%;
 `
 const Body = styled.nav`
-  margin-top: 300px;
-  margin-left: 100px;
+  margin-top: 100px;
+  // margin-left: 100px;
+  // border: dotted;
+  width: 90%;
 `
 
 
