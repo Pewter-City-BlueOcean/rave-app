@@ -11,6 +11,7 @@ const Wrapper = styled.div`
   height: 200px;
 `
 const H1 = styled.h1`
+  margin-top: 10px;
   font-family: KoHo;
   font-style: italic;
   font-size: 100px;

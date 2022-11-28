@@ -8,6 +8,7 @@ const http = require('http');
 const spotifyAuth = require("./routes/spotifyAuth.js");
 const sgAuth = require("./routes/sg.js");
 const { getGroups } = require("./database/controllers/groupController");
+const { getGroupMembers } = require('./database/controllers/members');
 const { updateIndividual, getIndividual, setNewUser, setPlaylist } = require("./database/controllers/individualsController");
 //const webPlayback = require('./routes/webPlayback.js');
 const { getMessages, getUserPhoto, addMessage } = require("./database/controllers/messages");
@@ -36,6 +37,7 @@ app.use('/sg', sgAuth);
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
 app.get('/db/groups', getGroups);
+app.get('/db/members/:group_id', getGroupMembers);
 app.post('/db/individuals', updateIndividual);
 app.post('/db/individuals/playlist', setPlaylist);
 app.get('/db/individuals', getIndividual);

@@ -50,8 +50,9 @@ const Playlist = ({id, access_token, setAccess_token, refresh_token, isOwner, us
         setAccess_token={setAccess_token}
         refresh_token={refresh_token}
         user={user}
+        setUser={setUser}
       />
-    </div> : <div> This user doesn't have a playlist! </div>
+    </div> : <div> This page doesn't have a playlist! It'd be a lot cooler if it did. </div>
   )
 }
 

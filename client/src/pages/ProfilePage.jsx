@@ -148,7 +148,12 @@ const ProfilePage = ({access_token, setAccess_token, refresh_token}) => {
   const [opened, setOpened] = useState(false);
   const handleEventClick = (event) => {
     setCurrentGroup(event);
-    let path = '/group';
+    let path = '/group?' +
+      new URLSearchParams({
+        id: event.group_id,
+        access_token: access_token,
+        refresh_token: refresh_token
+      });
     navigate(path);
   };
 
