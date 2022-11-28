@@ -5,12 +5,13 @@ import { getDaysFromToday } from '../../helpers/time_helpers.js';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+import { H3 } from '../../Styles.jsx';
 
 const NotificationHeader = styled.div`
 box-sizing: border-box;
 border: 1pt solid blue;
 border-radius: 5px 5px ${props => (props.show ? '0px 0px' : '5px 5px')};
-background: rgba(0, 0, 0, 0.46);
+background: rgba(0, 0, 0, 0.5);
 display: flex;
 justify-content: space-between;
 align-items: center;
@@ -25,7 +26,7 @@ outline: none;
 font-size: 15px;
 transition: 0.2s;
 &:hover {
-  background-color: #ccc;
+  background-color: rgba(10, 10, 10, 0.8);
 };
 `;
 
@@ -33,16 +34,15 @@ const NotificationListContainer = styled.div`
 `
 
 const NotificationContainer = styled.div`
-border: ${props => (props.show ? '1pt solid #aaa' : '')};
-border-top: 0pt;
+border-top: ${props => (props.show ? '1pt solid rgba(105, 105, 105, 0.5)' : '')};
 box-sizing: border-box;
 display: flex;
 justify-content: center;
 align-items: center;
 height: fit-content;
 padding: 0 18px;
-background-color: white;
-max-height: ${props => (props.show ? '75' : '0')}px;
+background-color: rgba(0, 0, 0, 0.5);
+max-height: ${props => (props.show ? '100' : '0')}px;
 overflow: hidden;
 transition: max-height 0.3s ease-out;
 &:last-child {
@@ -82,7 +82,7 @@ const NotificationList = ({ groups }) => {
   return (
     <div>
       <NotificationHeader show={showNotifications} onClick={handleClick}>
-        <h3>Notifications ({notifications.length})</h3>
+        <H3>Notifications ({notifications.length})</H3>
         {notifications.length > 0 &&
           <div>
             {showNotifications ?
