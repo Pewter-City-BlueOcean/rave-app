@@ -52,7 +52,7 @@ const Chat = () => {
   }, []);
 
   return (
-    <div style={{width: '50%', height: '570px', backgroundColor: '#000000B3', borderRadius: '5px', padding: '30px'}}>
+    <div style={{ height: '570px', backgroundColor: '#000000B3', borderRadius: '5px', margin: '5px', padding: '30px'}}>
 
       <div style={{height: '420px', overflow: 'auto', color: '#FFFFFF', display: 'flex', flexDirection: 'column-reverse'}}>
         {messages.map((message, i) => {
