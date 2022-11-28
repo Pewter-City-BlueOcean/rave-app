@@ -4,6 +4,8 @@ const MapContainer = styled.div`
 width: 90%;
 aspect-ratio: 4/3;
 box-sizing: border-box;
+opacity: 1;
+background-color: black;
 `
 const MapFrame = styled.iframe`
 box-sizing: border-box;

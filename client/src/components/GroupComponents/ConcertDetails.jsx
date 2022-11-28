@@ -1,55 +1,36 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import axios from 'axios';
+import moment from 'moment';
+import Avatar from '@mui/material/Avatar';
+import EventMap from '../GroupComponents/EventMap.jsx';
 
-const ConcertDetails = ( {eventInfo} ) => {
+// import {AccessTimeFilledIcon} from '@mui/icons-material';
 
-  const parseDate = (reviewDate) => {
-    reviewDate = new Date(reviewDate);
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    let year = reviewDate.getFullYear();
-    let date = reviewDate.getDate().toString().padStart(2, '0');
-    let month = months[reviewDate.getMonth()];
 
-    return `${month} ${date}, ${year}`;
-  };
+const ConcertDetails = ({groupInfo}) => {
 
+  console.log(groupInfo);
   return (
-    <div style={{width: '100%'}}>
-      <ul style={{textAlign: 'left'}}>
-        {/* Location */}
-        <li>
-          <b>Location: </b><a>{eventInfo.city}, {eventInfo.state}</a>
-        </li>
-
-        {/* Price */}
-        {eventInfo.average_price ?
-          <li>
-            <b>Price: </b><a>{eventInfo.average_price > 0 ? '$' + eventInfo.average_price : 'Free'}</a>
-          </li> : null
-
+  <div className='column-flex'>
+    <h2 className='concert-detail-title'>{groupInfo.event_title}</h2>
+    <div>{moment(groupInfo.datetime_local).format("dddd, MMMM Do YYYY, h:mm:ss a")}</div>
+    <p>{groupInfo.address} &nbsp; {groupInfo.extended_address} ,&nbsp; {groupInfo.country}</p>
+    <EventMap address={'1940 9th Street NW'} extended_address={'Washington, DC 20001'}/>
+    {/* <p>{groupInfo.city}</p> */}
+    <div className='column-flex'>
+      <ul>
+        {
+          (groupInfo.performers) &&
+          groupInfo.performers.map((p,index)=> (
+            <div className='row-flex' key={index}>
+              {/* <Avatar src={p.image_url} /> */}
+              <li>{p.name}</li>
+            </div>
+            ))
         }
-
-        {/* Artists */}
-        <li>
-          <b>{eventInfo.performers.length > 1 ? 'Artists: ' : 'Artist: '} </b>
-          {eventInfo.performers.length > 1 ?
-            eventInfo.performers.map((performer, index) => {
-              let str = performer.name;
-              if (index !== eventInfo.performers.length - 1) {
-                str += ', ';
-              }
-              return
-                <a>{str}</a>
-            })
-            : <a>{eventInfo.performers[0].name}</a>
-          }
-        </li>
-
-        {/* Data */}
-        <li>
-          <b>Date: </b><a>{parseDate(eventInfo.datetime_local)}</a>
-        </li>
       </ul>
     </div>
+  </div>
 
   )
 }
