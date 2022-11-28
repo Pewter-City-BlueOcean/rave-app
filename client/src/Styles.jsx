@@ -9,10 +9,15 @@ const H1 = styled.h1`
   margin-bottom: 0;
 `
 const H2 = styled.h2`
+  font-size: 35px;
+  font-family: KoHo;
+  color: #eeeee4;
+  // text-shadow: #000000 1px 0 14px;
+`
+const H3 = styled.h3`
   font-size: 20px;
   font-family: KoHo;
   color: #eeeee4;
-  text-shadow: #000000 1px 0 14px;
 `
 const FlexColumn = styled.div`
   display: flex;
@@ -21,6 +26,9 @@ const FlexColumn = styled.div`
 const FlexRow = styled.div`
   display: flex;
   flex-direction: row;
+`
+const background = styled.div`
+  background: rgba(0, 0, 0, 0.5);
 `
 
 const frostyStyle = {
@@ -41,6 +49,7 @@ const frostyStyle = {
 export {
 H1,
 H2,
+H3,
 
   frostyStyle
 }
