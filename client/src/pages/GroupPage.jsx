@@ -1,10 +1,8 @@
-import React, {useState, useEffect} from 'react';
-import axios from 'axios';
+import React from 'react';
 import styled from 'styled-components';
 
 import { useRaveStore } from '../helpers/raveStore.js';
-import ConcertInfo from '../components/GroupComponents/ConcertInfo.jsx';
-import Chat from '../components/GroupComponents/Chat.jsx';
+import { ConcertInfo, Chat} from '../components/GroupComponents/index.js'
 import Playlist from '../components/Playlist.jsx';
 
 const PlaylistContainer = styled.div`
@@ -20,22 +18,20 @@ const GroupPage = ({ access_token, refresh_token, setAccess_token }) => {
 
   console.log(group)
 
-  const currentGroup = useRaveStore((state) => state.currentGroup);
-
   return (
+
   <div>
     <div style={{display: 'flex', flexDirection:'row'}}>
       <div>
         <PlaylistContainer>
           <Playlist />
         </PlaylistContainer>
-      </div>
-      <div className='group-concert'>
         <Chat/>
-        <ConcertInfo currentGroup={currentGroup}/>
       </div>
-     </div>
+      <ConcertInfo eventInfo={group}/>
+    </div>
   </div>
+
   )
 }
 

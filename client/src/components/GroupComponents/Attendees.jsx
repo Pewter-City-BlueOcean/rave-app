@@ -1,19 +1,46 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 
-const Attendees = ({members}) => {
-  console.log(members);
+const SERVER_ADDR = process.env.SERVER_ADDR + ':' + process.env.PORT;
+
+const Attendees = ({groupId, handleSetMembers, members}) => {
+  const [attendees, setAttendees] = useState([]);
+
+  useEffect(() => {
+    if (groupId) {
+      axios.get(`${SERVER_ADDR}/db/members/${groupId}`)
+        .then((response) => {
+          setAttendees(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+    }
+  }, [groupId, members]);
+
+  useEffect(() => {
+    if (JSON.stringify(attendees) !== JSON.stringify(members)) {
+      const members = [];
+      attendees.map((attendee) => {
+        members.push(attendee.individual_id);
+      });
+
+      handleSetMembers(members);
+    }
+  }, [attendees])
+
   return (
-  <div className='column-flex'>
-    <h4 className='concert-detail-title'>Group Members</h4>
-    <ul className='member-list'>
-      {
-        members.map((m, index)=> (
-          <li key={index}>{m.individual_id}</li>
-        ))
-      }
-    </ul>
-  </div>
+    <div>
+      <h3> Attendees </h3>
+      <ul style={{textAlign: 'left'}}>
+        {attendees.map((attendee) => {
+          return (
+            <li>{attendee.username ? attendee.username : attendee.individual_id}</li>
+          );
+        })}
+      </ul>
+    </div>
 
   )
 }

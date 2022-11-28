@@ -66,6 +66,9 @@ router.get("/search/:access_token", (req, res) => {
     })
 });
 
+/**
+ *
+ */
 router.put('/player/:access_token', (req, res) => {
   const access_token = req.params.access_token;
   const body = req.body;
@@ -85,6 +88,39 @@ router.put('/player/:access_token', (req, res) => {
       }
     })
     .catch((error) => {
+      if (error.response.status === 401) {
+        res.status(401).send();
+      } else {
+        res.status(500).send('Spotify responded with a status ' + error.response.status);
+      }
+    })
+});
+
+/**
+ * Start/Resume Playback
+ * https://developer.spotify.com/documentation/web-api/reference/#/operations/start-a-users-playback
+ */
+router.put(`/play/:access_token`, (req, res) => {
+  const access_token = req.params.access_token;
+  const body = req.body;
+
+  const headers = {
+    headers: {
+      "Authorization": `Bearer ${access_token}`
+    }
+  }
+
+  axios.put(`${SPOTIFY_BASE}/me/player/play`, body, headers)
+    .then((response) => {
+      if (response.status === 202) {
+        res.send(response.data);
+      } else {
+        console.log(response.status);
+        res.status(500).send('Spotify responded with a status ' + response.status);
+      }
+    })
+    .catch((error) => {
+      console.log(error.response);
       if (error.response.status === 401) {
         res.status(401).send();
       } else {

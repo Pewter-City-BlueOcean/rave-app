@@ -96,9 +96,24 @@ const setPlaylist = (req, res) => {
     });
 }
 
+const getAllIndividuals = (req, res) => {
+  const query = `
+    SELECT * FROM individuals;
+  `;
+
+  return pool.query(query)
+    .then(results => {
+      res.send(results.rows);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}
+
 module.exports = {
   updateIndividual,
   getIndividual,
   setNewUser,
-  setPlaylist
+  setPlaylist,
+  getAllIndividuals
 };
