@@ -1,5 +1,5 @@
 import React from 'react';
-
+import ListNonMembers from './ListNonMembers.jsx';
 const AddMember = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -13,7 +13,7 @@ const AddMember = () => {
 
       }}>Add Member</button>
 
-      <ListMembers />
+      <ListNonMembers />
     </div>
   )
 }
