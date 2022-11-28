@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
+import { getUserData } from '../helpers/getUserData.js';
 
 import { useRaveStore } from '../helpers/raveStore.js';
 import { ConcertInfo, Chat} from '../components/GroupComponents/index.js'
@@ -15,8 +16,16 @@ const PlaylistContainer = styled.div`
 
 const GroupPage = ({ access_token, refresh_token, setAccess_token }) => {
   const group = useRaveStore((state) => state.currentGroup);
+  const userId = useRaveStore((state) => state.userId);
+  const [user, setUser] = useState();
 
-  console.log(group)
+  useEffect(() => {
+    if (userId) {
+      getUserData(userId).then(results => {
+        setUser(results.data[0]);
+      })
+    }
+  }, [userId])
 
   return (
 
@@ -24,7 +33,13 @@ const GroupPage = ({ access_token, refresh_token, setAccess_token }) => {
     <div style={{display: 'flex', flexDirection:'row'}}>
       <div>
         <PlaylistContainer>
-          <Playlist />
+          <Playlist
+            access_token={access_token}
+            refresh_token={refresh_token}
+            setAccess_token={setAccess_token}
+            isOwner={true}
+            user={user}
+          />
         </PlaylistContainer>
         <Chat/>
       </div>
