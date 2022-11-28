@@ -96,9 +96,25 @@ const setPlaylist = (req, res) => {
     });
 }
 
+const getIndividualsNotInGroup = (req, res) => {
+  const group_id = req.params.group_id;
+  const query = `
+    SELECT * FROM individuals INNER JOIN members ON individuals.individual_id = members.individual_id WHERE members.group_id != ${group_id};
+  `;
+
+  return pool.query(query)
+    .then(results => {
+      res.send(results.rows);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}
+
 module.exports = {
   updateIndividual,
   getIndividual,
   setNewUser,
-  setPlaylist
+  setPlaylist,
+  getAllIndividuals
 };

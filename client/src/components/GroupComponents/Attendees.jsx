@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const SERVER_ADDR = process.env.SERVER_ADDR + ':' + process.env.PORT;
 
-const Attendees = ({groupId}) => {
+const Attendees = ({groupId, setMembers}) => {
   const [attendees, setAttendees] = useState([]);
 
   useEffect(() => {
@@ -21,7 +21,12 @@ const Attendees = ({groupId}) => {
   }, [groupId]);
 
   useEffect(() => {
-    console.log(attendees);
+    const members = [];
+    attendees.map((attendee) => {
+      members.push(attendee.individual_id);
+    });
+
+    setMembers[members];
   }, [attendees])
 
   return (

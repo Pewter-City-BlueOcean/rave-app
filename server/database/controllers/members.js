@@ -16,8 +16,6 @@ const getGroupMembers = (req, res) => {
       console.log(error);
       res.status(500).send('Internal Server Error: Trouble retrieving group\'s members');
     })
-
-
 }
 
 

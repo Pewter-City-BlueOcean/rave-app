@@ -221,7 +221,7 @@ const spotify = {
                 });
             }
 
-            connectToDevice();
+            //connectToDevice();
         });
 
         player.addListener('not_ready', ({ device_id }) => {

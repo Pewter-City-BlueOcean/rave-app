@@ -9,11 +9,11 @@ const spotifyAuth = require("./routes/spotifyAuth.js");
 const sgAuth = require("./routes/sg.js");
 const { getGroups } = require("./database/controllers/groupController");
 const { getGroupMembers } = require('./database/controllers/members');
-const { updateIndividual, getIndividual, setNewUser, setPlaylist } = require("./database/controllers/individualsController");
+const { updateIndividual, getIndividual, setNewUser, setPlaylist, getIndividualsNotInGroup } = require("./database/controllers/individualsController");
 //const webPlayback = require('./routes/webPlayback.js');
 const { getMessages, getUserPhoto, addMessage } = require("./database/controllers/messages");
 const spotify = require('./routes/spotify.js');
-const playlist = require('./routes/playlist.js')
+const playlist = require('./routes/playlist.js');
 
 const cookieParser = require('./middleware/cookieParser.js');
 const app = express();
@@ -42,6 +42,7 @@ app.post('/db/individuals', updateIndividual);
 app.post('/db/individuals/playlist', setPlaylist);
 app.get('/db/individuals', getIndividual);
 app.post('/db/newIndividual', setNewUser);
+app.get('/db/individuals/:group_id', getIndividualsNotInGroup);
 
 app.get('/messages', getMessages);
 app.get('/userPhoto', getUserPhoto);

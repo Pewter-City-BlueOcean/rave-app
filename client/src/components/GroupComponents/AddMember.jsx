@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import ListNonMembers from './ListNonMembers.jsx';
-const AddMember = () => {
+const AddMember = ({members, setMembers}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleButtonClick = () => {
@@ -9,11 +9,9 @@ const AddMember = () => {
 
   return (
     <div>
-      <button style={{cursor: 'pointer'}} onClick={() => {
+      <button style={{cursor: 'pointer'}} onClick={handleButtonClick}>Add Member</button>
 
-      }}>Add Member</button>
-
-      <ListNonMembers />
+      <ListNonMembers isOpen={isOpen} setIsOpen={setIsOpen} members={members} setMembers={setMembers}/>
     </div>
   )
 }
