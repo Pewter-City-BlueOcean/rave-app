@@ -10,12 +10,14 @@ const Attendees = ({groupId, handleSetMembers, members}) => {
     if (groupId) {
       axios.get(`${SERVER_ADDR}/db/members/${groupId}`)
         .then((response) => {
-          setAttendees(response.data);
+          // Terrible fix
+          if (attendees.length != response.data.length) {
+            setAttendees(response.data);
+          }
         })
         .catch((error) => {
           console.log(error);
         });
-
     }
   }, [groupId, members]);
 

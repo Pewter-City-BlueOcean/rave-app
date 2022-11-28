@@ -128,6 +128,7 @@ const ProfilePage = ({access_token, setAccess_token, refresh_token}) => {
     axios.get(`${process.env.SERVER_ADDR}:${process.env.PORT}/db/groups/?user_id=${userId}`)
       .then((res) => {
         console.log('Got the groups', res.data);
+        setGroups(res.data);
         divideGroups(res.data);
       })
       .catch(e => console.error(e));
