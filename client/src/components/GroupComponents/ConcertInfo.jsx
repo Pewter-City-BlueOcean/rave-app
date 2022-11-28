@@ -6,14 +6,18 @@ import Notification from './Notification.jsx';
 import EventMap from './EventMap.jsx';
 
 
-const ConcertInfo = () => {
+const ConcertInfo = ( {eventInfo} ) => {
+
   return (
-  <div>
-    <ConcertDetails/>
-    <Attendees/>
-    <AddMember/>
-    <Notification/>
-    <EventMap address={'1940 9th Street NW'} extended_address={'Washington, DC 20001'}/>
+  <div style={{backgroundColor: 'rgba(0, 0, 0, 0.5)', borderRadius: '5px', margin: '5px', padding: '30px'}}>
+    <Notification />
+    <div style={{display: 'flex', flexDirection: 'row'}}>
+      <EventMap address={eventInfo.address} extended_address={eventInfo.extended_address}/>
+      <ConcertDetails eventInfo={eventInfo}/>
+    </div>
+
+    <Attendees groupId={eventInfo.group_id} />
+    <AddMember />
   </div>
 
   )

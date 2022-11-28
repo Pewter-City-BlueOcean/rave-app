@@ -1,7 +1,11 @@
 import { Card, Image, Text, Badge, Button, Group, Input, Title, HoverCard, Grid } from '@mantine/core';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
 
+const STEXT = styled(Text)`
+  font-family: Karla;
+`
 
 const EventCard = ({event, userId, searchExecute}) => {
 
@@ -45,33 +49,33 @@ const EventCard = ({event, userId, searchExecute}) => {
   }
 
   return(
-      <Grid.Col span={3}  style={{padding: '50px' }} >
-          <Card shadow="sm" p="lg" radius="md" withBorder style={{ opacity: 0.6}} >
+      <Grid.Col span={3} style={{padding: '50px' }} >
+          <Card shadow="sm" p="lg" radius="md" style={{width: '300px', margin:'40 px'}} >
             <Card.Section component="a" href={'https://seatgeek.com/' + event.event_title + '-tickets'}>
               <Image src = {event.performers[0].image_url === 'https://seatgeek.com/images/performers-landscape/gritty-kitty-4fe6dc/800829/huge.jpg' ? 'https://www.lyfepyle.com/wp-content/uploads/2021/07/music-festival-1.jpg' : event.performers[0].image_url}
-                height={160}
+                height={250}
                 alt="Norway"
               />
             </Card.Section>
 
             <Group position="center" mt="md" mb="xs" >
-              <Text weight={500} >{event.event_title}</Text>
+              <STEXT weight={800} size="lg" >{event.event_title.toUpperCase()}</STEXT>
             </Group>
-
+{/*
             <Text weight={350} size="sm" >
               Artist: {event.performers[0].name}
-            </Text>
+            </Text> */}
 
-            <Text weight={350} size="sm" >
-              Locations: {event.state}, {event.city}
-            </Text>
+            <STEXT weight={350} size="sm" >
+              {event.state}, {event.city}
+            </STEXT>
 
-            <Text weight={350} size="sm" >
-            Price: {event.average_price}
-            </Text>
-            <Text weight={350} size="sm" >
-            Date: {convertDate(event.datetime_local)}
-            </Text>
+            <STEXT weight={350} size="sm" >
+            ${event.average_price}
+            </STEXT>
+            <STEXT weight={350} size="sm" >
+            {convertDate(event.datetime_local)}
+            </STEXT>
             <Button variant="gradient" disabled={buttonLabel === 'Already a Group Member'? true : false} gradient={{ from: 'teal', to: 'blue', deg: 60 }} onClick={buttonClickHandler}>{buttonLabel}</Button>
           </Card>
       </Grid.Col>
