@@ -7,4 +7,30 @@ import {
 import { MantineProvider } from '@mantine/core';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <MantineProvider withGlobalStyles withNormalizeCSS><BrowserRouter><App /></BrowserRouter></MantineProvider>);
+  <MantineProvider
+    withGlobalStyles
+    withNormalizeCSS
+    theme={{
+      colorScheme: 'dark',
+      colors: {
+        dark: [
+          '#eeeee4',
+          '#A6A7AB',
+          '#909296',
+          '#5C5F66',
+          '#373A40',
+          '#101113',
+          'rgba(0, 0, 0, 0.5)',
+          'rgba(0, 0, 0, 0.5)',
+          'rgba(0, 0, 0, 0.5)',
+          'rgba(0, 0, 0, 0.5)',
+        ],
+      }
+
+    }}
+  >
+
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+  </MantineProvider>);

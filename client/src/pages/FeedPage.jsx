@@ -7,30 +7,34 @@ import groupsData from '../components/data/group_data.js'
 import {getDaysFromToday} from '../helpers/time_helpers.js'
 import styled from 'styled-components';
 import { useRaveStore } from '../helpers/raveStore.js';
+import { H2, H3 } from '../Styles.jsx';
 
 
 const Body = styled.div`
   display:flex;
   flex-direction: row;
   width: 100%;
+  height: 75vh;
+  margin-bottom: 25px;
   justify-content: space-around;
+  // border: dashed;
 `
 const CardContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-evenly;
   flex-wrap: wrap;
-  width: 1000px;
-  height: 400px;
+  height:fit-content;
+  max-height: 100vh ;
   overflow: auto;
 `
 const GroupsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 1000px;
-  height: 800px;
-  background: rgba(0, 0, 0, 0.46);
-  // opacity: 0.8;
+  margin-bottom; 100px;
+  width: 70vw;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
 `
@@ -38,14 +42,15 @@ const NotifSection = styled.div`
   display: flex;
   flex-direction: column;
   width: 300px;
-  // background: rgba(0, 0, 0, 0.46);
+  margin-left: 10px;
+  // background: rgba(0, 0, 0, 0.5);
   // opacity: 0.8;
   // box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   // border-radius: 5px;
 `
-const H3 = styled.h3`
-  font-size: 20px;
-  color: #eeeee4;
+const SH3 = styled(H3)`
+  align-self: flex-start;
+  margin-left: 18px;
 `
 
 const FeedPage = () => {
@@ -67,8 +72,8 @@ const FeedPage = () => {
       g.forEach((group) => {
         var isPast = (getDaysFromToday(group.datetime_local) < 0);
         isPast ? setPast( past => [...past, group]) : setUpcoming(upcoming => [...upcoming, group])
-      }
-      )
+       }
+     )
     }
 
     axios.get(`${process.env.SERVER_ADDR}:${process.env.PORT}/db/groups`, config)
@@ -88,16 +93,18 @@ const FeedPage = () => {
   }, [userId]);
 
   return (
+  <div>
+  <H2>HOME</H2>
     <Body>
       <GroupsContainer>
-        <H3>Upcoming Events ({upcoming.length})</H3>
+        <SH3>Upcoming Events ({upcoming.length})</SH3>
         <CardContainer>
           {upcoming.map((event, i) => (
             <EventCard key={i} event={event} />
           ))}
         </CardContainer>
 
-        <H3>Past Events ({past.length})</H3>
+        <SH3>Past Events ({past.length})</SH3>
         <CardContainer>
         {past.map((event, i) => (
           <EventCard key={i} event={event} />
@@ -108,6 +115,7 @@ const FeedPage = () => {
         <NotificationList groups={ groups }/>
       </NotifSection>
     </Body>
+    </div>
   )
 }
 

@@ -4,9 +4,22 @@ import {SearchForm} from './SearchForm.jsx';
 import EventCard from './EventCard.jsx';
 import { FaInfo } from 'react-icons/fa';
 import axios from 'axios';
-
 import { useRaveStore } from '../helpers/raveStore.js';
 import { getUserData } from '../helpers/getUserData.js';
+import {H2, H3} from '../Styles.jsx';
+import styled from 'styled-components';
+
+const DIV = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 75vh;
+`
+const Container = styled.div`
+  height:fit-content;
+  max-height: 100vh ;
+  overflow: auto;
+`
+
 
 const DiscoverPage = () => {
 
@@ -62,22 +75,27 @@ const DiscoverPage = () => {
   } else {
     return (
       <div>
-        <Title order={1} align='center' variant="gradient" gradient={{ from: 'teal', to: 'lime', deg: 105 }} style={{padding: '50px'}} >
-          DISCOVER
+        <Title order={1} align='center' /*variant="gradient"
+          gradient={{ from: 'teal', to: 'lime', deg: 105}}
+        */>
+          <H2>DISCOVER</H2>
         </Title>
+
+        <DIV>
+        <Container>
         <div style={{display: 'flex', alignItems:'center', justifyContent:'center'}}>
-        <Group >
-          <HoverCard width={280} shadow="md">
-            <HoverCard.Target>
-              <Button style={{ alignItems:'center', justifyContent:'center', width:45, height:45, borderRadius:50}}><FaInfo size={15}/></Button>
-            </HoverCard.Target>
-            <HoverCard.Dropdown style={{ backgroundColor: 'green', borderColor: 'green' }}>
-              <Text size="sm" style={{ color: 'yellow' }}>
-                No fields are mandatory! Search to your hearts content!
-              </Text>
-            </HoverCard.Dropdown>
-          </HoverCard>
-        </Group>
+          <Group >
+            <HoverCard width={280} shadow="md">
+              <HoverCard.Target>
+                <Button style={{ alignItems:'center', justifyContent:'center', width:45, height:45, borderRadius:50}}><FaInfo size={15}/></Button>
+              </HoverCard.Target>
+              <HoverCard.Dropdown style={{ backgroundColor: 'green', borderColor: 'green' }}>
+                <Text size="sm" style={{ color: 'yellow' }}>
+                  No fields are mandatory! Search to your hearts content!
+                </Text>
+              </HoverCard.Dropdown>
+            </HoverCard>
+          </Group>
         </div>
         <div style={{marginLeft: '20px', marginRight: '20px'}}>
           <SearchForm searchButtonHandler={searchButtonHandler} searchExecute={searchExecute} city={city} state={state} eventArtistSearchTerm={eventArtistSearchTerm} maxPrice={maxPrice} minPrice={minPrice}/>
@@ -89,6 +107,8 @@ const DiscoverPage = () => {
             })}
           </Grid>
         </div>
+        </Container>
+      </DIV>
       </div>
     )
   }

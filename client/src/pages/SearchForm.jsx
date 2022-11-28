@@ -1,6 +1,24 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {Button} from '@mantine/core';
 import axios from 'axios';
+import styled from 'styled-components';
+
+const Label = styled.label`
+  font-family: Karla;
+  font-weight: 700;
+  font-size: 18px;
+  color: #eeeee4;
+`
+const Input = styled.input`
+  display: flex;
+  font-family: Karla;
+  font-size: 15px;
+  padding: 10px 0 10px 0;
+  width: 230px;
+  border-radius: 100px;
+  background: rgba(0, 0, 0, 0.5);
+  text-align: center;
+`
 
 export const SearchForm = ({searchButtonHandler, searchExecute, city, state, eventArtistSearchTerm, maxPrice, minPrice}) => {
 
@@ -8,28 +26,28 @@ export const SearchForm = ({searchButtonHandler, searchExecute, city, state, eve
     <div>
       <div style={{display: 'flex', columnGap: '75px', justifyContent: 'center', paddingBottom: '50px', padding: '50px'}}>
         <div>
-          <label style={{color: 'yellow'}}>Event/Artist</label>
-          <input ref={eventArtistSearchTerm} type = "text" placeholder="...Enter Event/Artist" style={{width: '230px', displayType: 'flex', opacity: '.8', borderRadius: '100px', textAlign: 'center' }} ></input>
+          <Label>Event/Artist</Label>
+          <Input ref={eventArtistSearchTerm} type = "text" placeholder="...Example: Ubbi Dubbi" ></Input>
         </div>
         <div>
-          <label style={{color: 'yellow'}} >City</label>
-          <input ref={city} placeholder="...Enter city" type = "text" style={{width: '230px', displayType: 'flex', opacity: '.8', borderRadius: '100px', textAlign: 'center' }}></input>
+          <Label>City</Label>
+          <Input ref={city} placeholder="...Example: Dallas " type = "text"></Input>
         </div>
         <div>
-          <label style={{color: 'yellow'}} >State</label>
-          <input ref={state} placeholder="...Example: TX" type = "textarea" maxLength="2" style={{width: '230px', displayType: 'flex', opacity: '.8', borderRadius: '100px', textAlign: 'center' }}></input>
+          <Label>State</Label>
+          <Input ref={state} placeholder="...Example: TX" type = "textarea" maxLength="2"></Input>
         </div>
         <div>
-          <label style={{color: 'yellow'}} >Minimum Price ($)</label>
-          <input ref={minPrice} placeholder="...Enter minimum price" type = "number" style={{width: '230px', displayType: 'flex', opacity: '.8', borderRadius: '100px', textAlign: 'center' }}></input>
+          <Label>Minimum Price ($)</Label>
+          <Input ref={minPrice} placeholder="...Enter minimum price" type = "number"></Input>
         </div>
         <div>
-          <label style={{color: 'yellow'}} >Maximum Price ($)</label>
-          <input ref={maxPrice} placeholder="...Enter minimum price" type = "number" style={{width: '230px', displayType: 'flex', opacity: '.8', borderRadius: '100px', textAlign: 'center' }}></input>
+          <Label>Maximum Price ($)</Label>
+          <Input ref={maxPrice} placeholder="...Enter minimum price" type = "number"></Input>
         </div>
       </div>
       <div style={{ paddingBottom: '50px' }}>
-        <Button variant="gradient" gradient={{ from: 'orange', to: 'red' }} size='lg' onClick={searchExecute}>Search</Button>
+        <Button variant="gradient" gradient={{ from: 'orange', to: 'red' }} size='lg' style={{fontFamily: 'Karla'}} onClick={searchExecute}>Search</Button>
       </div>
     </div>
   )
