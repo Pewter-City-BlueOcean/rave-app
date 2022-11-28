@@ -1,69 +1,25 @@
-import React, {useState, useEffect} from 'react';
-import axios from 'axios';
+import React from 'react';
 import Attendees from './Attendees.jsx';
 import ConcertDetails from './ConcertDetails.jsx';
 import AddMember from './AddMember.jsx';
 import Notification from './Notification.jsx';
+import EventMap from './EventMap.jsx';
 
-const ConcertInfo = ({currentGroup}) => {
-  const [groupId, setGroupId] = useState(currentGroup.group_id || window.location.href.split('id=')[1].split('&')[0]);
 
-  const [groupInfo, setGroupInfo] = useState({});
-
-  const [members, setMembers] = useState([]);
-
-  const getGroupMembers =() => {
-    return axios.get('/groupMembers', {
-      params:{
-        group_id: groupId
-      }
-    })
-    .then((result)=> {
-      console.log(result.data);
-      setMembers(result.data)
-    })
-  }
-
-  const getGroupInfo = () => {
-    return axios.get('/groupInfo', {
-      params: {
-        group_id: groupId
-      }
-    })
-    .then((result)=> {
-      setGroupInfo(result.data[0]);
-    })
-  }
-
-  useEffect(()=> {
-    if (!Object.keys(currentGroup).length) {
-      getGroupInfo()
-    } else {
-      setGroupInfo(currentGroup);
-      setGroupId(currentGroup.group_id);
-    }
-  },[])
-
-  useEffect(()=> {
-    getGroupMembers()
-    .then((result)=> {
-      getGroupMembers();
-    })
-  },[groupId])
+const ConcertInfo = ( {eventInfo} ) => {
 
   return (
-
-  (Object.keys(groupInfo).length && members.length) &&
-    <div className='concert-info'>
-      <ConcertDetails groupInfo={groupInfo}/>
-      {/* <Notification/> */}
-      <Attendees members={members}/>
-      <AddMember
-        members={members}
-        groupId={groupId}
-        setMembers={setMembers}
-        getGroupMembers={getGroupMembers}/>
+  <div style={{backgroundColor: 'rgba(0, 0, 0, 0.5)', borderRadius: '5px', margin: '5px', padding: '30px'}}>
+    <Notification />
+    <div style={{display: 'flex', flexDirection: 'row'}}>
+      <EventMap address={eventInfo.address} extended_address={eventInfo.extended_address}/>
+      <ConcertDetails eventInfo={eventInfo}/>
     </div>
+
+    <Attendees groupId={eventInfo.group_id} />
+    <AddMember />
+  </div>
+
   )
 }
 
