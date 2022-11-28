@@ -8,12 +8,11 @@ const http = require('http');
 const spotifyAuth = require("./routes/spotifyAuth.js");
 const sgAuth = require("./routes/sg.js");
 const { getGroups } = require("./database/controllers/groupController");
-// const { getGroupMembers } = require('./database/controllers/members');
+const { getGroupMembers } = require('./database/controllers/members');
 const { updateIndividual, getIndividual, setNewUser, setPlaylist } = require("./database/controllers/individualsController");
 //const webPlayback = require('./routes/webPlayback.js');
 const { getMessages, getUserPhoto, addMessage } = require("./database/controllers/messages");
 const spotify = require('./routes/spotify.js');
-const {getGroupInfo,getGroupMembers,getAllMembers,postMembertoGroup} = require ('./database/controllers/groupEvent/index.js');
 const playlist = require('./routes/playlist.js')
 
 const cookieParser = require('./middleware/cookieParser.js');
@@ -38,12 +37,7 @@ app.use('/sg', sgAuth);
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
 app.get('/db/groups', getGroups);
-
-app.get('/groupInfo',getGroupInfo);
-app.get('/groupMembers',getGroupMembers);
-app.get('/getMembers',getAllMembers)
-
-// app.get('/db/members/:group_id', getGroupMembers);
+app.get('/db/members/:group_id', getGroupMembers);
 app.post('/db/individuals', updateIndividual);
 app.post('/db/individuals/playlist', setPlaylist);
 app.get('/db/individuals', getIndividual);
@@ -52,8 +46,6 @@ app.post('/db/newIndividual', setNewUser);
 app.get('/messages', getMessages);
 app.get('/userPhoto', getUserPhoto);
 app.post('/messages', addMessage);
-
-app.post('/groupMember',postMembertoGroup);
 
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, "../client/dist", 'index.html'));
