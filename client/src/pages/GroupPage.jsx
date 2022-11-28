@@ -5,8 +5,6 @@ import { useRaveStore } from '../helpers/raveStore.js';
 
 const GroupPage = () => {
 
-  const [groupId, setGroupId] = useState(5753906);
-
   const currentGroup = useRaveStore((state) => state.currentGroup);
 
   return (
@@ -14,7 +12,9 @@ const GroupPage = () => {
     <div>Header</div>
     <div className='group-concert'>
       {/* <Chat/> */}
-      <ConcertInfo groupId={groupId} />
+      <ConcertInfo
+        currentGroup={currentGroup}
+       />
     </div>
     <div>Music Player</div>
   </div>

@@ -8,7 +8,7 @@ const Attendees = ({members}) => {
     <ul className='member-list'>
       {
         members.map((m, index)=> (
-          <li key={index}>{m.spotify_username}</li>
+          <li key={index}>{m.individual_id}</li>
         ))
       }
     </ul>

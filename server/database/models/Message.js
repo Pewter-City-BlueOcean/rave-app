@@ -16,7 +16,7 @@ const Message = sequelize.define('messages', {
     allowNull:false
   },
   individual_id: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
     allowNull:false
   },
   message_text: {

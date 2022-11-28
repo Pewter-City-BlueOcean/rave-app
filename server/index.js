@@ -36,6 +36,8 @@ app.get('/db/groups', getGroups);
 
 app.get('/groupInfo',getGroupInfo);
 app.get('/groupMembers',getGroupMembers);
+app.get('/getMembers',getAllMembers)
+
 app.post('/db/newIndividual', setNewUser);
 
 app.get('/messages', getMessages);

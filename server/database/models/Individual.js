@@ -3,29 +3,30 @@ const sequelize = require('./dbConnect.js');
 
 const Individual = sequelize.define('individuals', {
   individual_id: {
-    type: Sequelize.INTEGER,
-    autoIncrement: true,
+    type: Sequelize.STRING,
     primaryKey: true
   },
   email: {
-    type: Sequelize.TEXT,
+    type: Sequelize.STRING,
     allowNull:false
   },
-  spotify_username: {
-    type: Sequelize.TEXT,
-    allowNull: false
+  motto: {
+    type: Sequelize.STRING,
+  },
+  location: {
+    type: Sequelize.STRING,
   },
   bio: {
     type: Sequelize.TEXT,
-    allowNull:false
   },
   photo: {
-    type: Sequelize.TEXT,
-    allowNull:false
+    type: Sequelize.STRING,
   },
   playlist: {
-    type: Sequelize.TEXT,
-    allowNull:false
+    type: Sequelize.STRING,
+  },
+  age: {
+    type: Sequelize.STRING,
   }
 });
 

@@ -13,13 +13,14 @@ const ConcertDetails = ({groupInfo}) => {
   <div className='column-flex'>
     <h2 className='concert-detail-title'>{groupInfo.event_title}</h2>
     <div>{moment(groupInfo.datetime_local).format("dddd, MMMM Do YYYY, h:mm:ss a")}</div>
+    <p>{groupInfo.address} &nbsp; {groupInfo.extended_address} ,&nbsp; {groupInfo.country}</p>
     {/* <p>{groupInfo.city}</p> */}
     <div className='column-flex'>
       {
         (groupInfo.performers) &&
         groupInfo.performers.map((p,index)=> (
           <div className='row-flex' key={index}>
-            <Avatar src={p.image_url} />
+            {/* <Avatar src={p.image_url} /> */}
             <p>{p.name}</p>
           </div>
           ))
