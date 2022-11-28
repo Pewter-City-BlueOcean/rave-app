@@ -23,10 +23,11 @@ const EditUser = ({opened, setOpened, user, setUser}) => {
     //create Form from object
     const formData = new FormData();
     formData.append('individual_id', userId );
-    formData.append('location', location || user.location);
-    formData.append('motto', motto || user.motto);
-    formData.append('age', age || user.age);
-    formData.append('bio', bio || user.bio);
+    formData.append('username', username);
+    formData.append('location', location);
+    formData.append('motto', motto);
+    formData.append('age', age);
+    formData.append('bio', bio);
     if (filename) {
       const photo = filename;
       formData.append('photo', photo);
@@ -52,6 +53,9 @@ const EditUser = ({opened, setOpened, user, setUser}) => {
   const handleAge = (e) => {
     setAge(e.target.value);
   }
+  const handleUsername = (e) => {
+    setUsername(e.target.value);
+  }
 
   return (
     <Modal
@@ -69,6 +73,12 @@ const EditUser = ({opened, setOpened, user, setUser}) => {
         label="Location"
         onChange={handleLocation}
         value={location}
+        />
+              <TextInput
+        placeholder={user.username}
+        label="username"
+        onChange={handleUsername}
+        value={username}
         />
       <TextInput
         placeholder={user.motto}
@@ -92,6 +102,7 @@ const EditUser = ({opened, setOpened, user, setUser}) => {
     </Modal>
   )
 }
+
 
 const config = {
   headers: {

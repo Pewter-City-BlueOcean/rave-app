@@ -103,6 +103,7 @@ const ProfilePage = ({access_token, setAccess_token, refresh_token}) => {
   const setCurrentGroup = useRaveStore((state) => state.setCurrentGroup);
   const [upcoming, setUpcoming] = useState([]);
   const [past, setPast] = useState([]);
+  const [groups, setGroups] = useState([]);
   let navigate = useNavigate();
   const userId = useRaveStore((state) => state.userId);
 
@@ -121,7 +122,7 @@ const ProfilePage = ({access_token, setAccess_token, refresh_token}) => {
       )
     }
 
-    axios.get(`${process.env.SERVER_ADDR}:${process.env.PORT}/db/groups/?${userId}`)
+    axios.get(`${process.env.SERVER_ADDR}:${process.env.PORT}/db/groups/?user_id=${userId}`)
       .then((res) => {
         console.log('Got the groups', res.data);
         divideGroups(res.data);
@@ -158,73 +159,69 @@ const ProfilePage = ({access_token, setAccess_token, refresh_token}) => {
       <div><h1>Loading</h1></div>
     )
   } else {
-    return (
-      <Outer>
-          <H2>ME</H2>
-        <Profile>
-          <MantineProvider theme={{colorScheme: 'dark'}}>
-            <ColumnContainer>
-              <PlaylistContainer>
-                <Playlist
-                  id={user.playlist}
-                  access_token={access_token}
-                  setAccess_token={setAccess_token}
-                  refresh_token={refresh_token}
-                  isOwner={isOwner}
-                  user={user}
-                  setUser={setUser}
-                />
-              </PlaylistContainer>
-              <RowContainer>
-                <About>
-                  <EditUser user={user} setUser={setUser} opened={opened} setOpened={setOpened} />
-                  <ImageContainer>
-                    <ProfileImage src={profileImage}/>
-                  </ImageContainer>
-                  {isOwner ? EditIcon : null}
-                  <AboutMe>
-                    <h4>{user.individual_id || ''}</h4>
-                    <PAbout>{user.bio || ''}</PAbout>
-                    <PAbout>Location: {user.location || ''}</PAbout>
-                    <PAbout>Age: {user.age || ''}</PAbout>
-                    <PAbout>motto: {user.motto || ''}</PAbout>
-                  </AboutMe>
-
-                </About>
-                <Sidebar>
-                  <Events>
-                    <SidebarTitles>Events</SidebarTitles>
-                    <Tabs color="dark" radius="md" defaultValue="Upcoming">
-                    <Tabs.List>
-                      <Tabs.Tab value="Upcoming" >Upcoming</Tabs.Tab>
-                      <Tabs.Tab value="Past" >Past</Tabs.Tab>
-                    </Tabs.List>
-
-                    <Tabs.Panel value="Upcoming" pt="xs">
-                      {upcoming.map((event, index) => (
-                        <p key={index} >{event.title} is {getDate(event.date)} </p>
-                        ))
-                      }
-                    </Tabs.Panel>
-
-                    <Tabs.Panel value="Past" pt="xs">
-                      {past.map((event, index) => (
-                        <p onClick={() => {handleEventClick(event)}} key={index} >{event.event_title} is {getDate(event.datetime_local)} </p>
-                        ))
-                      }
-                    </Tabs.Panel>
-                    </Tabs>
-                  </Events>
-                  <Notifications>
-                    <NotificationList />
-                  </Notifications>
-                </Sidebar>
-              </RowContainer>
-            </ColumnContainer>
-        </MantineProvider>
-        </Profile>
-      </Outer>
-    )
+  return (
+  <Outer>
+    <Profile>
+      <MantineProvider theme={{colorScheme: 'dark'}}>
+      <ColumnContainer>
+        <PlaylistContainer>
+          <Playlist
+            id={user.playlist}
+            access_token={access_token}
+            setAccess_token={setAccess_token}
+            refresh_token={refresh_token}
+            isOwner={isOwner}
+            user={user}
+            setUser={setUser}
+          />
+        </PlaylistContainer>
+      <RowContainer>
+        <About>
+          <EditUser user={user} setUser={setUser} opened={opened} setOpened={setOpened} />
+          <ImageContainer>
+          <ProfileImage src={profileImage}/>
+          </ImageContainer>
+          {isOwner ? EditIcon : null}
+          <AboutMe>
+            <h4>{user.username || user.individual_id}</h4>
+            <PAbout>{user.bio || ''}</PAbout>
+            <PAbout>Location: {user.location || ''}</PAbout>
+            <PAbout>Age: {user.age || ''}</PAbout>
+            <PAbout>motto: {user.motto || ''}</PAbout>
+          </AboutMe>
+        </About>
+      <Sidebar>
+        <Events>
+          <SidebarTitles>Events</SidebarTitles>
+          <Tabs color="dark" radius="md" defaultValue="Upcoming">
+          <Tabs.List>
+            <Tabs.Tab value="Upcoming" >Upcoming</Tabs.Tab>
+            <Tabs.Tab value="Past" >Past</Tabs.Tab>
+          </Tabs.List>
+          <Tabs.Panel value="Upcoming" pt="xs">
+            {upcoming.map((event, index) => (
+              <p onClick={() => {handleEventClick(event)}} key={index} >{event.event_title} is {getDate(event.datetime_local)} </p>
+              ))
+            }
+          </Tabs.Panel>
+          <Tabs.Panel value="Past" pt="xs">
+            {past.map((event, index) => (
+              <p onClick={() => {handleEventClick(event)}} key={index} >{event.event_title} is {getDate(event.datetime_local)} </p>
+              ))
+            }
+          </Tabs.Panel>
+          </Tabs>
+        </Events>
+        <Notifications>
+          <NotificationList groups={groups} />
+        </Notifications>
+      </Sidebar>
+    </RowContainer>
+    </ColumnContainer>
+  </MantineProvider>
+  </Profile>
+</Outer>
+  )
   }
 }
 
