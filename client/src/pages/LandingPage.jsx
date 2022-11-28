@@ -28,21 +28,33 @@ const Login = styled.button`
   }
 `;
 
+const H1 = styled.h1`
+  margin-top: 10px;
+  font-family: KoHo;
+  font-style: italic;
+  font-size: 100px;
+  color: #eeeee4;
+  margin: 0 0 0 5% ;
+  position:fixed;
+`
+
 const player = new Audio('/assets/egg.mp3');
 player.volume = 0.5;
 const LandingPage = () => {
 
   return (
-    <Div>
-      <h1>neuRAVE</h1>
-      <Login onClick={() => {window.location.href='http://localhost:8080/spotify/auth/login'}}
-        onMouseEnter={() => { player.play(); }}>
-        Log In With Spotify
-      </Login>
-      <Login onClick={() => {window.location.href='https://www.spotify.com/us/signup'}}>
-        Sign Up With Spotify
-      </Login>
-    </Div>
+    <div>
+      <H1>neuRAVE</H1>
+      <Div>
+        <Login onClick={() => {window.location.href='http://localhost:8080/spotify/auth/login'}}
+          onMouseEnter={() => { player.play(); }}>
+          Log In With Spotify
+        </Login>
+        <Login onClick={() => {window.location.href='https://www.spotify.com/us/signup'}}>
+          Sign Up With Spotify
+        </Login>
+      </Div>
+    </div>
   )
 }
 

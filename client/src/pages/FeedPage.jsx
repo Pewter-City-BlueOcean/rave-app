@@ -22,7 +22,7 @@ const Body = styled.div`
 const CardContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   flex-wrap: wrap;
   height:fit-content;
   max-height: 100vh ;
