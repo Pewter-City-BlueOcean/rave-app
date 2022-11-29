@@ -56,7 +56,7 @@ For the Discover page, managing the interaction between the Seatgeek API data an
 ## App Demo
 
 Login/Home Page
-![Login/Home Page GIF](http://g.recordit.co/8imnvxgGeb.gif)
+![](http://g.recordit.co/8imnvxgGeb.gif)
 
 Group Page
 ![Group Page GIF](http://g.recordit.co/7yFCpd2Uqy.gif)
