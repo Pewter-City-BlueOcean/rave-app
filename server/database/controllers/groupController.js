@@ -1,7 +1,6 @@
 const pool = require('../postgresDB.js');
 
 const getGroups = (req, res) => {
-  console.log('getting groups', req.query);
   const groupsQuery = `SELECT *
   FROM groups g
   LEFT JOIN members m

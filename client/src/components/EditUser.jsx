@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Modal, Button, Group, FileInput, Textarea, TextInput } from '@mantine/core';
+import { Modal, Button, FileInput, Textarea, TextInput } from '@mantine/core';
 import axios from 'axios';
 import { useRaveStore } from '../helpers/raveStore.js';
-
 
 const EditUser = ({opened, setOpened, user, setUser}) => {
 

@@ -14,7 +14,6 @@ const Playlist = styled.div`
 
 const AlbumImage = styled.img`
   width: 128px;
-
 `;
 
 const PlaylistName = styled.b`
@@ -27,10 +26,6 @@ const SelectPlaylist = ({opened, setOpened, access_token, setAccess_token, refre
 
   const [playlist, setPlaylist] = useState(user.playlist);
   const [allPlaylists, setAllPlaylists] = useState([]);
-
-  useEffect(() => {
-    console.log(playlist);
-  }, [playlist]);
 
   const handleSubmitForm = () => {
     setOpened(false);

@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import ListNonMembers from './ListNonMembers.jsx';
+
 const AddMember = ({eventInfo, members, handleSetMembers}) => {
   const [isOpen, setIsOpen] = useState(false);
 

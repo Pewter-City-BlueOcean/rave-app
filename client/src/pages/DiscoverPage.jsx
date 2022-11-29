@@ -20,7 +20,6 @@ const Container = styled.div`
   overflow: auto;
 `
 
-
 const DiscoverPage = () => {
 
   const userId = useRaveStore((state) => state.userId);
@@ -30,11 +29,7 @@ const DiscoverPage = () => {
   let maxPrice = useRef('');
   let minPrice = useRef('');
 
-  useEffect(() => {
-    getUserData(userId).then(results => {
-    })
-  }, [userId])
-  const [events, setEvents] = useState([])
+  const [events, setEvents] = useState([]);
 
   const searchButtonHandler = (dataToSend) => {
     axios({
@@ -75,9 +70,7 @@ const DiscoverPage = () => {
   } else {
     return (
       <div>
-        <Title order={1} align='center' /*variant="gradient"
-          gradient={{ from: 'teal', to: 'lime', deg: 105}}
-        */>
+        <Title order={1} align='center'>
           <H2>DISCOVER</H2>
         </Title>
 

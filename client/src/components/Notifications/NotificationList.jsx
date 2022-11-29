@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Notification from './Notification.jsx';
 import { getDaysFromToday } from '../../helpers/time_helpers.js';
-//import groups from '../data/group_data';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
@@ -29,9 +28,6 @@ transition: 0.2s;
   background-color: rgba(10, 10, 10, 0.8);
 };
 `;
-
-const NotificationListContainer = styled.div`
-`
 
 const NotificationContainer = styled.div`
 border-top: ${props => (props.show ? '1pt solid rgba(105, 105, 105, 0.5)' : '')};
@@ -91,13 +87,11 @@ const NotificationList = ({ groups }) => {
           </div>
         }
       </NotificationHeader>
-      <NotificationListContainer>
-        {notifications.map((notification, i) => (
-          <NotificationContainer key={notification + i} show={showNotifications}>
-            <Notification event_title={notification.event_title} days={notification.days} />
-          </NotificationContainer>
-        ))}
-      </NotificationListContainer>
+      {notifications.map((notification, i) => (
+        <NotificationContainer key={notification + i} show={showNotifications}>
+          <Notification event_title={notification.event_title} days={notification.days} />
+        </NotificationContainer>
+      ))}
     </div>
   )
 }

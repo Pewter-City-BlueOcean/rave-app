@@ -19,15 +19,3 @@ export const useRaveStore = create(set => ({
   }
 
 }));
-
-/*
-import { useRaveStore } from '../helpers/raveStore.js';
-
-//getter
-const currentGroup = useRaveStore((state) => state.currentGroup);
-etc.
-
-//setter
-const setCurrentGroup = useRaveStore((state) => state.setCurrentGroup);
-etc.
-*/

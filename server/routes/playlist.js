@@ -18,10 +18,8 @@ router.get('/get/:playlist_id/:access_token', (req, res) => {
       "Authorization": `Bearer ${access_token}`
     }
   }
-  console.log(playlist_id);
   axios.get(`${SPOTIFY_BASE}/playlists/${playlist_id}`, headers)
     .then((response) => {
-      console.log('hi')
       if (response.status === 200) {
         res.send(response.data);
       } else {

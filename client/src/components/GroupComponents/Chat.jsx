@@ -1,17 +1,10 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import { useRaveStore } from '../../helpers/raveStore.js';
-import { getUserData } from '../../helpers/getUserData.js';
-
-
-const { useState, useEffect } = React;
 
 const Chat = () => {
   const groupId = useRaveStore((state) => state.currentGroup.group_id);
-
-  // const [groupId, setGroupId] = useState('5730147');
-  // const [userId, setUserId] = useState('31d2ibnaf2ug6gwivecavuhnphze');
   const userId = useRaveStore((state) => state.userId);
 
   const [profilePic, setProfilePic] = useState('');
@@ -33,7 +26,6 @@ const Chat = () => {
     // should get messages and then set messages to returned data every 5 seconds
     axios.get(`/messages?groupId=${groupId}`)
       .then((response) => {
-        console.log(response.data);
         setMessages(response.data);
       })
       .catch((err) => console.log(err));
@@ -100,7 +92,7 @@ const Chat = () => {
         <div style={{height: '75px', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
           <img src={profilePic} width='40px' height='40px' style={{borderRadius: '50%', objectFit: 'cover', verticalAlign: 'middle', margin: '10px'}}></img>
           <input value={newMessage} style={{height: '35px', width: '400px', borderRadius: '5px', padding: '5px 10px', border: 'none', margin: '10px'}} onChange={(e) => setNewMessage(e.target.value)}></input>
-          <button style={{backgroundColor: '#FFFFFF', border: 'none', height: '35px', padding: '8px 10px', borderRadius: '5px', margin: '10px'}} onClick={handlePostMessage}> Send </button>
+          <button style={{backgroundColor: '#FFFFFF', color: 'black', border: 'none', height: '35px', padding: '8px 10px', borderRadius: '5px', margin: '10px'}} onClick={handlePostMessage}> Send </button>
         </div>
       }
 

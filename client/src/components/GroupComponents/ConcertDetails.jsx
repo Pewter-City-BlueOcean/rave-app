@@ -44,7 +44,7 @@ const ConcertDetails = ( {eventInfo} ) => {
           }
         </li>
 
-        {/* Data */}
+        {/* Date */}
         <li>
           <b>Date: </b><a>{parseDate(eventInfo.datetime_local)}</a>
         </li>

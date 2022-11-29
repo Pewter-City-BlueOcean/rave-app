@@ -129,13 +129,15 @@ function WebPlayer({ access_token, track }) {
   // Skeleton player stolen from Spotify's docs on Web SDK
   if (!is_active || !current_track) {
     return (
-      <Wrapper>
-        <NotConnected>
-          <Text>
-            Loading...
-          </Text>
-        </NotConnected>
-        </Wrapper>)
+      <div></div>
+      // <Wrapper>
+      //   <NotConnected>
+      //     <Text>
+
+      //     </Text>
+      //   </NotConnected>
+      // </Wrapper>
+    )
   } else {
     return (
       <Wrapper>

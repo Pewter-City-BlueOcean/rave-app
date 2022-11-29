@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Modal, ActionIcon } from '@mantine/core';
+import {Modal } from '@mantine/core';
 import axios from 'axios';
 
 const ListMembers = ({ isOpen, setIsOpen, members, handleSetMembers, eventInfo}) => {
@@ -7,7 +7,6 @@ const ListMembers = ({ isOpen, setIsOpen, members, handleSetMembers, eventInfo})
   const [memberToAdd, setMemberToAdd] = useState();
 
   useEffect(() => {
-    console.log('m', members)
     if (isOpen && members) {
       axios.get(`/db/individuals/all`)
         .then((response) => {
@@ -22,10 +21,6 @@ const ListMembers = ({ isOpen, setIsOpen, members, handleSetMembers, eventInfo})
         })
     }
   }, [isOpen]);
-
-  useEffect(() => {
-    console.log(nonMembers);
-  }, [nonMembers])
 
   const handleAdd = (nonMember) => {
     axios.post(`/db/members/${eventInfo.group_id}/${nonMember.individual_id}`)
