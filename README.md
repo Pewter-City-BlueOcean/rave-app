@@ -32,15 +32,19 @@ Allows users to search the Seatgeek API database and create groups. Results are 
 Allows users to save information such as age, location, photo, and bio, which other users can see. Past and upcoming event names can also be seen on this page, as well as, notifications.
 
 ## Tech Stack
+### Front End
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Styled Components](https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white)
+![Mantine](https://img.shields.io/badge/-Mantine-blue)
+![Zustand](https://img.shields.io/badge/-Zustand-red)
 
-PostsgreSQL
-Express
-Axios
-React
-Node.js
-Zustand
-Socket.io
-Mantine
+### Back End
+![Postgres](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+![Express](https://img.shields.io/badge/-Express-DCDCDC?logo=express&logoColor=black&style=for-the-badge)
+![Node](https://img.shields.io/badge/-Node-9ACD32?logo=node.js&logoColor=white&style=for-the-badge)
+![Axios](https://img.shields.io/badge/-Axios-671ddf?logo=axios&logoColor=black&style=for-the-badge)
+![Socket.io](https://img.shields.io/badge/Socket.io-black?style=for-the-badge&logo=socket.io&badgeColor=010101)
+
 
 ## Technical Challenges
 
