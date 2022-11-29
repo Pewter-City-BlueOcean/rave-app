@@ -2,14 +2,18 @@
 ## Rave About Your Rave
 
 ## Contributors
-[Sarah Handley](https://github.com/SarahHandley)
-[Drew Henderson](http://github.com/gthellter)
+**Project Manager:-**
 [Christopher Leblanc](https://github.com/ChristopherLeBlanc2)
-[Georgina Lin](https://github.com/xialin0702)
-[Gabi Olarte](https://github.com/babsjohnson)
-[Jojo Ortiz](https://github.com/jojortz)
-[Miles Owens](http://github.com/milrilowe)
+**Porject Architect:-**
 [Ben Tanaka](https://github.com/BTanaka11)
+**Project UI Team:-**
+[Gabi Olarte](https://github.com/babsjohnson)
+[Sarah Handley](https://github.com/SarahHandley)
+**project Team:-**
+[Miles Owens](http://github.com/milrilowe)
+[Jojo Ortiz](https://github.com/jojortz)
+[Drew Henderson](http://github.com/gthellter)
+[Georgina Lin](https://github.com/xialin0702)
 
 ## Description
 
@@ -56,16 +60,16 @@ For the Discover page, managing the interaction between the Seatgeek API data an
 ## App Demo
 
 Login/Home Page
-![](http://g.recordit.co/8imnvxgGeb.gif)
+![Login Page GIF](LoginandHomepage.gif)
 
 Group Page
-![Group Page GIF](http://g.recordit.co/7yFCpd2Uqy.gif)
+![Group Page GIF](Group%20Page.gif)
 
 Discover Page
-![Discover Page GIF](http://g.recordit.co/mSmwTKEEjX.gif)
+![Discover Page GIF](DiscoverPage.gif)
 
 Profile Page
-![Profile Page GIF](http://g.recordit.co/MsXEtTIgsM.gif)
+![Profile Page GIF](ProfilePage.gif)
 
 
 ## How the App Works
@@ -108,8 +112,6 @@ Plans to implement a notification sign up system that would allow all members in
 
 Customizable playlists where each group member can add to a group's spotify playlist.
 
-Make the group chat live and update as soon as a message is sent.
-
 Have access to other users’ profiles to learn more about them.
 
 Have the ability to see the discovery page and user profiles (that are public) to be accessible to guests.
@@ -117,8 +119,6 @@ Have the ability to see the discovery page and user profiles (that are public) t
 Each user to have the ability to add friends via request to other users and save those users to their profile.
 
 Each user to have the ability to add photos of the previous events to share with other attendees.
-
-Create a mobile app to go along with the website.
 
 Ability to add photos to your profile and integrate Instagram.
 
