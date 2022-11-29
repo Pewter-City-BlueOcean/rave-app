@@ -10,7 +10,7 @@ const sgAuth = require("./routes/sg.js");
 const { getGroups } = require("./database/controllers/groupController");
 const { getGroupMembers, addToGroup } = require('./database/controllers/members');
 const { updateIndividual, getIndividual, setNewUser, setPlaylist, getAllIndividuals } = require("./database/controllers/individualsController");
-//const webPlayback = require('./routes/webPlayback.js');
+
 const { getMessages, getUserPhoto, addMessage } = require("./database/controllers/messages");
 const spotify = require('./routes/spotify.js');
 const playlist = require('./routes/playlist.js');

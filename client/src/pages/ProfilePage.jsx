@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
-import { Modal, MantineProvider, Tabs, ActionIcon } from '@mantine/core';
+import { MantineProvider, Tabs, ActionIcon } from '@mantine/core';
 import moment from 'moment';
 import EditUser from '../components/EditUser.jsx';
 import NotificationList from '../components/Notifications/NotificationList.jsx';
@@ -74,10 +74,10 @@ const AboutMe = styled.div`
   flex-direction: column;
   width: 60%;
 `;
+
 const PAbout = styled.p`
   margin: 1px;
 `;
-
 
 const Sidebar = styled.div`
   width: 30vh;
@@ -127,7 +127,6 @@ const ProfilePage = ({access_token, setAccess_token, refresh_token}) => {
 
     axios.get(`${process.env.SERVER_ADDR}:${process.env.PORT}/db/groups/?user_id=${userId}`)
       .then((res) => {
-        console.log('Got the groups', res.data);
         setGroups(res.data);
         divideGroups(res.data);
       })
@@ -137,7 +136,6 @@ const ProfilePage = ({access_token, setAccess_token, refresh_token}) => {
   useEffect(() => {
     if (userId) {
       getUserData(userId).then(results => {
-        console.log(results.data[0]);
         setUser(results.data[0]);
         setProfileImage(`${SERVER_ADDR}/${results.data[0].photo}`);
       })
@@ -243,15 +241,4 @@ const getDate = (date) => {
   return currentDate - date === 0 ? 'Today' : moment(date).toNow();
 }
 
-const exampleUser = {
-  id: 123,
-  email: "hello@okay.com",
-  bio: "I'm a raving raver",
-  location: 'Dallas',
-  age:"a bad age",
-  motto: 'rave Rave RAAAAAVE',
-  individual_id: 'RVR4EVR',
-  photo: 'https://lexica-serve-encoded-images.sharif.workers.dev/sm/13d675a7-b651-40c4-ba45-7fc268db5ba4',
-  playlist_id:'none'
-};
 export default ProfilePage;

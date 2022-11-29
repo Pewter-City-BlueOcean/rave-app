@@ -3,12 +3,10 @@ const { useState, useEffect } = React;
 import axios from 'axios';
 import EventCard from "../components/Feed/EventCard.jsx";
 import NotificationList from "../components/Notifications/NotificationList.jsx";
-import groupsData from '../components/data/group_data.js'
 import {getDaysFromToday} from '../helpers/time_helpers.js'
 import styled from 'styled-components';
 import { useRaveStore } from '../helpers/raveStore.js';
 import { H2, H3 } from '../Styles.jsx';
-
 
 const Body = styled.div`
   display:flex;
@@ -17,8 +15,8 @@ const Body = styled.div`
   height: 75vh;
   margin-bottom: 25px;
   justify-content: space-around;
-  // border: dashed;
 `
+
 const CardContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -28,6 +26,7 @@ const CardContainer = styled.div`
   max-height: 100vh ;
   overflow: auto;
 `
+
 const GroupsContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -43,10 +42,6 @@ const NotifSection = styled.div`
   flex-direction: column;
   width: 300px;
   margin-left: 10px;
-  // background: rgba(0, 0, 0, 0.5);
-  // opacity: 0.8;
-  // box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  // border-radius: 5px;
 `
 const SH3 = styled(H3)`
   align-self: flex-start;
@@ -58,8 +53,6 @@ const FeedPage = ({ access_token, refresh_token, setAccess_token }) => {
   const [upcoming, setUpcoming] = useState([]);
   const [past, setPast] = useState([]);
   const userId = useRaveStore((state) => state.userId);
-
-  // console.log(userId);
 
   const getGroups = () => {
     const config = {
@@ -78,7 +71,6 @@ const FeedPage = ({ access_token, refresh_token, setAccess_token }) => {
 
     axios.get(`${process.env.SERVER_ADDR}:${process.env.PORT}/db/groups`, config)
       .then((res) => {
-        console.log('Got the groups', res.data);
         divideGroups(res.data);
         setGroups(res.data);
       })
@@ -89,32 +81,31 @@ const FeedPage = ({ access_token, refresh_token, setAccess_token }) => {
     if (userId) {
       getGroups();
     }
-    console.log(userId)
   }, [userId]);
 
   return (
   <div>
-  <H2>HOME</H2>
-    <Body>
-      <GroupsContainer>
-        <SH3>Upcoming Events ({upcoming.length})</SH3>
-        <CardContainer>
-          {upcoming.map((event, i) => (
+    <H2>HOME</H2>
+      <Body>
+        <GroupsContainer>
+          <SH3>Upcoming Events ({upcoming.length})</SH3>
+          <CardContainer>
+            {upcoming.map((event, i) => (
+              <EventCard key={i} event={event} access_token={access_token} setAccess_token={setAccess_token} refresh_token={refresh_token} />
+            ))}
+          </CardContainer>
+
+          <SH3>Past Events ({past.length})</SH3>
+          <CardContainer>
+          {past.map((event, i) => (
             <EventCard key={i} event={event} access_token={access_token} setAccess_token={setAccess_token} refresh_token={refresh_token} />
           ))}
-        </CardContainer>
-
-        <SH3>Past Events ({past.length})</SH3>
-        <CardContainer>
-        {past.map((event, i) => (
-          <EventCard key={i} event={event} access_token={access_token} setAccess_token={setAccess_token} refresh_token={refresh_token} />
-        ))}
-        </CardContainer>
-      </GroupsContainer>
-      <NotifSection>
-        <NotificationList groups={ groups }/>
-      </NotifSection>
-    </Body>
+          </CardContainer>
+        </GroupsContainer>
+        <NotifSection>
+          <NotificationList groups={ groups }/>
+        </NotifSection>
+      </Body>
     </div>
   )
 }

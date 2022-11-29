@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { useRaveStore } from '../helpers/raveStore.js';
-import { ConcertInfo, Chat} from '../components/GroupComponents/index.js'
+import ConcertInfo from '../components/GroupComponents/ConcertInfo.jsx'
+import Chat from '../components/GroupComponents/Chat.jsx'
 import Playlist from '../components/Playlist.jsx';
 import { H2, H3 } from '../Styles.jsx';
 
@@ -10,7 +11,7 @@ const Div= styled.div`
   display:flex;
   flex-direction: column;
   align-items: center;
-`
+`;
 
 const PlaylistContainer = styled.div`
   background: rgba(0, 0, 0, 0.5);
@@ -20,11 +21,12 @@ const PlaylistContainer = styled.div`
   padding: 0.35vh;
 `;
 
-
 const GroupPage = ({ access_token, refresh_token, setAccess_token }) => {
   const group = useRaveStore((state) => state.currentGroup);
 
-  console.log(group)
+  if (!group) {
+    return <div>...loading</div>
+  }
 
   return (
   <Div>

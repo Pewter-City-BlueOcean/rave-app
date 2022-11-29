@@ -14,18 +14,19 @@ const FlexColumn = styled.div`
   display: flex;
   flex-direction: column;
 `
+
 const Title = styled.nav`
   position:fixed;
   top: 0;
   width: 90%;
 `
+
 const Body = styled.nav`
   margin-top: 100px;
   // margin-left: 100px;
   // border: dotted;
   width: 90%;
 `
-
 
 const Layout = ({access_token, refresh_token}) => {
   return (
@@ -39,4 +40,5 @@ const Layout = ({access_token, refresh_token}) => {
     </Wrapper>
   )
 }
+
 export default Layout;

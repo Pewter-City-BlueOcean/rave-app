@@ -9,10 +9,6 @@ const P = styled.p`
 const Notification = ({event_title, days}) => {
   const [ show, setShow ] = useState( );
 
-  useEffect(() => {
-
-  }, [])
-
   return (
     <div>
       <P>You have <b>{event_title}</b>{days === 0 ? ' today!' : ' in ' + days + ' days.'}</P>

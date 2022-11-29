@@ -9,7 +9,6 @@ justify-content: center;
 align-items: center;
 `;
 
-
 const Login = styled.button`
   display: flex;
   align-items: center;

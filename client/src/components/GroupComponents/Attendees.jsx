@@ -10,7 +10,6 @@ const Attendees = ({groupId, handleSetMembers, members}) => {
     if (groupId) {
       axios.get(`${SERVER_ADDR}/db/members/${groupId}`)
         .then((response) => {
-          // Terrible fix
           if (attendees.length != response.data.length) {
             setAttendees(response.data);
           }
@@ -36,14 +35,13 @@ const Attendees = ({groupId, handleSetMembers, members}) => {
     <div>
       <h3> Attendees </h3>
       <ul style={{textAlign: 'left'}}>
-        {attendees.map((attendee) => {
+        {attendees.map((attendee, index) => {
           return (
-            <li>{attendee.username ? attendee.username : attendee.individual_id}</li>
+            <li key={index}>{attendee.username ? attendee.username : attendee.individual_id}</li>
           );
         })}
       </ul>
     </div>
-
   )
 }
 

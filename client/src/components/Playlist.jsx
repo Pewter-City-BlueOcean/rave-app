@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {Modal, ActionIcon } from '@mantine/core';
+import { Modal } from '@mantine/core';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';

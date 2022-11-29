@@ -1,4 +1,4 @@
-import { Card, Image, Text, Badge, Button, Group, Input, Title, HoverCard, Grid } from '@mantine/core';
+import { Card, Image, Text, Button, Group, Grid } from '@mantine/core';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
@@ -35,7 +35,6 @@ const EventCard = ({event, userId, searchExecute}) => {
       method: 'post',
       url: '/sg/events',
       data: {
-
         invididual_id: userId,
         objEventData: event
       }
@@ -61,10 +60,6 @@ const EventCard = ({event, userId, searchExecute}) => {
             <Group position="center" mt="md" mb="xs" >
               <STEXT weight={800} size="lg" >{event.event_title.toUpperCase()}</STEXT>
             </Group>
-{/*
-            <Text weight={350} size="sm" >
-              Artist: {event.performers[0].name}
-            </Text> */}
 
             <STEXT weight={350} size="sm" >
               {event.state}, {event.city}

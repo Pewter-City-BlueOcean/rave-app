@@ -70,7 +70,6 @@ return pool.query(query, params).then((results) => {
 const setNewUser = (req, res) => {
   const spotifyUserId = req.query.username;
   const email = req.query.email;
-  console.log('spotifyUserId', spotifyUserId);
   const insertQuery = `INSERT INTO individuals (individual_id, email) VALUES ($1, $2);`
   const params = [spotifyUserId, email];
   return pool.query(insertQuery, params).then(() => {

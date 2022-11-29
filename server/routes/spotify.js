@@ -115,12 +115,10 @@ router.put(`/play/:access_token`, (req, res) => {
       if (response.status === 202) {
         res.send(response.data);
       } else {
-        console.log(response.status);
         res.status(500).send('Spotify responded with a status ' + response.status);
       }
     })
     .catch((error) => {
-      console.log(error.response);
       if (error.response.status === 401) {
         res.status(401).send();
       } else {

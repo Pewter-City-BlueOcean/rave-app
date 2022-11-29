@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Card, Image, Text, Badge, Button, Group, Input, Title } from '@mantine/core';
+import { Card, Image, Text, Group } from '@mantine/core';
 import { useNavigate } from "react-router-dom";
 import { useRaveStore } from '../../helpers/raveStore.js';
 
@@ -30,7 +30,6 @@ const EventCard = ({ event, access_token, refresh_token, setAccess_token}) => {
 
   const routeChange = () => {
     setCurrentGroup(event);
-    console.log(currentGroup);
     let path = '/group?' +
       new URLSearchParams({
         id: event.group_id,

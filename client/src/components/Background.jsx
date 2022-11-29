@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Hydra from 'hydra-synth'
+import Hydra from 'hydra-synth';
 
 const Background = () => {
   var hydra = new Hydra();
@@ -9,18 +9,3 @@ const Background = () => {
 }
 
 export default Background;
-
-// osc(20, 0.03, 1.7)
-// .kaleid()
-// .mult(
-//   osc(20, 0.001, 0)
-//     .rotate(1.58))
-// .blend(o0, 0.85)
-// .modulateScale(
-//   osc(100, 0),-0.03)
-//   .kaleid()
-
-//   .scale(0.8, () =>
-//     (1.05 + .4 * Math.sin(time * 3)))
-
-// .out(o0)

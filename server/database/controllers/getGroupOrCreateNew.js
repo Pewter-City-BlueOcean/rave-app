@@ -13,7 +13,7 @@ const getGroupOrCreateNewFunc = (individual_id, objEventData) => {
         .catch(()=>{return 'CREATED NEW GROUP BUT FAILED TO ADD MEMBER TO IT'})
       })
       .catch((err)=>{
-        console.log(err)
+        console.log(err);
         return 'NEED GROUP NEEDED BUT ERROR CREATING';
       })
     } else {

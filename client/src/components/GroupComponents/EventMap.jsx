@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+
 const MapContainer = styled.div`
 width: 90%;
 aspect-ratio: 4/3;

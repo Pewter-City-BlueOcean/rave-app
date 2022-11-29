@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Notification from './Notification.jsx';
 import { getDaysFromToday } from '../../helpers/time_helpers.js';
-//import groups from '../data/group_data';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';

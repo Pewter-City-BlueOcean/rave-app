@@ -92,7 +92,4 @@ router.post('/events', (req, res) => {
   .catch((err)=>{res.status(500).send()});
 })
 
-// seatGeekSearch({state:'TX', city:'Houston', minPrice: 150, IP_address: '192.168.0.173'})
-// .then((val)=>{console.log(val)})
-
 module.exports = router;
