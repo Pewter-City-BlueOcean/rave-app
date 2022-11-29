@@ -60,17 +60,16 @@ For the Discover page, managing the interaction between the Seatgeek API data an
 ## App Demo
 
 Login/Home Page
-![Login Page GIF](LoginandHomepage.gif)
+![Login Page GIF](walkThroughGifs/Login_and_Home_Page.gif)
 
 Group Page
-![Group Page GIF](Group%20Page.gif)
+![Group Page GIF](walkThroughGifs/GroupPagelowres.gif)
 
 Discover Page
-![Discover Page GIF](DiscoverPage.gif)
+![Discover Page GIF](walkThroughGifs/Discover_Page.gif)
 
 Profile Page
-![Profile Page GIF](ProfilePage.gif)
-
+![Profile Page GIF](walkThroughGifs/Profile_Page.gif)
 
 ## How the App Works
 
