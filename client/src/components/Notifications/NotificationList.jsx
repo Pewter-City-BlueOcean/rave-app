@@ -29,9 +29,6 @@ transition: 0.2s;
 };
 `;
 
-const NotificationListContainer = styled.div`
-`
-
 const NotificationContainer = styled.div`
 border-top: ${props => (props.show ? '1pt solid rgba(105, 105, 105, 0.5)' : '')};
 box-sizing: border-box;
@@ -90,13 +87,11 @@ const NotificationList = ({ groups }) => {
           </div>
         }
       </NotificationHeader>
-      <NotificationListContainer>
-        {notifications.map((notification, i) => (
-          <NotificationContainer key={notification + i} show={showNotifications}>
-            <Notification event_title={notification.event_title} days={notification.days} />
-          </NotificationContainer>
-        ))}
-      </NotificationListContainer>
+      {notifications.map((notification, i) => (
+        <NotificationContainer key={notification + i} show={showNotifications}>
+          <Notification event_title={notification.event_title} days={notification.days} />
+        </NotificationContainer>
+      ))}
     </div>
   )
 }
