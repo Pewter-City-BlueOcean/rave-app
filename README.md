@@ -63,7 +63,7 @@ Login/Home Page
 ![Login Page GIF](walkThroughGifs/Login_and_Home_Page.gif)
 
 Group Page
-![Group Page GIF](walkThroughGifs/GroupPagelowres.gif)
+![Group Page GIF](walkThroughGifs/GroupPageGIF.gif)
 
 Discover Page
 ![Discover Page GIF](walkThroughGifs/Discover_Page.gif)
