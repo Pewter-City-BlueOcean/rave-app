@@ -2,14 +2,14 @@
 ## Rave About Your Rave
 
 ## Contributors
-**Project Manager:-**
+**Project Manager: **
 [Christopher Leblanc](https://github.com/ChristopherLeBlanc2)
-**Porject Architect:-**
+**Project Architect: **
 [Ben Tanaka](https://github.com/BTanaka11)
-**Project UI Team:-**
+**Project UI Team: **
 [Gabi Olarte](https://github.com/babsjohnson)
 [Sarah Handley](https://github.com/SarahHandley)
-**project Team:-**
+**project Team: **
 [Miles Owens](http://github.com/milrilowe)
 [Jojo Ortiz](https://github.com/jojortz)
 [Drew Henderson](http://github.com/gthellter)
